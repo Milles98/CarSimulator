@@ -1,4 +1,4 @@
-﻿using CarSimulator.Factory.MenuFactory;
+﻿using CarSimulator.Menus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +9,10 @@ namespace CarSimulator
 {
     public class AppStart
     {
-        private readonly MenuFactory _menuFactory;
-
-        public AppStart(MenuFactory menuFactory)
-        {
-            _menuFactory = menuFactory;
-        }
         public void AppRun()
         {
-            var menu = _menuFactory.CreateMenu("MainMenu");
-            menu.Display();
+            var initalMenu = new InitialMenu();
+            initalMenu.Menu();
         }
     }
 }

@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarSimulator.Menus
+namespace Library.Enums
 {
-    public interface IMenu
+    public enum Fatigue
     {
-        void Display();
+        Rested = 0,
+        Tired = 5,
+        Exhausted = 10
     }
 }
