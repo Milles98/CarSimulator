@@ -2,9 +2,6 @@
 using Library.Models;
 using Library.Services;
 using Library.Services.Interfaces;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CarSimulator.Menus
 {
