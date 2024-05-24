@@ -36,12 +36,12 @@ public class FoodService : IFoodService
         {
             _driver.Hunger = Hunger.Mätt;
             string foodItem = _faker.PickRandom(_foodItems);
-            Console.WriteLine($"{_driver.Name} äter {foodItem} och känner sig mätt.");
+            Console.WriteLine($"{_driver.Name} och du äter varsin {foodItem} och känner sig mätta.");
         }
         else
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"{_driver.Name} är redan mätt.");
+            Console.WriteLine($"{_driver.Name} och du är redan mätt.");
             Console.ResetColor();
         }
     }
@@ -51,11 +51,11 @@ public class FoodService : IFoodService
         _driver.Hunger += HungerIncreaseRate;
         if ((int)_driver.Hunger >= 11)
         {
-            Console.WriteLine($"{_driver.Name} svälter! Du måste äta något omedelbart.");
+            Console.WriteLine($"{_driver.Name} och du svälter! Ni måste äta något omedelbart.");
         }
         else if ((int)_driver.Hunger >= 6)
         {
-            Console.WriteLine($"{_driver.Name} är hungrig. Det är dags att äta snart.");
+            Console.WriteLine($"{_driver.Name} och du är hungriga. Det är dags att äta snart.");
         }
     }
 }

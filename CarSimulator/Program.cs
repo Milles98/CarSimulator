@@ -1,4 +1,4 @@
 ﻿using CarSimulator;
 
 var appStart = new AppStart();
-appStart.AppRun();
+await appStart.AppRun();

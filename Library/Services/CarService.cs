@@ -42,7 +42,7 @@ public class CarService : ICarService
 
         if (direction == "framåt" || direction == "bakåt")
         {
-            Console.WriteLine($"{_driver.Name} i sin {_carBrand} kör {direction} mot {location}.");
+            Console.WriteLine($"{_driver.Name} med dig i sin {_carBrand} kör {direction} mot {location}.");
             if (direction == "bakåt")
             {
                 _car.Direction = GetOppositeDirection(_car.Direction);
@@ -61,7 +61,7 @@ public class CarService : ICarService
     {
         if (_car.Fuel <= 0)
         {
-            Console.WriteLine($"{_carBrand} är utan bränsle. Du måste tanka.");
+            Console.WriteLine($"{_carBrand} är utan bränsle. Dags att tanka.");
             return;
         }
 
@@ -72,7 +72,7 @@ public class CarService : ICarService
         string location = _faker.Address.City();
 
         _car.Direction = GetNewDirection(_car.Direction, direction);
-        Console.WriteLine($"{_driver.Name} i sin {_carBrand} svänger {direction} mot {location}.");
+        Console.WriteLine($"{_driver.Name} med dig i sin {_carBrand} svänger {direction} mot {location}.");
         _driverService.CheckFatigue();
     }
 

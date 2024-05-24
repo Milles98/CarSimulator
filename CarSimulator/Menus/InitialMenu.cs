@@ -1,16 +1,16 @@
-﻿using Bogus;
-using Library.Enums;
+﻿using Library.Enums;
 using Library.Models;
 using Library.Services;
 using Library.Services.Interfaces;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CarSimulator.Menus
 {
     public class InitialMenu
     {
-        public void Menu()
+        public async Task Menu()
         {
             Console.WriteLine("Hej! Välkommen till Car Simulator 2.0");
             Console.WriteLine("1. Starta simulationen");
@@ -31,7 +31,7 @@ namespace CarSimulator.Menus
                 switch (choice)
                 {
                     case 1:
-                        driver = EnterDriverDetails();
+                        driver = await FetchDriverDetails();
                         if (driver != null)
                         {
                             Console.WriteLine("Förarinformation har sparats korrekt.");
@@ -76,41 +76,34 @@ namespace CarSimulator.Menus
             }
         }
 
-        private Driver EnterDriverDetails()
+        private async Task<Driver> FetchDriverDetails()
         {
             Console.Clear();
-            Console.WriteLine("Ange förarens namn:");
-            Console.WriteLine("1. Ange ett namn");
-            Console.WriteLine("2. Ge mig bara något namn...");
-            Console.Write("\nDitt val: ");
-
-            if (!int.TryParse(Console.ReadLine(), out int nameChoice) || nameChoice < 1 || nameChoice > 2)
+            Console.Write("Hämtar förare");
+            for (int i = 0; i < 3; i++)
             {
-                Console.WriteLine("Ogiltigt val. Försök igen.");
+                await Task.Delay(1000);
+                Console.Write(".");
+            }
+            Console.WriteLine();
+
+            var randomUserService = new RandomUserService();
+            var driver = await randomUserService.GetRandomDriverAsync();
+            if (driver == null)
+            {
+                Console.WriteLine("Kunde inte hämta ett namn. Försök igen.");
                 return null;
             }
-
-            string name;
-            if (nameChoice == 1)
-            {
-                Console.Write("Ange förarens namn: ");
-                name = Console.ReadLine();
-            }
-            else
-            {
-                var faker = new Faker();
-                name = faker.Name.FullName();
-                Console.WriteLine($"Genererat namn: {name}");
-            }
-
-            return new Driver { Name = name, Fatigue = Fatigue.Rested };
+            Console.WriteLine($"Genererat namn: {driver.Name}");
+            await Task.Delay(2000);
+            return new Driver { FirstName = driver.FirstName, LastName = driver.LastName, Fatigue = Fatigue.Rested };
         }
 
         private Car EnterCarDetails(string driverName)
         {
             Console.Clear();
 
-            Console.WriteLine("Vilken bil vill du ta en tur med?");
+            Console.WriteLine($"{driverName} undrar vilken bil vill du ta en tur med?");
             var brands = Enum.GetValues(typeof(CarBrand)).Cast<CarBrand>().ToList();
             for (int i = 0; i < brands.Count; i++)
             {
@@ -128,7 +121,7 @@ namespace CarSimulator.Menus
             CarBrand selectedBrand = brands[brandChoice - 1];
 
             Console.Clear();
-            Console.WriteLine($"Hej {driverName}, du har valt att åka i en {selectedBrand}, kul!");
+            Console.WriteLine($"Du har valt att åka i en {selectedBrand}, kul! säger {driverName}");
             Console.WriteLine("\nVart vill du börja åka mot? \n1: Norr \n2: Öst \n3: Söder \n4: Väst \n5: Jag bryr mig inte, välj något bara!");
             Console.Write("\nDitt val: ");
 
