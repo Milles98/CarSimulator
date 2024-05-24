@@ -18,9 +18,6 @@ public class CarService : ICarService
         _fuelService = fuelService;
         _driverService = driverService;
         _carBrand = carBrand;
-        _car.Fuel = Fuel.Full;
-        _driver.Fatigue = Fatigue.Rested;
-        _car.Direction = car.Direction;
     }
 
     public void Drive(string direction)
@@ -34,14 +31,13 @@ public class CarService : ICarService
         _car.Fuel -= 2;
         _driver.Fatigue += 1;
 
-        if (direction == "framåt")
+        if (direction == "framåt" || direction == "bakåt")
         {
-            Console.WriteLine($"{_carBrand} kör {direction}.");
-        }
-        else if (direction == "bakåt")
-        {
-            _car.Direction = GetOppositeDirection(_car.Direction);
-            Console.WriteLine($"{_carBrand} kör {direction}.");
+            Console.WriteLine($"{_driver.Name} i sin {_carBrand} kör {direction}.");
+            if (direction == "bakåt")
+            {
+                _car.Direction = GetOppositeDirection(_car.Direction);
+            }
         }
         else
         {
@@ -64,7 +60,7 @@ public class CarService : ICarService
         _driver.Fatigue += 1;
 
         _car.Direction = GetNewDirection(_car.Direction, direction);
-        Console.WriteLine($"{_carBrand} svänger {direction}.");
+        Console.WriteLine($"{_driver.Name} i sin {_carBrand} svänger {direction}.");
         _driverService.CheckFatigue();
     }
 
@@ -80,39 +76,37 @@ public class CarService : ICarService
 
     private Direction GetOppositeDirection(Direction currentDirection)
     {
-        switch (currentDirection)
+        return currentDirection switch
         {
-            case Direction.Norr: return Direction.Söder;
-            case Direction.Söder: return Direction.Norr;
-            case Direction.Öst: return Direction.Väst;
-            case Direction.Väst: return Direction.Öst;
-            default: return currentDirection;
-        }
+            Direction.Norr => Direction.Söder,
+            Direction.Söder => Direction.Norr,
+            Direction.Öst => Direction.Väst,
+            Direction.Väst => Direction.Öst,
+            _ => currentDirection
+        };
     }
 
     private Direction GetNewDirection(Direction currentDirection, string turnDirection)
     {
-        if (turnDirection == "vänster")
+        return turnDirection switch
         {
-            switch (currentDirection)
+            "vänster" => currentDirection switch
             {
-                case Direction.Norr: return Direction.Väst;
-                case Direction.Väst: return Direction.Söder;
-                case Direction.Söder: return Direction.Öst;
-                case Direction.Öst: return Direction.Norr;
-            }
-        }
-        else if (turnDirection == "höger")
-        {
-            switch (currentDirection)
+                Direction.Norr => Direction.Väst,
+                Direction.Väst => Direction.Söder,
+                Direction.Söder => Direction.Öst,
+                Direction.Öst => Direction.Norr,
+                _ => currentDirection
+            },
+            "höger" => currentDirection switch
             {
-                case Direction.Norr: return Direction.Öst;
-                case Direction.Öst: return Direction.Söder;
-                case Direction.Söder: return Direction.Väst;
-                case Direction.Väst: return Direction.Norr;
-            }
-        }
-
-        return currentDirection;
+                Direction.Norr => Direction.Öst,
+                Direction.Öst => Direction.Söder,
+                Direction.Söder => Direction.Väst,
+                Direction.Väst => Direction.Norr,
+                _ => currentDirection
+            },
+            _ => currentDirection
+        };
     }
 }

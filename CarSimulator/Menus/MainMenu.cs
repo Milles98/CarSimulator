@@ -19,7 +19,7 @@ namespace CarSimulator.Menus
             Console.WriteLine("5. Rasta");
             Console.WriteLine("6. Tanka bilen");
             Console.WriteLine("7. Avsluta");
-            Console.Write("Vad vill du göra härnäst?: ");
+            Console.Write("\nVad vill du göra härnäst?: ");
         }
     }
 }

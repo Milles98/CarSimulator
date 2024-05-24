@@ -27,10 +27,7 @@ namespace CarSimulator.Menus
         {
             if (_isFirstTime)
             {
-                TypeText($"{_driverName} sätter sig i sin sprillans nya {_carBrand} och kollar inställningarna.");
-                TypeText($"Allt ser bra ut. {_driverName} tar en tugga av sin macka köpt på Circle-K.");
-                TypeText($"{_driverName} ser glad ut efter att ha valt {_carBrand} som sin bil.");
-                TypeText("Nu börjar resan!\n");
+                DisplayIntroduction();
                 _isFirstTime = false;
             }
 
@@ -46,42 +43,49 @@ namespace CarSimulator.Menus
                     continue;
                 }
 
-                switch (choice)
-                {
-                    case 1:
-                        Console.Clear();
-                        _carService.Turn("vänster");
-                        break;
-                    case 2:
-                        Console.Clear();
-                        _carService.Turn("höger");
-                        break;
-                    case 3:
-                        Console.Clear();
-                        _carService.Drive("framåt");
-                        break;
-                    case 4:
-                        Console.Clear();
-                        _carService.Drive("bakåt");
-                        break;
-                    case 5:
-                        Console.Clear();
-                        _driverService.Rest();
-                        break;
-                    case 6:
-                        Console.Clear();
-                        _fuelService.Refuel();
-                        break;
-                    case 7:
-                        running = false;
-                        break;
-                    default:
-                        Console.WriteLine("Ogiltigt val, försök igen.");
-                        break;
-                }
-
+                ExecuteChoice(choice, ref running);
                 StatusMenu.PrintStatus(_carService.GetStatus(), _driverName, _carBrand.ToString());
             }
+        }
+
+        private void ExecuteChoice(int choice, ref bool running)
+        {
+            Console.Clear();
+            switch (choice)
+            {
+                case 1:
+                    _carService.Turn("vänster");
+                    break;
+                case 2:
+                    _carService.Turn("höger");
+                    break;
+                case 3:
+                    _carService.Drive("framåt");
+                    break;
+                case 4:
+                    _carService.Drive("bakåt");
+                    break;
+                case 5:
+                    _driverService.Rest();
+                    break;
+                case 6:
+                    _fuelService.Refuel();
+                    break;
+                case 7:
+                    running = false;
+                    break;
+                default:
+                    Console.WriteLine("Ogiltigt val, försök igen.");
+                    break;
+            }
+        }
+
+        private void DisplayIntroduction()
+        {
+            TypeText($"{_driverName} sätter sig i sin sprillans nya {_carBrand} och kollar inställningarna.");
+            TypeText($"Allt ser bra ut. {_driverName} tar en tugga av sin macka köpt på Circle-K.");
+            TypeText($"{_driverName} ser glad ut efter att ha valt {_carBrand} som sin bil.");
+            TypeText("\nNu börjar resan!\n");
         }
 
         private void TypeText(string text, int delay = 50)

@@ -7,8 +7,7 @@ namespace CarSimulator.Menus
     {
         public static void PrintStatus(CarStatus status, string driverName, string carBrand)
         {
-            Console.WriteLine($"\n{driverName} svänger och kör åt {status.Direction}");
-            Console.WriteLine($"{carBrand} riktning: {status.Direction}");
+            Console.WriteLine($"\nBilens riktning: {status.Direction}");
 
             if (status.Fuel >= 11 && status.Fuel <= 20)
             {
@@ -28,10 +27,8 @@ namespace CarSimulator.Menus
             }
 
             Console.WriteLine($"Bensin: {status.Fuel}/20");
-
             Console.ResetColor();
-
-            Console.WriteLine($"{driverName}s trötthet: {status.Fatigue}/10\n");
+            Console.WriteLine($"Trötthet: {status.Fatigue}/10\n");
         }
     }
 }
