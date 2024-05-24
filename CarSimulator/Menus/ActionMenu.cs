@@ -10,15 +10,17 @@ namespace CarSimulator.Menus
         private readonly ICarService _carService;
         private readonly IFuelService _fuelService;
         private readonly IDriverService _driverService;
+        private readonly IFoodService _foodService;
         private readonly string _driverName;
         private readonly CarBrand _carBrand;
         private bool _isFirstTime = true;
 
-        public ActionMenu(ICarService carService, IFuelService fuelService, IDriverService driverService, string driverName, CarBrand carBrand)
+        public ActionMenu(ICarService carService, IFuelService fuelService, IDriverService driverService, IFoodService foodService, string driverName, CarBrand carBrand)
         {
             _carService = carService;
             _fuelService = fuelService;
             _driverService = driverService;
+            _foodService = foodService;
             _driverName = driverName;
             _carBrand = carBrand;
         }
@@ -69,9 +71,12 @@ namespace CarSimulator.Menus
                     _driverService.Rest();
                     break;
                 case 6:
-                    _fuelService.Refuel();
+                    _foodService.Eat();
                     break;
                 case 7:
+                    _fuelService.Refuel();
+                    break;
+                case 8:
                     running = false;
                     break;
                 default:
@@ -82,10 +87,14 @@ namespace CarSimulator.Menus
 
         private void DisplayIntroduction()
         {
-            TypeText($"{_driverName} sätter sig i sin sprillans nya {_carBrand} och kollar inställningarna.");
-            TypeText($"Allt ser bra ut. {_driverName} tar en tugga av sin macka köpt på Circle-K.");
-            TypeText($"{_driverName} ser glad ut efter att ha valt {_carBrand} som sin bil.");
-            TypeText("\nNu börjar resan!\n");
+            Console.WriteLine($"{_driverName} sätter sig i sin sprillans nya {_carBrand} och kollar inställningarna." +
+                $"\nAllt ser bra ut. {_driverName} tar en tugga av sin macka köpt på Circle-K." +
+                $"\n{_driverName} ser glad ut efter att ha valt {_carBrand} som sin bil." +
+                $"\nNu börjar resan!\n");
+            //TypeText($"{_driverName} sätter sig i sin sprillans nya {_carBrand} och kollar inställningarna.");
+            //TypeText($"\nAllt ser bra ut. {_driverName} tar en tugga av sin macka köpt på Circle-K.");
+            //TypeText($"\n{_driverName} ser glad ut efter att ha valt {_carBrand} som sin bil.");
+            //TypeText("\nNu börjar resan!\n");
         }
 
         private void TypeText(string text, int delay = 50)
@@ -95,7 +104,7 @@ namespace CarSimulator.Menus
                 Console.Write(c);
                 System.Threading.Thread.Sleep(delay);
             }
-            Console.WriteLine(); // Move to the next line after the text is done
+            Console.WriteLine();
         }
     }
 }

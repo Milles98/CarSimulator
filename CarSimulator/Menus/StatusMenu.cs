@@ -25,10 +25,42 @@ namespace CarSimulator.Menus
             {
                 Console.ForegroundColor = ConsoleColor.Red;
             }
-
             Console.WriteLine($"Bensin: {status.Fuel}/20");
             Console.ResetColor();
-            Console.WriteLine($"Trötthet: {status.Fatigue}/10\n");
+
+            if (status.Fatigue >= 0 && status.Fatigue <= 3)
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+            }
+            else if (status.Fatigue >= 4 && status.Fatigue <= 6)
+            {
+                Console.ForegroundColor = ConsoleColor.Magenta;
+            }
+            else if (status.Fatigue >= 7 && status.Fatigue <= 9)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            }
+            else if (status.Fatigue == 10)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+            }
+            Console.WriteLine($"Trötthet: {status.Fatigue}/10");
+            Console.ResetColor();
+
+            if (status.Hunger >= 0 && status.Hunger <= 5)
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
+            }
+            else if (status.Hunger >= 6 && status.Hunger <= 10)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
+            }
+            else if (status.Hunger >= 11)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+            }
+            Console.WriteLine($"Hunger: {status.Hunger}/10\n");
+            Console.ResetColor();
         }
     }
 }
