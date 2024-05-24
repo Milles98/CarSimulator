@@ -1,7 +1,9 @@
 ﻿using Library.Enums;
 using Library.Models;
 using Library.Services;
+using Library.Services.Interfaces;
 using System;
+using System.Linq;
 
 namespace CarSimulator.Menus
 {
@@ -32,14 +34,23 @@ namespace CarSimulator.Menus
                         if (driver != null)
                         {
                             Console.WriteLine("Förarinformation har sparats korrekt.");
-                            car = EnterCarDetails();
+                            car = EnterCarDetails(driver.Name);
                             if (car != null)
                             {
-                                Console.WriteLine("Bilinformation har sparats korrekt.");
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine("\nBilinformation har sparats korrekt.");
+                                Console.ResetColor();
                                 Console.WriteLine("Tryck valfri knapp för att börja åka bilen.");
                                 Console.ReadKey();
                                 Console.Clear();
-                                ActionMenu actionMenu = new ActionMenu(new CarService(car, driver));
+
+                                // Create service instances
+                                IFuelService fuelService = new FuelService(car, car.Brand.ToString());
+                                IDriverService driverService = new DriverService(driver, driver.Name);
+                                ICarService carService = new CarService(car, driver, fuelService, driverService, car.Brand.ToString());
+
+                                // Inject into ActionMenu
+                                ActionMenu actionMenu = new ActionMenu(carService, fuelService, driverService, driver.Name, car.Brand);
                                 actionMenu.Menu();
                                 running = false;
                             }
@@ -72,7 +83,7 @@ namespace CarSimulator.Menus
             return new Driver { Name = name, Fatigue = Fatigue.Rested };
         }
 
-        private Car EnterCarDetails()
+        private Car EnterCarDetails(string driverName)
         {
             Console.Clear();
 
@@ -91,7 +102,10 @@ namespace CarSimulator.Menus
 
             CarBrand selectedBrand = brands[brandChoice - 1];
 
-            Console.WriteLine("Vart vill du börja åka mot? (1: Norr, 2: Öst, 3: Söder, 4: Väst): ");
+            Console.Clear();
+            Console.WriteLine($"Hej {driverName}, du har valt att åka i en {selectedBrand}, kul!");
+            Console.WriteLine("\nVart vill du börja åka mot? \n1: Norr \n2: Öst \n3: Söder \n4: Väst");
+            Console.Write("\nDitt val: ");
             if (!int.TryParse(Console.ReadLine(), out int directionChoice) || directionChoice < 1 || directionChoice > 4)
             {
                 Console.WriteLine("Ogiltigt val. Försök igen.");
@@ -102,6 +116,5 @@ namespace CarSimulator.Menus
 
             return new Car { Brand = selectedBrand, Fuel = (Fuel)20, Direction = direction };
         }
-
     }
 }

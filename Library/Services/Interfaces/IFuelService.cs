@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Library.Services.Interfaces
 {
-    public interface ICarService
+    public interface IFuelService
     {
-        void Drive(string direction);
-        void Turn(string direction);
-        CarStatus GetStatus();
+        void Refuel();
     }
 }
