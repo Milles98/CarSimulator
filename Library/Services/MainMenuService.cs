@@ -102,7 +102,10 @@ namespace Library.Services
                 try
                 {
                     Console.Clear();
-                    Console.WriteLine($"Du har valt att åka i en {selectedBrand}, kul! säger {driverName}");
+                    var random = new Random();
+                    var expressions = Enum.GetValues(typeof(Expression)).Cast<Expression>().ToList();
+                    var randomExpression = expressions[random.Next(expressions.Count)];
+                    Console.WriteLine($"Du har valt att åka i en {selectedBrand}, {randomExpression.ToString().ToLower()}! säger {driverName}");
                     Console.WriteLine("\nVart vill du börja åka mot?\n \n1: Norr \n2: Öst \n3: Söder \n4: Väst \n5: Jag bryr mig inte, välj något bara!\n0: Avbryt");
                     Console.Write("\nDitt val: ");
                     string input = Console.ReadLine();
@@ -119,7 +122,6 @@ namespace Library.Services
                         {
                             if (directionChoice == 5)
                             {
-                                Random random = new Random();
                                 directionChoice = random.Next(1, 5);
                                 direction = (Direction)(directionChoice - 1);
                                 Console.WriteLine($"\nSlumpmässigt vald riktning: {direction}");
