@@ -1,19 +1,17 @@
-﻿using Library.Enums;
-using Library.Models;
-using Library.Services;
+﻿using Library.Models;
 using Library.Services.Interfaces;
 
 namespace CarSimulator.Menus
 {
     public class MainMenu
     {
-        private readonly IMainMenuService _initializationService;
+        private readonly IMainMenuService _mainMenuService;
         private readonly IMenuDisplayService _menuDisplayService;
         private readonly IInputService _inputService;
 
         public MainMenu(IMainMenuService initializationService, IMenuDisplayService menuDisplayService, IInputService inputService)
         {
-            _initializationService = initializationService;
+            _mainMenuService = initializationService;
             _menuDisplayService = menuDisplayService;
             _inputService = inputService;
         }
@@ -39,11 +37,11 @@ namespace CarSimulator.Menus
                 switch (choice)
                 {
                     case 1:
-                        driver = await _initializationService.FetchDriverDetails();
+                        driver = await _mainMenuService.FetchDriverDetails();
                         if (driver != null)
                         {
                             Console.WriteLine("Förarinformation har sparats korrekt.");
-                            car = _initializationService.EnterCarDetails(driver.Name);
+                            car = _mainMenuService.EnterCarDetails(driver.Name);
                             if (car != null)
                             {
                                 Console.Write("\nVärmer upp motorn");

@@ -1,17 +1,17 @@
 ﻿using Library.Enums;
 using Library.Models;
 using Library.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.Services
 {
     public class MainMenuService : IMainMenuService
     {
-        private readonly RandomUserService _randomUserService = new RandomUserService();
+        private readonly IRandomUserService _randomUserService;
+
+        public MainMenuService(IRandomUserService randomUserService)
+        {
+            _randomUserService = randomUserService;
+        }
 
         public async Task<Driver> FetchDriverDetails()
         {
@@ -30,7 +30,7 @@ namespace Library.Services
                 Console.WriteLine("Kunde inte hämta ett namn. Försök igen.");
                 return null;
             }
-            Console.WriteLine($"Din förare är: {driver.Name}");
+            Console.WriteLine($"Din förare är: {driver.FirstName} {driver.LastName}");
             await Task.Delay(2000);
             return new Driver { FirstName = driver.FirstName, LastName = driver.LastName, Fatigue = Fatigue.Rested };
         }
