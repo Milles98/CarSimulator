@@ -36,12 +36,12 @@ public class FoodService : IFoodService
         {
             _driver.Hunger = Hunger.Mätt;
             string foodItem = _faker.PickRandom(_foodItems);
-            Console.WriteLine($"{_driver.Name} och du äter varsin {foodItem} och känner sig mätta.");
+            Console.WriteLine($"{_driver.Name} och du äter varsin {foodItem} och känner er mättade.");
         }
         else
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"{_driver.Name} och du är redan mätt.");
+            Console.WriteLine($"{_driver.Name} och du är redan mätta.");
             Console.ResetColor();
         }
     }

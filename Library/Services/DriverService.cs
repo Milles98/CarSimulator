@@ -18,15 +18,21 @@ public class DriverService : IDriverService
     {
         _driver = driver;
         _driverName = driverName;
-        _driver.Hunger = Hunger.Mätt;
         _faker = new Faker();
     }
 
     public void Rest()
     {
-        _driver.Fatigue = (Fatigue)Math.Max((int)_driver.Fatigue - 5, 0);
-        string restLocation = _faker.Address.City();
-        Console.WriteLine($"{_driverName} och du tar en rast på {restLocation} och känner sig piggare.");
+        if (_driver.Fatigue == Fatigue.Rested)
+        {
+            Console.WriteLine($"Du och {_driverName} rastade MEN ni blev inte mycket piggare av det.. Ni är ju redan utvilade!");
+        }
+        else
+        {
+            _driver.Fatigue = (Fatigue)Math.Max((int)_driver.Fatigue - 5, 0);
+            string restLocation = _faker.Address.City();
+            Console.WriteLine($"{_driverName} och du tar en rast på {restLocation} och känner sig piggare.");
+        }
     }
 
     public void CheckFatigue()
@@ -40,5 +46,4 @@ public class DriverService : IDriverService
             Console.WriteLine($"{_driverName} och du börjar bli trötta. Det är dags för en rast snart.");
         }
     }
-
 }

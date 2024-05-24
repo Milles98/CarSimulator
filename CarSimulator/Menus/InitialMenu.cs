@@ -38,20 +38,20 @@ namespace CarSimulator.Menus
                             car = EnterCarDetails(driver.Name);
                             if (car != null)
                             {
-                                Console.ForegroundColor = ConsoleColor.Green;
-                                Console.WriteLine("\nBilinformation har sparats korrekt.");
-                                Console.ResetColor();
-                                Console.WriteLine("Tryck valfri knapp för att börja åka bilen.");
-                                Console.ReadKey();
+                                Console.Write("\nVärmer upp motorn");
+                                for (int i = 0; i < 3; i++)
+                                {
+                                    await Task.Delay(1000);
+                                    Console.Write(".");
+                                }
+                                Console.WriteLine();
                                 Console.Clear();
 
-                                // Create service instances
                                 IFuelService fuelService = new FuelService(car, car.Brand.ToString());
                                 IDriverService driverService = new DriverService(driver, driver.Name);
                                 IFoodService foodService = new FoodService(driver);
                                 ICarService carService = new CarService(car, driver, fuelService, driverService, foodService, car.Brand.ToString());
 
-                                // Inject into ActionMenu
                                 ActionMenu actionMenu = new ActionMenu(carService, fuelService, driverService, foodService, driver.Name, car.Brand);
                                 actionMenu.Menu();
                                 running = false;
@@ -103,7 +103,7 @@ namespace CarSimulator.Menus
         {
             Console.Clear();
 
-            Console.WriteLine($"{driverName} undrar vilken bil vill du ta en tur med?");
+            Console.WriteLine($"{driverName} undrar vilken bil du vill ta en åktur med?\n");
             var brands = Enum.GetValues(typeof(CarBrand)).Cast<CarBrand>().ToList();
             for (int i = 0; i < brands.Count; i++)
             {
@@ -122,7 +122,7 @@ namespace CarSimulator.Menus
 
             Console.Clear();
             Console.WriteLine($"Du har valt att åka i en {selectedBrand}, kul! säger {driverName}");
-            Console.WriteLine("\nVart vill du börja åka mot? \n1: Norr \n2: Öst \n3: Söder \n4: Väst \n5: Jag bryr mig inte, välj något bara!");
+            Console.WriteLine("\nVart vill du börja åka mot?\n \n1: Norr \n2: Öst \n3: Söder \n4: Väst \n5: Jag bryr mig inte, välj något bara!");
             Console.Write("\nDitt val: ");
 
             if (!int.TryParse(Console.ReadLine(), out int directionChoice) || directionChoice < 1 || directionChoice > 5)
