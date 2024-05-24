@@ -33,21 +33,27 @@ namespace CarSimulator.Menus
                 switch (choice)
                 {
                     case 1:
+                        Console.Clear();
                         _carService.Turn("vänster");
                         break;
                     case 2:
+                        Console.Clear();
                         _carService.Turn("höger");
                         break;
                     case 3:
+                        Console.Clear();
                         _carService.Drive("framåt");
                         break;
                     case 4:
+                        Console.Clear();
                         _carService.Drive("bakåt");
                         break;
                     case 5:
+                        Console.Clear();
                         _carService.Rest();
                         break;
                     case 6:
+                        Console.Clear();
                         _carService.Refuel();
                         break;
                     case 7:

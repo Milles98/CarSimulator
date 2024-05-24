@@ -62,6 +62,7 @@ namespace CarSimulator.Menus
 
         private Driver EnterDriverDetails()
         {
+            Console.Clear();
             Console.Write("Ange förarens förnamn: ");
             string firstName = Console.ReadLine();
 
@@ -83,6 +84,7 @@ namespace CarSimulator.Menus
 
         private Car EnterCarDetails()
         {
+            Console.Clear();
             Console.Write("Ange bilens märke: ");
             string type = Console.ReadLine();
 
