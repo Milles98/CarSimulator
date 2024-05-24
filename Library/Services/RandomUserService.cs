@@ -6,24 +6,51 @@ namespace Library.Services
 {
     public class RandomUserService : IRandomUserService
     {
-        private readonly HttpClient httpClient = new HttpClient();
+        private readonly HttpClient httpClient;
+
+        public RandomUserService()
+        {
+            httpClient = new HttpClient();
+        }
 
         public async Task<Driver> GetRandomDriverAsync()
         {
             string url = "https://randomuser.me/api/";
-            var response = await httpClient.GetStringAsync(url);
-            var randomUserResponse = JsonConvert.DeserializeObject<RandomUserResponse>(response);
-
-            if (randomUserResponse?.Results != null && randomUserResponse.Results.Count > 0)
+            try
             {
-                var user = randomUserResponse.Results[0];
-                return new Driver
+                var response = await httpClient.GetStringAsync(url);
+                var randomUserResponse = JsonConvert.DeserializeObject<RandomUserResponse>(response);
+
+                if (randomUserResponse?.Results != null && randomUserResponse.Results.Count > 0)
                 {
-                    FirstName = user.Name.First,
-                    LastName = user.Name.Last
-                };
+                    var user = randomUserResponse.Results[0];
+                    return new Driver
+                    {
+                        FirstName = user.Name.First,
+                        LastName = user.Name.Last
+                    };
+                }
+                else
+                {
+                    Console.WriteLine("No results found in the response.");
+                    return null;
+                }
             }
-            return null;
+            catch (HttpRequestException httpRequestException)
+            {
+                Console.WriteLine($"An error occurred while fetching data from the API: {httpRequestException.Message}");
+                return null;
+            }
+            catch (JsonSerializationException jsonSerializationException)
+            {
+                Console.WriteLine($"An error occurred while deserializing the response: {jsonSerializationException.Message}");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+                return null;
+            }
         }
     }
 }

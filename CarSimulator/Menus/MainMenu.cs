@@ -8,12 +8,14 @@ namespace CarSimulator.Menus
         private readonly IMainMenuService _mainMenuService;
         private readonly IMenuDisplayService _menuDisplayService;
         private readonly IInputService _inputService;
+        private readonly IActionServiceFactory _actionServiceFactory;
 
-        public MainMenu(IMainMenuService initializationService, IMenuDisplayService menuDisplayService, IInputService inputService)
+        public MainMenu(IMainMenuService mainMenuService, IMenuDisplayService menuDisplayService, IInputService inputService, IActionServiceFactory actionServiceFactory)
         {
-            _mainMenuService = initializationService;
+            _mainMenuService = mainMenuService;
             _menuDisplayService = menuDisplayService;
             _inputService = inputService;
+            _actionServiceFactory = actionServiceFactory;
         }
 
         public async Task Menu()
@@ -21,9 +23,6 @@ namespace CarSimulator.Menus
             Console.WriteLine("Hej! Välkommen till Car Simulator 2.0");
             Console.WriteLine("1. Starta simulationen");
             Console.WriteLine("2. Avsluta");
-
-            Driver driver = null;
-            Car car = null;
 
             bool running = true;
             while (running)
@@ -37,49 +36,56 @@ namespace CarSimulator.Menus
                 switch (choice)
                 {
                     case 1:
-                        driver = await _mainMenuService.FetchDriverDetails();
-                        if (driver != null)
-                        {
-                            Console.WriteLine("Förarinformation har sparats korrekt.");
-                            car = _mainMenuService.EnterCarDetails(driver.Name);
-                            if (car != null)
-                            {
-                                Console.Write("\nVärmer upp motorn");
-                                for (int i = 0; i < 3; i++)
-                                {
-                                    await Task.Delay(1000);
-                                    Console.Write(".");
-                                }
-                                Console.WriteLine();
-                                Console.Clear();
-
-                                IFuelService fuelService = new FuelService(car, car.Brand.ToString());
-                                IDriverService driverService = new DriverService(driver, driver.Name);
-                                IFoodService foodService = new FoodService(driver);
-                                ICarService carService = new CarService(car, driver, fuelService, driverService, foodService, car.Brand.ToString());
-
-                                var actionMenu = new ActionMenu(carService, fuelService, driverService, foodService, _menuDisplayService, _inputService, driver.Name, car.Brand);
-                                actionMenu.Menu();
-                                running = false;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Något gick fel när du sparade bilinformationen. Försök igen.");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("Något gick fel när du sparade förarinformationen. Försök igen.");
-                        }
+                        await StartSimulation();
+                        running = false;
                         break;
                     case 2:
                         running = false;
                         break;
                     default:
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Ogiltigt val, försök igen.");
+                        Console.ResetColor();
                         break;
                 }
             }
+        }
+
+        private async Task StartSimulation()
+        {
+            Driver driver = await _mainMenuService.FetchDriverDetails();
+            if (driver != null)
+            {
+                Car car = _mainMenuService.EnterCarDetails(driver.Name);
+                if (car != null)
+                {
+                    await WarmUpEngine();
+
+                    var actionService = _actionServiceFactory.CreateActionService(driver, car);
+                    var actionMenu = new ActionMenu(actionService);
+                    actionMenu.Menu();
+                }
+                else
+                {
+                    Console.WriteLine("Något gick fel när du sparade bilinformationen. Försök igen.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Något gick fel när du sparade förarinformationen. Försök igen.");
+            }
+        }
+
+        private async Task WarmUpEngine()
+        {
+            Console.Write("\nVärmer upp motorn");
+            for (int i = 0; i < 3; i++)
+            {
+                await Task.Delay(1000);
+                Console.Write(".");
+            }
+            Console.WriteLine();
+            Console.Clear();
         }
     }
 }

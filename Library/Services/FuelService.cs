@@ -2,33 +2,41 @@
 using Library.Enums;
 using Library.Models;
 using Library.Services.Interfaces;
+using System;
 
 public class FuelService : IFuelService
 {
-    private Car _car;
-    private string _carBrand;
-    private Faker _faker;
+    private readonly Car _car;
+    private readonly string _carBrand;
+    private readonly Faker _faker;
 
     public FuelService(Car car, string carBrand)
     {
-        _car = car;
-        _carBrand = carBrand;
+        _car = car ?? throw new ArgumentNullException(nameof(car));
+        _carBrand = !string.IsNullOrWhiteSpace(carBrand) ? carBrand : throw new ArgumentException("Car brand cannot be null or empty", nameof(carBrand));
         _faker = new Faker();
     }
 
     public void Refuel()
     {
-        if (_car.Fuel == Fuel.Full)
+        try
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"Det går inte att tanka {_carBrand}, bilen är redan fulltankad!");
-            Console.ResetColor();
+            if (_car.Fuel == Fuel.Full)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Det går inte att tanka {_carBrand}, bilen är redan fulltankad!");
+                Console.ResetColor();
+            }
+            else
+            {
+                _car.Fuel = Fuel.Full;
+                string refuelLocation = _faker.Address.City();
+                Console.WriteLine($"{_carBrand} tankade på {refuelLocation} och nu är bilen fulltankad.");
+            }
         }
-        else
+        catch (Exception ex)
         {
-            _car.Fuel = Fuel.Full;
-            string refuelLocation = _faker.Address.City();
-            Console.WriteLine($"{_carBrand} tankade på {refuelLocation} och nu är bilen fulltankad.");
+            Console.WriteLine($"An error occurred while refueling: {ex.Message}");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CarSimulator.Menus;
+using Library.Factory;
 using Library.Services;
 using Library.Services.Interfaces;
 
@@ -13,7 +14,9 @@ namespace CarSimulator
             IMenuDisplayService menuDisplayService = new MenuDisplayService();
             IInputService inputService = new InputService();
 
-            var mainMenu = new MainMenu(mainMenuService, menuDisplayService, inputService);
+            IActionServiceFactory actionServiceFactory = new ActionServiceFactory(menuDisplayService, inputService);
+
+            var mainMenu = new MainMenu(mainMenuService, menuDisplayService, inputService, actionServiceFactory);
             await mainMenu.Menu();
         }
     }

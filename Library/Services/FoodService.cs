@@ -2,17 +2,19 @@
 using Library.Enums;
 using Library.Models;
 using Library.Services.Interfaces;
+using System;
+using System.Collections.Generic;
 
 public class FoodService : IFoodService
 {
     private const int HungerIncreaseRate = 2;
-    private Driver _driver;
-    private Faker _faker;
-    private List<string> _foodItems;
+    private readonly Driver _driver;
+    private readonly Faker _faker;
+    private readonly List<string> _foodItems;
 
     public FoodService(Driver driver)
     {
-        _driver = driver;
+        _driver = driver ?? throw new ArgumentNullException(nameof(driver));
         _faker = new Faker();
         _foodItems = new List<string>
         {
@@ -31,30 +33,44 @@ public class FoodService : IFoodService
 
     public void Eat()
     {
-        if (_driver.Hunger > Hunger.Mätt)
+        try
         {
-            _driver.Hunger = Hunger.Mätt;
-            string foodItem = _faker.PickRandom(_foodItems);
-            Console.WriteLine($"{_driver.Name} och du äter varsin {foodItem} och känner er mättade.");
+            if (_driver.Hunger > Hunger.Mätt)
+            {
+                _driver.Hunger = Hunger.Mätt;
+                string foodItem = _faker.PickRandom(_foodItems);
+                Console.WriteLine($"{_driver.Name} och du äter varsin {foodItem} och känner er mättade.");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"{_driver.Name} och du är redan mätta.");
+                Console.ResetColor();
+            }
         }
-        else
+        catch (Exception ex)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"{_driver.Name} och du är redan mätta.");
-            Console.ResetColor();
+            Console.WriteLine($"An error occurred while eating: {ex.Message}");
         }
     }
 
     public void CheckHunger()
     {
-        _driver.Hunger += HungerIncreaseRate;
-        if ((int)_driver.Hunger >= 11)
+        try
         {
-            Console.WriteLine($"{_driver.Name} och du svälter! Ni måste äta något omedelbart.");
+            _driver.Hunger += HungerIncreaseRate;
+            if ((int)_driver.Hunger >= 11)
+            {
+                Console.WriteLine($"{_driver.Name} och du svälter! Ni måste äta något omedelbart.");
+            }
+            else if ((int)_driver.Hunger >= 6)
+            {
+                Console.WriteLine($"{_driver.Name} och du är hungriga. Det är dags att äta snart.");
+            }
         }
-        else if ((int)_driver.Hunger >= 6)
+        catch (Exception ex)
         {
-            Console.WriteLine($"{_driver.Name} och du är hungriga. Det är dags att äta snart.");
+            Console.WriteLine($"An error occurred while checking hunger: {ex.Message}");
         }
     }
 }
