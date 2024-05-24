@@ -106,7 +106,9 @@ namespace Library.Services
                         _fuelService.Refuel();
                         break;
                     case 0:
+                        DisplayExitMessage();
                         running = false;
+                        Environment.Exit(0);
                         break;
                     default:
                         Console.WriteLine("Ogiltigt val, försök igen.");
@@ -117,6 +119,15 @@ namespace Library.Services
             {
                 Console.WriteLine($"An error occurred while executing choice {choice}: {ex.Message}");
             }
+        }
+
+        private void DisplayExitMessage()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Tack för att du spelade Car Simulator 2.0! Ha en bra dag!");
+            Console.ResetColor();
+            Task.Delay(3000).Wait();
         }
     }
 }

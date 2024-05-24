@@ -39,10 +39,11 @@ namespace CarSimulator.Menus
                 {
                     case 1:
                         await StartSimulation();
-                        running = false;
                         break;
                     case 2:
+                        DisplayExitMessage();
                         running = false;
+                        Environment.Exit(0);
                         break;
                     default:
                         DisplayErrorMessage();
@@ -57,6 +58,15 @@ namespace CarSimulator.Menus
             Console.WriteLine("Ogiltigt val, försök igen.");
             Console.ResetColor();
             Task.Delay(2000).Wait();
+        }
+
+        private void DisplayExitMessage()
+        {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Tack för att du spelade Car Simulator 2.0! Ha en bra dag!");
+            Console.ResetColor();
+            Task.Delay(3000).Wait();
         }
 
         private async Task StartSimulation()
@@ -75,7 +85,7 @@ namespace CarSimulator.Menus
                 }
                 else
                 {
-                    Console.WriteLine("Något gick fel när du sparade bilinformationen. Försök igen.");
+                    DisplayExitMessage();
                 }
             }
             else
