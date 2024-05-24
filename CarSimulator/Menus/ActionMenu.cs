@@ -9,16 +9,20 @@ namespace CarSimulator.Menus
         private readonly IFuelService _fuelService;
         private readonly IDriverService _driverService;
         private readonly IFoodService _foodService;
+        private readonly IMenuDisplayService _menuDisplayService;
+        private readonly IInputService _inputService;
         private readonly string _driverName;
         private readonly CarBrand _carBrand;
         private bool _isFirstTime = true;
 
-        public ActionMenu(ICarService carService, IFuelService fuelService, IDriverService driverService, IFoodService foodService, string driverName, CarBrand carBrand)
+        public ActionMenu(ICarService carService, IFuelService fuelService, IDriverService driverService, IFoodService foodService, IMenuDisplayService menuDisplayService, IInputService inputService, string driverName, CarBrand carBrand)
         {
             _carService = carService;
             _fuelService = fuelService;
             _driverService = driverService;
             _foodService = foodService;
+            _menuDisplayService = menuDisplayService;
+            _inputService = inputService;
             _driverName = driverName;
             _carBrand = carBrand;
         }
@@ -27,7 +31,7 @@ namespace CarSimulator.Menus
         {
             if (_isFirstTime)
             {
-                DisplayIntroduction();
+                _menuDisplayService.DisplayIntroduction(_driverName, _carBrand);
                 _isFirstTime = false;
             }
 
@@ -35,16 +39,16 @@ namespace CarSimulator.Menus
 
             while (running)
             {
-                MainMenu.PrintMenu(_driverName);
+                _menuDisplayService.DisplayMainMenu(_driverName);
 
-                if (!int.TryParse(Console.ReadLine(), out int choice))
+                int choice = _inputService.GetUserChoice();
+                if (choice == -1)
                 {
-                    Console.WriteLine("Ogiltigt val, försök igen.");
                     continue;
                 }
 
                 ExecuteChoice(choice, ref running);
-                StatusMenu.PrintStatus(_carService.GetStatus(), _driverName, _carBrand.ToString());
+                _menuDisplayService.DisplayStatusMenu(_carService.GetStatus(), _driverName, _carBrand.ToString());
             }
         }
 
@@ -74,35 +78,13 @@ namespace CarSimulator.Menus
                 case 7:
                     _fuelService.Refuel();
                     break;
-                case 8:
+                case 0:
                     running = false;
                     break;
                 default:
                     Console.WriteLine("Ogiltigt val, försök igen.");
                     break;
             }
-        }
-
-        private void DisplayIntroduction()
-        {
-            //Console.WriteLine($"Du sätter dig i en sprillans ny {_carBrand} och kollar ut från fönstret i framsätet." +
-            //    $"\nAllt ser bra ut. du tar en tugga av din macka du köpt på Circle-K." +
-            //    $"\n{_driverName} ser glad ut efter att du valde {_carBrand} som bil." +
-            //    $"\n\nNu börjar resan!\n");
-            TypeText($"Du sätter dig i en sprillans ny {_carBrand} och kollar ut från fönstret i framsätet.");
-            TypeText($"Allt ser bra ut. Du tar en tugga av din macka som du köpt på Circle-K.");
-            TypeText($"{_driverName} ser glad ut efter att du valde {_carBrand} som bil.");
-            TypeText("Nu börjar resan!\n");
-        }
-
-        private void TypeText(string text, int delay = 50)
-        {
-            foreach (char c in text)
-            {
-                Console.Write(c);
-                System.Threading.Thread.Sleep(delay);
-            }
-            Console.WriteLine();
         }
     }
 }
