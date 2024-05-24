@@ -9,10 +9,10 @@ namespace CarSimulator
 {
     public class AppStart
     {
-        public void AppRun()
+        public async Task AppRun()
         {
-            var initalMenu = new InitialMenu();
-            initalMenu.Menu();
+            var initialMenu = new InitialMenu();
+            await initialMenu.Menu();
         }
     }
 }

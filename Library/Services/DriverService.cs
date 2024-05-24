@@ -26,18 +26,18 @@ public class DriverService : IDriverService
     {
         _driver.Fatigue = (Fatigue)Math.Max((int)_driver.Fatigue - 5, 0);
         string restLocation = _faker.Address.City();
-        Console.WriteLine($"{_driverName} tar en rast på {restLocation} och känner sig piggare.");
+        Console.WriteLine($"{_driverName} och du tar en rast på {restLocation} och känner sig piggare.");
     }
 
     public void CheckFatigue()
     {
         if ((int)_driver.Fatigue >= MaxFatigue)
         {
-            Console.WriteLine($"{_driverName} är utmattad! Ta en rast omedelbart.");
+            Console.WriteLine($"{_driverName} och du är utmattade! Ta en rast omedelbart.");
         }
         else if ((int)_driver.Fatigue >= FatigueWarningLevel)
         {
-            Console.WriteLine($"{_driverName} börjar bli trött. Det är dags för en rast snart.");
+            Console.WriteLine($"{_driverName} och du börjar bli trötta. Det är dags för en rast snart.");
         }
     }
 
