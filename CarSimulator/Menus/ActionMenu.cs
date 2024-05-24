@@ -1,23 +1,39 @@
 ﻿using Library;
+using Library.Enums;
 using Library.Services.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarSimulator.Menus
 {
     public class ActionMenu
     {
-        private ICarService _carService;
+        private readonly ICarService _carService;
+        private readonly IFuelService _fuelService;
+        private readonly IDriverService _driverService;
+        private readonly string _driverName;
+        private readonly CarBrand _carBrand;
+        private bool _isFirstTime = true;
 
-        public ActionMenu(ICarService carService)
+        public ActionMenu(ICarService carService, IFuelService fuelService, IDriverService driverService, string driverName, CarBrand carBrand)
         {
             _carService = carService;
+            _fuelService = fuelService;
+            _driverService = driverService;
+            _driverName = driverName;
+            _carBrand = carBrand;
         }
+
         public void Menu()
         {
+            if (_isFirstTime)
+            {
+                TypeText($"{_driverName} sätter sig i sin sprillans nya {_carBrand} och kollar inställningarna.");
+                TypeText($"Allt ser bra ut. {_driverName} tar en tugga av sin macka köpt på Circle-K.");
+                TypeText($"{_driverName} ser glad ut efter att ha valt {_carBrand} som sin bil.");
+                TypeText("Nu börjar resan!\n");
+                _isFirstTime = false;
+            }
+
             bool running = true;
 
             while (running)
@@ -50,11 +66,11 @@ namespace CarSimulator.Menus
                         break;
                     case 5:
                         Console.Clear();
-                        _carService.Rest();
+                        _driverService.Rest();
                         break;
                     case 6:
                         Console.Clear();
-                        _carService.Refuel();
+                        _fuelService.Refuel();
                         break;
                     case 7:
                         running = false;
@@ -64,9 +80,18 @@ namespace CarSimulator.Menus
                         break;
                 }
 
-                StatusMenu.PrintStatus(_carService.GetStatus());
+                StatusMenu.PrintStatus(_carService.GetStatus(), _driverName, _carBrand.ToString());
             }
         }
 
+        private void TypeText(string text, int delay = 50)
+        {
+            foreach (char c in text)
+            {
+                Console.Write(c);
+                System.Threading.Thread.Sleep(delay);
+            }
+            Console.WriteLine(); // Move to the next line after the text is done
+        }
     }
 }
