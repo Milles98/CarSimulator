@@ -1,4 +1,6 @@
 ﻿using CarSimulator.Menus;
+using Library.Services;
+using Library.Services.Interfaces;
 
 namespace CarSimulator
 {
@@ -6,7 +8,11 @@ namespace CarSimulator
     {
         public async Task AppRun()
         {
-            var initialMenu = new InitialMenu();
+            IInitializationService initializationService = new InitializationService();
+            IMenuDisplayService menuDisplayService = new MenuDisplayService();
+            IInputService inputService = new InputService();
+
+            var initialMenu = new InitialMenu(initializationService, menuDisplayService, inputService);
             await initialMenu.Menu();
         }
     }

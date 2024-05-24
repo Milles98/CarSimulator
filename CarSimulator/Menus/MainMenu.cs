@@ -11,7 +11,7 @@
             Console.WriteLine("5. Rasta");
             Console.WriteLine("6. Ät mat");
             Console.WriteLine("7. Tanka bilen");
-            Console.WriteLine("8. Avsluta");
+            Console.WriteLine("0. Avsluta");
             Console.Write($"\n{driverName} frågar, vad ska vi göra härnäst?: ");
         }
     }
