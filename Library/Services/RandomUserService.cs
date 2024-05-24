@@ -1,9 +1,10 @@
 ﻿using Library.Models;
+using Library.Services.Interfaces;
 using Newtonsoft.Json;
 
 namespace Library.Services
 {
-    public class RandomUserService
+    public class RandomUserService : IRandomUserService
     {
         private readonly HttpClient httpClient = new HttpClient();
 
