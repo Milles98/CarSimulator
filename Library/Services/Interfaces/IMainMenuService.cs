@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library.Services.Interfaces
 {
-    public interface IInitializationService
+    public interface IMainMenuService
     {
         Task<Driver> FetchDriverDetails();
         Car EnterCarDetails(string driverName);
