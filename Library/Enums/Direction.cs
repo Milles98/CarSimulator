@@ -8,9 +8,9 @@ namespace Library.Enums
 {
     public enum Direction
     {
-        North,
-        East,
-        South,
-        West
+        Norr,
+        Öst,
+        Söder,
+        Väst
     }
 }

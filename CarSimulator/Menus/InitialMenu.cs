@@ -36,6 +36,9 @@ namespace CarSimulator.Menus
                             if (car != null)
                             {
                                 Console.WriteLine("Bilinformation har sparats korrekt.");
+                                Console.WriteLine("Tryck valfri knapp för att börja åka bilen.");
+                                Console.ReadKey();
+                                Console.Clear();
                                 ActionMenu actionMenu = new ActionMenu(new CarService(car, driver));
                                 actionMenu.Menu();
                                 running = false;
@@ -63,39 +66,32 @@ namespace CarSimulator.Menus
         private Driver EnterDriverDetails()
         {
             Console.Clear();
-            Console.Write("Ange förarens förnamn: ");
-            string firstName = Console.ReadLine();
+            Console.Write("Ange förarens namn: ");
+            string name = Console.ReadLine();
 
-            Console.Write("Ange förarens efternamn: ");
-            string lastName = Console.ReadLine();
-
-            Console.Write("Ange förarens stad: ");
-            string city = Console.ReadLine();
-
-            Console.Write("Ange förarens ålder: ");
-            if (!int.TryParse(Console.ReadLine(), out int age))
-            {
-                Console.WriteLine("Ogiltig ålder. Försök igen.");
-                return null;
-            }
-
-            return new Driver { FirstName = firstName, LastName = lastName, City = city, Age = age, Fatigue = Fatigue.Rested };
+            return new Driver { Name = name, Fatigue = Fatigue.Rested };
         }
 
         private Car EnterCarDetails()
         {
             Console.Clear();
-            Console.Write("Ange bilens märke: ");
-            string type = Console.ReadLine();
 
-            Console.Write("Ange bilens ålder (ex 2005): ");
-            if (!int.TryParse(Console.ReadLine(), out int age))
+            Console.WriteLine("Vilken bil vill du ta en tur med?:");
+            var brands = Enum.GetValues(typeof(CarBrand)).Cast<CarBrand>().ToList();
+            for (int i = 0; i < brands.Count; i++)
             {
-                Console.WriteLine("Ogiltig ålder. Försök igen.");
+                Console.WriteLine($"{i + 1}: {brands[i]}");
+            }
+
+            if (!int.TryParse(Console.ReadLine(), out int brandChoice) || brandChoice < 1 || brandChoice > brands.Count)
+            {
+                Console.WriteLine("Ogiltigt val. Försök igen.");
                 return null;
             }
 
-            Console.WriteLine("Ange bilens initiala riktning (1: North, 2: East, 3: South, 4: West): ");
+            CarBrand selectedBrand = brands[brandChoice - 1];
+
+            Console.WriteLine("Vart vill du börja åka mot? (1: Norr, 2: Öst, 3: Söder, 4: Väst): ");
             if (!int.TryParse(Console.ReadLine(), out int directionChoice) || directionChoice < 1 || directionChoice > 4)
             {
                 Console.WriteLine("Ogiltigt val. Försök igen.");
@@ -104,7 +100,7 @@ namespace CarSimulator.Menus
 
             Direction direction = (Direction)(directionChoice - 1);
 
-            return new Car { Brand = type, Age = age, Fuel = (Fuel)20, Direction = direction };
+            return new Car { Brand = selectedBrand, Fuel = (Fuel)20, Direction = direction };
         }
 
     }
