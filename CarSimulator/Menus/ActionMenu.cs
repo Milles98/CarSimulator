@@ -37,7 +37,7 @@ namespace CarSimulator.Menus
 
             while (running)
             {
-                MainMenu.PrintMenu();
+                MainMenu.PrintMenu(_driverName);
 
                 if (!int.TryParse(Console.ReadLine(), out int choice))
                 {
@@ -87,8 +87,8 @@ namespace CarSimulator.Menus
 
         private void DisplayIntroduction()
         {
-            Console.WriteLine($"Du sätter dig i den sprillans nya {_carBrand} och kollar ut från fönstret i framsätet." +
-                $"\nAllt ser bra ut. du tar en tugga av din macka du köpt på Circle-K i väntan på din förare." +
+            Console.WriteLine($"Du sätter dig i en sprillans ny {_carBrand} och kollar ut från fönstret i framsätet." +
+                $"\nAllt ser bra ut. du tar en tugga av din macka du köpt på Circle-K." +
                 $"\n{_driverName} ser glad ut efter att du valde {_carBrand} som bil." +
                 $"\nNu börjar resan!\n");
             //TypeText($"{_driverName} sätter sig i sin sprillans nya {_carBrand} och kollar inställningarna.");
