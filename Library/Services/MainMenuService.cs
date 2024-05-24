@@ -61,27 +61,37 @@ namespace Library.Services
                     {
                         Console.WriteLine($"{i + 1}: {brands[i]}");
                     }
+                    Console.WriteLine("0: Avbryt");
 
                     Console.Write("\nDitt val: ");
                     string input = Console.ReadLine();
 
-                    if (int.TryParse(input, out int brandChoice) && brandChoice >= 1 && brandChoice <= brands.Count)
+                    if (int.TryParse(input, out int brandChoice))
                     {
-                        selectedBrand = brands[brandChoice - 1];
-                        break;
+                        if (brandChoice == 0)
+                        {
+                            Console.WriteLine("Avslutar bilval.");
+                            return null;
+                        }
+
+                        if (brandChoice >= 1 && brandChoice <= brands.Count)
+                        {
+                            selectedBrand = brands[brandChoice - 1];
+                            break;
+                        }
+                        else
+                        {
+                            DisplayErrorMessage("Ogiltigt val. Försök igen.");
+                        }
                     }
                     else
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Ogiltigt val. Försök igen.");
-                        Console.ResetColor();
+                        DisplayErrorMessage("Ogiltigt val. Försök igen.");
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"An error occurred while entering car details: {ex.Message}");
-                    Console.ResetColor();
+                    DisplayErrorMessage($"An error occurred while entering car details: {ex.Message}");
                 }
             }
 
@@ -93,41 +103,58 @@ namespace Library.Services
                 {
                     Console.Clear();
                     Console.WriteLine($"Du har valt att åka i en {selectedBrand}, kul! säger {driverName}");
-                    Console.WriteLine("\nVart vill du börja åka mot?\n \n1: Norr \n2: Öst \n3: Söder \n4: Väst \n5: Jag bryr mig inte, välj något bara!");
+                    Console.WriteLine("\nVart vill du börja åka mot?\n \n1: Norr \n2: Öst \n3: Söder \n4: Väst \n5: Jag bryr mig inte, välj något bara!\n0: Avbryt");
                     Console.Write("\nDitt val: ");
                     string input = Console.ReadLine();
 
-                    if (int.TryParse(input, out int directionChoice) && directionChoice >= 1 && directionChoice <= 5)
+                    if (int.TryParse(input, out int directionChoice))
                     {
-                        if (directionChoice == 5)
+                        if (directionChoice == 0)
                         {
-                            Random random = new Random();
-                            directionChoice = random.Next(1, 5);
-                            direction = (Direction)(directionChoice - 1);
-                            Console.WriteLine($"\nSlumpmässigt vald riktning: {direction}");
+                            Console.WriteLine("Avslutar riktning val.");
+                            return null;
+                        }
+
+                        if (directionChoice >= 1 && directionChoice <= 5)
+                        {
+                            if (directionChoice == 5)
+                            {
+                                Random random = new Random();
+                                directionChoice = random.Next(1, 5);
+                                direction = (Direction)(directionChoice - 1);
+                                Console.WriteLine($"\nSlumpmässigt vald riktning: {direction}");
+                            }
+                            else
+                            {
+                                direction = (Direction)(directionChoice - 1);
+                            }
+                            break;
                         }
                         else
                         {
-                            direction = (Direction)(directionChoice - 1);
+                            DisplayErrorMessage("Ogiltigt val. Försök igen.");
                         }
-                        break;
                     }
                     else
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Ogiltigt val. Försök igen.");
-                        Console.ResetColor();
+                        DisplayErrorMessage("Ogiltigt val. Försök igen.");
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"An error occurred while entering direction details: {ex.Message}");
-                    Console.ResetColor();
+                    DisplayErrorMessage($"An error occurred while entering direction details: {ex.Message}");
                 }
             }
 
             return new Car { Brand = selectedBrand, Fuel = (Fuel)20, Direction = direction };
+        }
+
+        private void DisplayErrorMessage(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(message);
+            Console.ResetColor();
+            Task.Delay(2000).Wait();
         }
     }
 }
