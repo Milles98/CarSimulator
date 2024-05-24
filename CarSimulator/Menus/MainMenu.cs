@@ -20,16 +20,18 @@ namespace CarSimulator.Menus
 
         public async Task Menu()
         {
-            Console.WriteLine("Hej! Välkommen till Car Simulator 2.0");
-            Console.WriteLine("1. Starta simulationen");
-            Console.WriteLine("2. Avsluta");
-
             bool running = true;
             while (running)
             {
+                Console.Clear();
+                Console.WriteLine("Hej! Välkommen till Car Simulator 2.0");
+                Console.WriteLine("1. Starta simulationen");
+                Console.WriteLine("2. Avsluta");
+
                 int choice = _inputService.GetUserChoice();
                 if (choice == -1)
                 {
+                    DisplayErrorMessage();
                     continue;
                 }
 
@@ -43,12 +45,18 @@ namespace CarSimulator.Menus
                         running = false;
                         break;
                     default:
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Ogiltigt val, försök igen.");
-                        Console.ResetColor();
+                        DisplayErrorMessage();
                         break;
                 }
             }
+        }
+
+        private void DisplayErrorMessage()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Ogiltigt val, försök igen.");
+            Console.ResetColor();
+            Task.Delay(2000).Wait();
         }
 
         private async Task StartSimulation()

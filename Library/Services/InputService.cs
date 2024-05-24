@@ -15,7 +15,9 @@ namespace Library.Services
                     return choice;
                 }
 
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Ogiltigt val, försök igen.");
+                Console.ResetColor();
                 return -1;
             }
             catch (Exception ex)
