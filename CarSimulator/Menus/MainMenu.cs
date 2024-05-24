@@ -1,16 +1,8 @@
-﻿using Library;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarSimulator.Menus
+﻿namespace CarSimulator.Menus
 {
     public class MainMenu
     {
-        public static void PrintMenu()
+        public static void PrintMenu(string driverName)
         {
             Console.WriteLine("1. Sväng vänster");
             Console.WriteLine("2. Sväng höger");
@@ -20,7 +12,7 @@ namespace CarSimulator.Menus
             Console.WriteLine("6. Ät mat");
             Console.WriteLine("7. Tanka bilen");
             Console.WriteLine("8. Avsluta");
-            Console.Write("\nVad vill du göra härnäst?: ");
+            Console.Write($"\n{driverName} frågar, vad ska vi göra härnäst?: ");
         }
     }
 }

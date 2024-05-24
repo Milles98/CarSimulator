@@ -94,7 +94,7 @@ namespace CarSimulator.Menus
                 Console.WriteLine("Kunde inte hämta ett namn. Försök igen.");
                 return null;
             }
-            Console.WriteLine($"Genererat namn: {driver.Name}");
+            Console.WriteLine($"Din förare är: {driver.Name}");
             await Task.Delay(2000);
             return new Driver { FirstName = driver.FirstName, LastName = driver.LastName, Fatigue = Fatigue.Rested };
         }
