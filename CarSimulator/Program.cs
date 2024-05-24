@@ -1,2 +1,7 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using CarSimulator;
+using CarSimulator.Factory.MenuFactory;
+
+var menuFactory = new MenuFactory();
+var app = new AppStart(menuFactory);
+
+app.AppRun();

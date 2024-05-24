@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarSimulator", "CarSimulator\CarSimulator.csproj", "{BDBD0054-3ACC-4E7A-BBAC-194356BE85B6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library", "Library\Library.csproj", "{BBFDB1AB-99D5-4A82-B464-FE35671679D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{BDBD0054-3ACC-4E7A-BBAC-194356BE85B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDBD0054-3ACC-4E7A-BBAC-194356BE85B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDBD0054-3ACC-4E7A-BBAC-194356BE85B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBFDB1AB-99D5-4A82-B464-FE35671679D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBFDB1AB-99D5-4A82-B464-FE35671679D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBFDB1AB-99D5-4A82-B464-FE35671679D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBFDB1AB-99D5-4A82-B464-FE35671679D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
