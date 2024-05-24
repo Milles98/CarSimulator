@@ -8,12 +8,12 @@ namespace CarSimulator
     {
         public async Task AppRun()
         {
-            IInitializationService initializationService = new InitializationService();
+            IMainMenuService initializationService = new MainMenuService();
             IMenuDisplayService menuDisplayService = new MenuDisplayService();
             IInputService inputService = new InputService();
 
-            var initialMenu = new InitialMenu(initializationService, menuDisplayService, inputService);
-            await initialMenu.Menu();
+            var mainMenu = new MainMenu(initializationService, menuDisplayService, inputService);
+            await mainMenu.Menu();
         }
     }
 }

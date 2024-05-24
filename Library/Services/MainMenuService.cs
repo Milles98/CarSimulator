@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Library.Services
 {
-    public class InitializationService : IInitializationService
+    public class MainMenuService : IMainMenuService
     {
         private readonly RandomUserService _randomUserService = new RandomUserService();
 
