@@ -26,7 +26,7 @@ namespace CarSimulator.Menus
                 Console.Clear();
                 Console.WriteLine("Hej! Välkommen till Car Simulator 2.0");
                 Console.WriteLine("1. Starta simulationen");
-                Console.WriteLine("2. Avsluta");
+                Console.WriteLine("0. Avsluta");
 
                 int choice = _inputService.GetUserChoice();
                 if (choice == -1)
@@ -40,7 +40,7 @@ namespace CarSimulator.Menus
                     case 1:
                         await StartSimulation();
                         break;
-                    case 2:
+                    case 0:
                         DisplayExitMessage();
                         running = false;
                         Environment.Exit(0);
