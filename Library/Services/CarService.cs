@@ -37,9 +37,43 @@ namespace Library.Services
 
             _car.Fuel -= 2;
             _driver.Fatigue += 1;
-            _car.Direction = direction == "framåt" ? _car.Direction : Enum.Parse<Direction>(direction);
-            Console.WriteLine($"Bilen kör {direction}.");
+
+            if (direction == "framåt")
+            {
+                // Maintain the current direction
+                Console.WriteLine($"Bilen kör {direction}.");
+            }
+            else if (direction == "bakåt")
+            {
+                // Reverse the direction
+                _car.Direction = GetOppositeDirection(_car.Direction);
+                Console.WriteLine($"Bilen kör {direction}.");
+            }
+            else
+            {
+                // Unsupported direction
+                Console.WriteLine("Ogiltig riktning.");
+                return;
+            }
+
             CheckStatus();
+        }
+
+        private Direction GetOppositeDirection(Direction currentDirection)
+        {
+            switch (currentDirection)
+            {
+                case Direction.Norr:
+                    return Direction.Söder;
+                case Direction.Söder:
+                    return Direction.Norr;
+                case Direction.Öst:
+                    return Direction.Väst;
+                case Direction.Väst:
+                    return Direction.Öst;
+                default:
+                    return currentDirection; // Should never reach here
+            }
         }
 
         public void Turn(string direction)
@@ -52,7 +86,8 @@ namespace Library.Services
 
             _car.Fuel -= 1;
             _driver.Fatigue += 1;
-            _car.Direction = direction == "vänster" ? Direction.West : Direction.East;
+
+            _car.Direction = GetNewDirection(_car.Direction, direction);
             Console.WriteLine($"Bilen svänger {direction}.");
             CheckStatus();
         }
@@ -91,6 +126,41 @@ namespace Library.Services
             {
                 Console.WriteLine("Föraren börjar bli trött. Det är dags för en rast snart.");
             }
+        }
+
+        private Direction GetNewDirection(Direction currentDirection, string turnDirection)
+        {
+            if (turnDirection == "vänster")
+            {
+                switch (currentDirection)
+                {
+                    case Direction.Norr:
+                        return Direction.Väst;
+                    case Direction.Väst:
+                        return Direction.Söder;
+                    case Direction.Söder:
+                        return Direction.Öst;
+                    case Direction.Öst:
+                        return Direction.Norr;
+                }
+            }
+            else if (turnDirection == "höger")
+            {
+                switch (currentDirection)
+                {
+                    case Direction.Norr:
+                        return Direction.Öst;
+                    case Direction.Öst:
+                        return Direction.Söder;
+                    case Direction.Söder:
+                        return Direction.Väst;
+                    case Direction.Väst:
+                        return Direction.Norr;
+                }
+            }
+
+            // If the direction is not "vänster" or "höger", return the current direction.
+            return currentDirection;
         }
     }
 }
