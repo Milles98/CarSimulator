@@ -1,5 +1,4 @@
 ﻿using Library;
-using System;
 
 namespace CarSimulator.Menus
 {
