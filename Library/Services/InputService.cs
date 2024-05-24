@@ -1,4 +1,5 @@
-﻿using Library.Services.Interfaces;
+﻿using System;
+using Library.Services.Interfaces;
 
 namespace Library.Services
 {
@@ -6,13 +7,22 @@ namespace Library.Services
     {
         public int GetUserChoice()
         {
-            if (int.TryParse(Console.ReadLine(), out int choice))
+            try
             {
-                return choice;
-            }
+                string input = Console.ReadLine();
+                if (int.TryParse(input, out int choice))
+                {
+                    return choice;
+                }
 
-            Console.WriteLine("Ogiltigt val, försök igen.");
-            return -1;
+                Console.WriteLine("Ogiltigt val, försök igen.");
+                return -1;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while getting user choice: {ex.Message}");
+                return -1;
+            }
         }
     }
 }

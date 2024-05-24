@@ -9,40 +9,54 @@ public class DriverService : IDriverService
     private const int FatigueWarningLevel = 7;
     private const int HungerIncreaseRate = 2;
 
-    private Driver _driver;
-    private string _driverName;
-    private Faker _faker;
+    private readonly Driver _driver;
+    private readonly string _driverName;
+    private readonly Faker _faker;
 
     public DriverService(Driver driver, string driverName)
     {
-        _driver = driver;
-        _driverName = driverName;
+        _driver = driver ?? throw new ArgumentNullException(nameof(driver));
+        _driverName = !string.IsNullOrWhiteSpace(driverName) ? driverName : throw new ArgumentException("Driver name cannot be null or empty", nameof(driverName));
         _faker = new Faker();
     }
 
     public void Rest()
     {
-        if (_driver.Fatigue == Fatigue.Rested)
+        try
         {
-            Console.WriteLine($"Du och {_driverName} rastade MEN ni blev inte mycket piggare av det.. Ni är ju redan utvilade!");
+            if (_driver.Fatigue == Fatigue.Rested)
+            {
+                Console.WriteLine($"Du och {_driverName} rastade MEN ni blev inte mycket piggare av det.. Ni är ju redan utvilade!");
+            }
+            else
+            {
+                _driver.Fatigue = (Fatigue)Math.Max((int)_driver.Fatigue - 5, 0);
+                string restLocation = _faker.Address.City();
+                Console.WriteLine($"{_driverName} och du tar en rast på {restLocation} och känner sig piggare.");
+            }
         }
-        else
+        catch (Exception ex)
         {
-            _driver.Fatigue = (Fatigue)Math.Max((int)_driver.Fatigue - 5, 0);
-            string restLocation = _faker.Address.City();
-            Console.WriteLine($"{_driverName} och du tar en rast på {restLocation} och känner sig piggare.");
+            Console.WriteLine($"An error occurred while resting: {ex.Message}");
         }
     }
 
     public void CheckFatigue()
     {
-        if ((int)_driver.Fatigue >= MaxFatigue)
+        try
         {
-            Console.WriteLine($"{_driverName} och du är utmattade! Ta en rast omedelbart.");
+            if ((int)_driver.Fatigue >= MaxFatigue)
+            {
+                Console.WriteLine($"{_driverName} och du är utmattade! Ta en rast omedelbart.");
+            }
+            else if ((int)_driver.Fatigue >= FatigueWarningLevel)
+            {
+                Console.WriteLine($"{_driverName} och du börjar bli trötta. Det är dags för en rast snart.");
+            }
         }
-        else if ((int)_driver.Fatigue >= FatigueWarningLevel)
+        catch (Exception ex)
         {
-            Console.WriteLine($"{_driverName} och du börjar bli trötta. Det är dags för en rast snart.");
+            Console.WriteLine($"An error occurred while checking fatigue: {ex.Message}");
         }
     }
 }
