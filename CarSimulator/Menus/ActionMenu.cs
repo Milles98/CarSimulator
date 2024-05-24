@@ -87,14 +87,14 @@ namespace CarSimulator.Menus
 
         private void DisplayIntroduction()
         {
-            Console.WriteLine($"Du sätter dig i en sprillans ny {_carBrand} och kollar ut från fönstret i framsätet." +
-                $"\nAllt ser bra ut. du tar en tugga av din macka du köpt på Circle-K." +
-                $"\n{_driverName} ser glad ut efter att du valde {_carBrand} som bil." +
-                $"\nNu börjar resan!\n");
-            //TypeText($"{_driverName} sätter sig i sin sprillans nya {_carBrand} och kollar inställningarna.");
-            //TypeText($"\nAllt ser bra ut. {_driverName} tar en tugga av sin macka köpt på Circle-K.");
-            //TypeText($"\n{_driverName} ser glad ut efter att ha valt {_carBrand} som sin bil.");
-            //TypeText("\nNu börjar resan!");
+            //Console.WriteLine($"Du sätter dig i en sprillans ny {_carBrand} och kollar ut från fönstret i framsätet." +
+            //    $"\nAllt ser bra ut. du tar en tugga av din macka du köpt på Circle-K." +
+            //    $"\n{_driverName} ser glad ut efter att du valde {_carBrand} som bil." +
+            //    $"\n\nNu börjar resan!\n");
+            TypeText($"Du sätter dig i en sprillans ny {_carBrand} och kollar ut från fönstret i framsätet.");
+            TypeText($"Allt ser bra ut. Du tar en tugga av din macka som du köpt på Circle-K.");
+            TypeText($"{_driverName} ser glad ut efter att du valde {_carBrand} som bil.");
+            TypeText("Nu börjar resan!\n");
         }
 
         private void TypeText(string text, int delay = 50)
