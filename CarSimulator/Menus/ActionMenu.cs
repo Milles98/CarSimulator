@@ -94,7 +94,7 @@ namespace CarSimulator.Menus
             //TypeText($"{_driverName} sätter sig i sin sprillans nya {_carBrand} och kollar inställningarna.");
             //TypeText($"\nAllt ser bra ut. {_driverName} tar en tugga av sin macka köpt på Circle-K.");
             //TypeText($"\n{_driverName} ser glad ut efter att ha valt {_carBrand} som sin bil.");
-            //TypeText("\nNu börjar resan!\n");
+            //TypeText("\nNu börjar resan!");
         }
 
         private void TypeText(string text, int delay = 50)
