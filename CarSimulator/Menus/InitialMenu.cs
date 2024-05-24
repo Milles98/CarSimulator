@@ -48,10 +48,11 @@ namespace CarSimulator.Menus
                                 // Create service instances
                                 IFuelService fuelService = new FuelService(car, car.Brand.ToString());
                                 IDriverService driverService = new DriverService(driver, driver.Name);
-                                ICarService carService = new CarService(car, driver, fuelService, driverService, car.Brand.ToString());
+                                IFoodService foodService = new FoodService(driver);
+                                ICarService carService = new CarService(car, driver, fuelService, driverService, foodService, car.Brand.ToString());
 
                                 // Inject into ActionMenu
-                                ActionMenu actionMenu = new ActionMenu(carService, fuelService, driverService, driver.Name, car.Brand);
+                                ActionMenu actionMenu = new ActionMenu(carService, fuelService, driverService, foodService, driver.Name, car.Brand);
                                 actionMenu.Menu();
                                 running = false;
                             }

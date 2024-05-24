@@ -11,5 +11,6 @@ namespace Library.Models
     {
         public string Name { get; set; }
         public Fatigue Fatigue { get; set; }
+        public Hunger Hunger { get; set; }
     }
 }
