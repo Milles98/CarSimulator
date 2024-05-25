@@ -35,22 +35,13 @@ public class CarService : ICarService
                 throw new ArgumentException("Direction cannot be null or empty", nameof(direction));
             }
 
-            if (_car.Fuel <= 0)
+            if (!_fuelService.HasEnoughFuel(2))
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(@"
- ____                 _         ____  _       _   _ 
-| __ )  ___ _ __  ___(_)_ __   / ___|| |_   _| |_| |
-|  _ \ / _ \ '_ \/ __| | '_ \  \___ \| | | | | __| |
-| |_) |  __/ | | \__ \ | | | |  ___) | | |_| | |_|_|
-|____/ \___|_| |_|___/_|_| |_| |____/|_|\__,_|\__(_)
-                ");
-                Console.WriteLine($"{_carBrand} är utan bränsle. Du måste tanka.");
-                Console.ResetColor();
+                _fuelService.DisplayLowFuelWarning();
                 return;
             }
 
-            _car.Fuel -= 2;
+            _fuelService.UseFuel(2);
             _driver.Fatigue += 1;
             _foodService.CheckHunger();
 
@@ -93,15 +84,13 @@ public class CarService : ICarService
                 throw new ArgumentException("Direction cannot be null or empty", nameof(direction));
             }
 
-            if (_car.Fuel <= 0)
+            if (!_fuelService.HasEnoughFuel(1))
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"{_carBrand} är utan bränsle. Dags att tanka.");
-                Console.ResetColor();
+                _fuelService.DisplayLowFuelWarning();
                 return;
             }
 
-            _car.Fuel -= 1;
+            _fuelService.UseFuel(1);
             _driver.Fatigue += 1;
             _foodService.CheckHunger();
 

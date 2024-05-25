@@ -100,6 +100,8 @@ namespace Library.Services
             }
         }
 
+        private bool skipTypingEffect = false;
+
         public void DisplayIntroduction(string driverName, CarBrand carBrand)
         {
             while (true)
@@ -115,6 +117,10 @@ namespace Library.Services
                         continue;
                     }
 
+                    Console.WriteLine("Do you want to skip the typing effect? (yes/no)");
+                    string userInput = Console.ReadLine();
+                    skipTypingEffect = userInput?.ToLower() == "yes";
+
                     Random random = new Random();
                     var expressions = Enum.GetValues(typeof(Expression)).Cast<Expression>().ToList();
                     var randomExpression = expressions[random.Next(expressions.Count)];
@@ -123,7 +129,30 @@ namespace Library.Services
                     TypeText($"Du sätter dig i en sprillans ny {carBrand} och kollar ut från fönstret i framsätet.");
                     TypeText($"Allt ser bra ut. Du tar en tugga av din macka som du köpt på Circle K.");
                     TypeText($"{driverName} ser {randomExpression.ToString().ToLower()} ut efter att du valde {carBrand} som bil.");
-                    TypeText("Nu börjar resan!\n");
+
+                    if (skipTypingEffect)
+                    {
+                        Console.WriteLine(@"
+ _   _         _     _   _      _                                        _ 
+| \ | |_   _  | |__ (_)_(_)_ __(_) __ _ _ __   _ __ ___  ___  __ _ _ __ | |
+|  \| | | | | | '_ \ / _ \| '__| |/ _` | '__| | '__/ _ \/ __|/ _` | '_ \| |
+| |\  | |_| | | |_) | (_) | |  | | (_| | |    | | |  __/\__ \ (_| | | | |_|
+|_| \_|\__,_| |_.__/ \___/|_| _/ |\__,_|_|    |_|  \___||___/\__,_|_| |_(_)
+                             |__/                                          
+                ");
+                    }
+                    else
+                    {
+                        TypeText(@"
+ _   _         _     _   _      _                                        _ 
+| \ | |_   _  | |__ (_)_(_)_ __(_) __ _ _ __   _ __ ___  ___  __ _ _ __ | |
+|  \| | | | | | '_ \ / _ \| '__| |/ _` | '__| | '__/ _ \/ __|/ _` | '_ \| |
+| |\  | |_| | | |_) | (_) | |  | | (_| | |    | | |  __/\__ \ (_| | | | |_|
+|_| \_|\__,_| |_.__/ \___/|_| _/ |\__,_|_|    |_|  \___||___/\__,_|_| |_(_)
+                             |__/                                          
+                ", 0);
+                    }
+
                     Console.ResetColor();
                     break;
                 }
@@ -143,7 +172,10 @@ namespace Library.Services
                 foreach (char c in text)
                 {
                     Console.Write(c);
-                    System.Threading.Thread.Sleep(delay);
+                    if (!skipTypingEffect)
+                    {
+                        System.Threading.Thread.Sleep(delay);
+                    }
                 }
                 Console.WriteLine();
             }
@@ -154,6 +186,7 @@ namespace Library.Services
                 Console.ResetColor();
             }
         }
+
 
         private void SetConsoleColorForFuel(int fuel)
         {
