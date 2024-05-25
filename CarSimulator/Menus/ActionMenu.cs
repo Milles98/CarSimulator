@@ -1,5 +1,4 @@
-﻿using Library.Enums;
-using Library.Services.Interfaces;
+﻿using Library.Services.Interfaces;
 
 namespace CarSimulator.Menus
 {
