@@ -31,12 +31,16 @@ public class FuelService : IFuelService
             {
                 _car.Fuel = Fuel.Full;
                 string refuelLocation = _faker.Address.City();
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"{_carBrand} tankade på {refuelLocation} och nu är bilen fulltankad.");
+                Console.ResetColor();
             }
         }
         catch (Exception ex)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"An error occurred while refueling: {ex.Message}");
+            Console.ResetColor();
         }
     }
 }

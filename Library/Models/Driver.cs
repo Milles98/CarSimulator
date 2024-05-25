@@ -10,5 +10,6 @@ namespace Library.Models
         public Hunger Hunger { get; set; }
 
         public string Name => $"{FirstName} {LastName}";
+
     }
 }

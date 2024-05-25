@@ -37,7 +37,16 @@ public class CarService : ICarService
 
             if (_car.Fuel <= 0)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(@"
+ ____                 _         ____  _       _   _ 
+| __ )  ___ _ __  ___(_)_ __   / ___|| |_   _| |_| |
+|  _ \ / _ \ '_ \/ __| | '_ \  \___ \| | | | | __| |
+| |_) |  __/ | | \__ \ | | | |  ___) | | |_| | |_|_|
+|____/ \___|_| |_|___/_|_| |_| |____/|_|\__,_|\__(_)
+                ");
                 Console.WriteLine($"{_carBrand} är utan bränsle. Du måste tanka.");
+                Console.ResetColor();
                 return;
             }
 
@@ -49,7 +58,9 @@ public class CarService : ICarService
 
             if (direction == "framåt" || direction == "bakåt")
             {
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"{_driver.Name} med dig i sin {_carBrand} kör {direction} mot {location}.");
+                Console.ResetColor();
                 if (direction == "bakåt")
                 {
                     _car.Direction = GetOppositeDirection(_car.Direction);
@@ -57,7 +68,9 @@ public class CarService : ICarService
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Ogiltig riktning.");
+                Console.ResetColor();
                 return;
             }
 
@@ -65,7 +78,9 @@ public class CarService : ICarService
         }
         catch (Exception ex)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"An error occurred while driving: {ex.Message}");
+            Console.ResetColor();
         }
     }
 
@@ -80,7 +95,9 @@ public class CarService : ICarService
 
             if (_car.Fuel <= 0)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"{_carBrand} är utan bränsle. Dags att tanka.");
+                Console.ResetColor();
                 return;
             }
 
@@ -91,12 +108,16 @@ public class CarService : ICarService
             string location = _faker.Address.City();
 
             _car.Direction = GetNewDirection(_car.Direction, direction);
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"{_driver.Name} med dig i sin {_carBrand} svänger {direction} mot {location}.");
+            Console.ResetColor();
             _driverService.CheckFatigue();
         }
         catch (Exception ex)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"An error occurred while turning: {ex.Message}");
+            Console.ResetColor();
         }
     }
 
@@ -114,7 +135,9 @@ public class CarService : ICarService
         }
         catch (Exception ex)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"An error occurred while getting status: {ex.Message}");
+            Console.ResetColor();
             return null;
         }
     }
