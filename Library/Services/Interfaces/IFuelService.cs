@@ -3,5 +3,8 @@
     public interface IFuelService
     {
         void Refuel();
+        bool HasEnoughFuel(int requiredFuel);
+        void DisplayLowFuelWarning();
+        void UseFuel(int amount);
     }
 }

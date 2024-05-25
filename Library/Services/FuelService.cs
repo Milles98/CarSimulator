@@ -43,4 +43,31 @@ public class FuelService : IFuelService
             Console.ResetColor();
         }
     }
+
+    public bool HasEnoughFuel(int requiredFuel)
+    {
+        return (int)_car.Fuel >= requiredFuel;
+    }
+
+    public void DisplayLowFuelWarning()
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine(@"
+ ____                 _         ____  _       _   _ 
+| __ )  ___ _ __  ___(_)_ __   / ___|| |_   _| |_| |
+|  _ \ / _ \ '_ \/ __| | '_ \  \___ \| | | | | __| |
+| |_) |  __/ | | \__ \ | | | |  ___) | | |_| | |_|_|
+|____/ \___|_| |_|___/_|_| |_| |____/|_|\__,_|\__(_)
+                ");
+        Console.WriteLine($"{_carBrand} är utan bränsle. Du måste tanka.");
+        Console.ResetColor();
+    }
+
+    public void UseFuel(int amount)
+    {
+        int currentFuel = (int)_car.Fuel;
+        currentFuel -= amount;
+        if (currentFuel < (int)Fuel.Empty) currentFuel = (int)Fuel.Empty;
+        _car.Fuel = (Fuel)currentFuel;
+    }
 }
