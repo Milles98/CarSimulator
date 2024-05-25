@@ -2,6 +2,7 @@
 using Library.Factory;
 using Library.Services;
 using Library.Services.Interfaces;
+using System.Text;
 
 namespace CarSimulator
 {
@@ -9,6 +10,7 @@ namespace CarSimulator
     {
         public async Task AppRun()
         {
+            Console.OutputEncoding = Encoding.UTF8;
             IRandomUserService randomUserService = new RandomUserService();
             IMainMenuService mainMenuService = new MainMenuService(randomUserService);
             IMenuDisplayService menuDisplayService = new MenuDisplayService();

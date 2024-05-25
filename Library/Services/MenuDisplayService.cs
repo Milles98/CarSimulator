@@ -21,6 +21,7 @@ namespace Library.Services
                         continue;
                     }
 
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine("1. Sväng vänster");
                     Console.WriteLine("2. Sväng höger");
                     Console.WriteLine("3. Köra framåt");
@@ -30,6 +31,7 @@ namespace Library.Services
                     Console.WriteLine("7. Tanka bilen");
                     Console.WriteLine("0. Avsluta");
                     Console.Write($"\n{driverName} frågar, vad ska vi göra härnäst?: ");
+                    Console.ResetColor();
                     break;
                 }
                 catch (Exception ex)
@@ -73,6 +75,7 @@ namespace Library.Services
                         continue;
                     }
 
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine($"\nBilens riktning: {status.Direction}");
 
                     SetConsoleColorForFuel(status.Fuel);
@@ -112,10 +115,16 @@ namespace Library.Services
                         continue;
                     }
 
+                    Random random = new Random();
+                    var expressions = Enum.GetValues(typeof(Expression)).Cast<Expression>().ToList();
+                    var randomExpression = expressions[random.Next(expressions.Count)];
+
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     TypeText($"Du sätter dig i en sprillans ny {carBrand} och kollar ut från fönstret i framsätet.");
                     TypeText($"Allt ser bra ut. Du tar en tugga av din macka som du köpt på Circle K.");
-                    TypeText($"{driverName} ser glad ut efter att du valde {carBrand} som bil.");
+                    TypeText($"{driverName} ser {randomExpression.ToString().ToLower()} ut efter att du valde {carBrand} som bil.");
                     TypeText("Nu börjar resan!\n");
+                    Console.ResetColor();
                     break;
                 }
                 catch (Exception ex)

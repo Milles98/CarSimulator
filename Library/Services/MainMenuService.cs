@@ -21,6 +21,7 @@ namespace Library.Services
             try
             {
                 Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write("Hämtar förare");
                 for (int i = 0; i < 3; i++)
                 {
@@ -28,20 +29,27 @@ namespace Library.Services
                     Console.Write(".");
                 }
                 Console.WriteLine();
+                Console.ResetColor();
 
                 var driver = await _randomUserService.GetRandomDriverAsync();
                 if (driver == null)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Kunde inte hämta ett namn. Försök igen.");
+                    Console.ResetColor();
                     return null;
                 }
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"Din förare är: {driver.FirstName} {driver.LastName}");
+                Console.ResetColor();
                 await Task.Delay(2000);
                 return new Driver { FirstName = driver.FirstName, LastName = driver.LastName, Fatigue = Fatigue.Rested };
             }
             catch (Exception ex)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"An error occurred while fetching driver details: {ex.Message}");
+                Console.ResetColor();
                 return null;
             }
         }
@@ -55,6 +63,7 @@ namespace Library.Services
                 try
                 {
                     Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine($"{driverName} undrar vilken bil du vill ta en åktur med?\n");
                     var brands = Enum.GetValues(typeof(CarBrand)).Cast<CarBrand>().ToList();
                     for (int i = 0; i < brands.Count; i++)
@@ -62,6 +71,7 @@ namespace Library.Services
                         Console.WriteLine($"{i + 1}: {brands[i]}");
                     }
                     Console.WriteLine("0: Avbryt");
+                    Console.ResetColor();
 
                     Console.Write("\nDitt val: ");
                     string input = Console.ReadLine();
@@ -70,7 +80,9 @@ namespace Library.Services
                     {
                         if (brandChoice == 0)
                         {
+                            Console.ForegroundColor = ConsoleColor.Yellow;
                             Console.WriteLine("Avslutar bilval.");
+                            Console.ResetColor();
                             return null;
                         }
 
@@ -105,8 +117,10 @@ namespace Library.Services
                     var random = new Random();
                     var expressions = Enum.GetValues(typeof(Expression)).Cast<Expression>().ToList();
                     var randomExpression = expressions[random.Next(expressions.Count)];
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine($"Du har valt att åka i en {selectedBrand}, {randomExpression.ToString().ToLower()}! säger {driverName}");
                     Console.WriteLine("\nVart vill du börja åka mot?\n \n1: Norr \n2: Öst \n3: Söder \n4: Väst \n5: Jag bryr mig inte, välj något bara!\n0: Avbryt");
+                    Console.ResetColor();
                     Console.Write("\nDitt val: ");
                     string input = Console.ReadLine();
 
@@ -114,7 +128,9 @@ namespace Library.Services
                     {
                         if (directionChoice == 0)
                         {
+                            Console.ForegroundColor = ConsoleColor.Yellow;
                             Console.WriteLine("Avslutar riktning val.");
+                            Console.ResetColor();
                             return null;
                         }
 
@@ -124,7 +140,9 @@ namespace Library.Services
                             {
                                 directionChoice = random.Next(1, 5);
                                 direction = (Direction)(directionChoice - 1);
+                                Console.ForegroundColor = ConsoleColor.Cyan;
                                 Console.WriteLine($"\nSlumpmässigt vald riktning: {direction}");
+                                Console.ResetColor();
                             }
                             else
                             {
