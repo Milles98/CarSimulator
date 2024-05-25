@@ -34,6 +34,7 @@ namespace CarSimulator.Menus
                 ");
                 Console.ResetColor();
                 Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("Välkommen till bilkörningssimulatorn!");
                 Console.WriteLine("1. Starta simulationen");
                 Console.WriteLine("0. Avsluta");
                 Console.ResetColor();
