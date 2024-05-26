@@ -76,19 +76,20 @@ namespace Library.Services
                     }
 
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine($"\nBilens riktning: {status.Direction}");
+                    Console.WriteLine($"\n\nBilens riktning: {status.Direction}");
 
                     SetConsoleColorForFuel(status.Fuel);
-                    Console.WriteLine($"Bensin: {status.Fuel}/20");
+                    Console.WriteLine($"{"\nBensin:",-10} {GenerateBar(status.Fuel, 20)} {status.Fuel,2}/20");
                     Console.ResetColor();
 
                     SetConsoleColorForFatigue(status.Fatigue);
-                    Console.WriteLine($"Trötthet: {status.Fatigue}/10");
+                    Console.WriteLine($"{"\nTrötthet:",-10} {GenerateBar(status.Fatigue, 10)} {status.Fatigue,2}/10");
                     Console.ResetColor();
 
                     SetConsoleColorForHunger(status.Hunger);
-                    Console.WriteLine($"Hunger: {status.Hunger}/10\n");
+                    Console.WriteLine($"{"\nHunger:",-10} {GenerateBar(status.Hunger, 10)} {status.Hunger,2}/10\n");
                     Console.ResetColor();
+
                     break;
                 }
                 catch (Exception ex)
@@ -98,6 +99,14 @@ namespace Library.Services
                     Console.ResetColor();
                 }
             }
+        }
+
+        private string GenerateBar(int currentValue, int maxValue, int barLength = 20)
+        {
+            int filledLength = Math.Max(0, Math.Min(barLength, (int)((double)currentValue / maxValue * barLength)));
+            string filled = new string('█', filledLength);
+            string unfilled = new string('░', barLength - filledLength);
+            return filled + unfilled;
         }
 
         private bool skipTypingEffect = false;
@@ -186,7 +195,6 @@ namespace Library.Services
                 Console.ResetColor();
             }
         }
-
 
         private void SetConsoleColorForFuel(int fuel)
         {
