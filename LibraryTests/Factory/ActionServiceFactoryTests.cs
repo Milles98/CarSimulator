@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace LibraryTests.Factory
 {
-    internal class ActionServiceFactoryTests
+    [TestClass]
+    public class ActionServiceFactoryTests
     {
     }
 }

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace LibraryTests.Services
 {
-    internal class MainMenuServiceTests
+    [TestClass]
+    public class MainMenuServiceTests
     {
     }
 }

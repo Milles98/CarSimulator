@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace CarSimulatorTests.Menus
 {
-    internal class MainMenuTests
+    [TestClass]
+    public class MainMenuTests
     {
     }
 }
