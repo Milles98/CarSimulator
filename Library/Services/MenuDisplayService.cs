@@ -6,6 +6,10 @@ namespace Library.Services
 {
     public class MenuDisplayService : IMenuDisplayService
     {
+        /// <summary>
+        /// Visar huvudmenyn.
+        /// Testning: Enhetstestning för att verifiera att menyn visas korrekt och att undantag hanteras.
+        /// </summary>
         public void DisplayMainMenu(string driverName)
         {
             while (true)
@@ -43,6 +47,10 @@ namespace Library.Services
             }
         }
 
+        /// <summary>
+        /// Visar statusmenyn.
+        /// Testning: Enhetstestning för att verifiera att statusinformationen visas korrekt och att undantag hanteras.
+        /// </summary>
         public void DisplayStatusMenu(CarStatus status, string driverName, string carBrand)
         {
             if (status == null)
@@ -101,6 +109,10 @@ namespace Library.Services
             }
         }
 
+        /// <summary>
+        /// Genererar en stapel för att visa nivåer.
+        /// Testning: Enhetstestning för att verifiera att stapeln genereras korrekt baserat på aktuellt värde och maxvärde.
+        /// </summary>
         private string GenerateBar(int currentValue, int maxValue, int barLength = 20)
         {
             int filledLength = Math.Max(0, Math.Min(barLength, (int)((double)currentValue / maxValue * barLength)));
@@ -111,6 +123,10 @@ namespace Library.Services
 
         private bool skipTypingEffect = false;
 
+        /// <summary>
+        /// Visar introduktionen.
+        /// Testning: Enhetstestning för att verifiera att introduktionstexten visas korrekt och att undantag hanteras.
+        /// </summary>
         public void DisplayIntroduction(string driverName, CarBrand carBrand)
         {
             while (true)
@@ -174,6 +190,10 @@ namespace Library.Services
             }
         }
 
+        /// <summary>
+        /// Skriver ut text med en skriveffekt.
+        /// Testning: Enhetstestning för att verifiera att texten skrivs ut korrekt med rätt fördröjning och att undantag hanteras.
+        /// </summary>
         private void TypeText(string text, int delay = 50)
         {
             try
@@ -196,6 +216,10 @@ namespace Library.Services
             }
         }
 
+        /// <summary>
+        /// Sätter konsolfärgen baserat på bränslenivån.
+        /// Testning: Enhetstestning för att verifiera att rätt färg sätts beroende på bränslenivån.
+        /// </summary>
         private void SetConsoleColorForFuel(int fuel)
         {
             if (fuel >= 11 && fuel <= 20)
@@ -216,6 +240,10 @@ namespace Library.Services
             }
         }
 
+        /// <summary>
+        /// Sätter konsolfärgen baserat på trötthetsnivån.
+        /// Testning: Enhetstestning för att verifiera att rätt färg sätts beroende på trötthetsnivån.
+        /// </summary>
         private void SetConsoleColorForFatigue(int fatigue)
         {
             if (fatigue >= 0 && fatigue <= 3)
@@ -236,6 +264,10 @@ namespace Library.Services
             }
         }
 
+        /// <summary>
+        /// Sätter konsolfärgen baserat på hungernivån.
+        /// Testning: Enhetstestning för att verifiera att rätt färg sätts beroende på hungernivån.
+        /// </summary>
         private void SetConsoleColorForHunger(int hunger)
         {
             if (hunger >= 0 && hunger <= 5)

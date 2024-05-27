@@ -13,6 +13,10 @@ namespace Library.Services
             httpClient = new HttpClient();
         }
 
+        /// <summary>
+        /// Hämtar en slumpmässig förare från ett API.
+        /// Testning: Enhetstestning för att verifiera att rätt data hämtas och deserialiseras korrekt samt att undantag hanteras.
+        /// </summary>
         public async Task<Driver> GetRandomDriverAsync()
         {
             string url = "https://randomuser.me/api/";

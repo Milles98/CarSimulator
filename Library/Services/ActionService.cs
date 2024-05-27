@@ -27,6 +27,10 @@ namespace Library.Services
             _carBrand = carBrand;
         }
 
+        /// <summary>
+        /// Kör huvudmenyns loop.
+        /// Testning: Integrationstestning för att säkerställa att loopen körs korrekt och hanterar användarinmatningar.
+        /// </summary>
         public void ExecuteMenu()
         {
             try
@@ -50,7 +54,7 @@ namespace Library.Services
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"An error occurred while getting user choice: {ex.Message}");
+                        Console.WriteLine($"Ett fel inträffade vid hämtning av användarens val: {ex.Message}");
                         continue;
                     }
 
@@ -66,16 +70,20 @@ namespace Library.Services
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"An error occurred while displaying status menu: {ex.Message}");
+                        Console.WriteLine($"Ett fel inträffade vid visning av statusmenyn: {ex.Message}");
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+                Console.WriteLine($"Ett oväntat fel inträffade: {ex.Message}");
             }
         }
 
+        /// <summary>
+        /// Utför åtgärden baserat på användarens val.
+        /// Testning: Enhetstestning för varje fall i switch-satsen för att verifiera korrekta tjänstanrop och felhantering.
+        /// </summary>
         private void ExecuteChoice(int choice, ref bool running)
         {
             Console.Clear();
@@ -116,10 +124,14 @@ namespace Library.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred while executing choice {choice}: {ex.Message}");
+                Console.WriteLine($"Ett fel inträffade vid utförande av val {choice}: {ex.Message}");
             }
         }
 
+        /// <summary>
+        /// Visar avslutsmeddelandet.
+        /// Testning: Enhetstestning för att säkerställa att meddelandet visas korrekt.
+        /// </summary>
         private void DisplayExitMessage()
         {
             Console.Clear();

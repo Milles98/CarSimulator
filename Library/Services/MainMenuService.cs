@@ -13,6 +13,10 @@ namespace Library.Services
             _randomUserService = randomUserService ?? throw new ArgumentNullException(nameof(randomUserService));
         }
 
+        /// <summary>
+        /// Hämtar förardetaljer.
+        /// Testning: Enhetstestning för att verifiera att rätt förare hämtas och att undantag hanteras korrekt.
+        /// </summary>
         public async Task<Driver> FetchDriverDetails()
         {
             try
@@ -51,6 +55,10 @@ namespace Library.Services
             }
         }
 
+        /// <summary>
+        /// Anger bildetaljer.
+        /// Testning: Enhetstestning för att verifiera att rätt bil och riktning väljs och att undantag hanteras korrekt.
+        /// </summary>
         public Car EnterCarDetails(string driverName)
         {
             CarBrand selectedBrand;
@@ -166,6 +174,10 @@ namespace Library.Services
             return new Car { Brand = selectedBrand, Fuel = (Fuel)20, Direction = direction };
         }
 
+        /// <summary>
+        /// Visar felmeddelande.
+        /// Testning: Enhetstestning för att verifiera att felmeddelanden visas korrekt.
+        /// </summary>
         private void DisplayErrorMessage(string message)
         {
             Console.ForegroundColor = ConsoleColor.Red;
