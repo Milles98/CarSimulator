@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace CarSimulatorTests
 {
-    internal class AppStartTests
+    [TestClass]
+    public class AppStartTests
     {
     }
 }

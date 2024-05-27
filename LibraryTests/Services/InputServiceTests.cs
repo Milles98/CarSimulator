@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace LibraryTests.Services
 {
-    internal class InputServiceTests
+    [TestClass]
+    public class InputServiceTests
     {
     }
 }
