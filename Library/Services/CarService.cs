@@ -25,6 +25,10 @@ public class CarService : ICarService
         _faker = new Faker();
     }
 
+    /// <summary>
+    /// Kör bilen i angiven riktning.
+    /// Testning: Enhetstestning för att verifiera att rätt åtgärder vidtas beroende på riktningen och att fel hanteras korrekt.
+    /// </summary>
     public void Drive(string direction)
     {
         try
@@ -74,6 +78,10 @@ public class CarService : ICarService
         }
     }
 
+    /// <summary>
+    /// Svänger bilen i angiven riktning.
+    /// Testning: Enhetstestning för att verifiera att svängningslogiken fungerar korrekt och att fel hanteras.
+    /// </summary>
     public void Turn(string direction)
     {
         try
@@ -109,6 +117,10 @@ public class CarService : ICarService
         }
     }
 
+    /// <summary>
+    /// Hämtar bilens status.
+    /// Testning: Enhetstestning för att verifiera att statusinformationen hämtas korrekt och hanterar undantag.
+    /// </summary>
     public CarStatus GetStatus()
     {
         try
@@ -130,6 +142,10 @@ public class CarService : ICarService
         }
     }
 
+    /// <summary>
+    /// Hämtar motsatt riktning.
+    /// Testning: Enhetstestning för att verifiera att rätt motsatt riktning returneras.
+    /// </summary>
     private Direction GetOppositeDirection(Direction currentDirection)
     {
         return currentDirection switch
@@ -142,6 +158,10 @@ public class CarService : ICarService
         };
     }
 
+    /// <summary>
+    /// Hämtar ny riktning baserat på svängriktningen.
+    /// Testning: Enhetstestning för att verifiera att rätt nya riktning returneras beroende på svängriktningen.
+    /// </summary>
     private Direction GetNewDirection(Direction currentDirection, string turnDirection)
     {
         return turnDirection switch

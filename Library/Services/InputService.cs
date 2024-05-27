@@ -5,6 +5,10 @@ namespace Library.Services
 {
     public class InputService : IInputService
     {
+        /// <summary>
+        /// Hämtar användarens val.
+        /// Testning: Enhetstestning för att verifiera att rätt val returneras och att fel hanteras korrekt.
+        /// </summary>
         public int GetUserChoice()
         {
             try

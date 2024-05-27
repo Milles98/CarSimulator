@@ -16,6 +16,10 @@ public class FuelService : IFuelService
         _faker = new Faker();
     }
 
+    /// <summary>
+    /// Utför tankning av bilen.
+    /// Testning: Enhetstestning för att verifiera att tankningslogiken fungerar korrekt och att undantag hanteras.
+    /// </summary>
     public void Refuel()
     {
         try
@@ -43,11 +47,19 @@ public class FuelService : IFuelService
         }
     }
 
+    /// <summary>
+    /// Kontrollerar om bilen har tillräckligt med bränsle.
+    /// Testning: Enhetstestning för att verifiera att rätt booleanvärde returneras baserat på bränslenivån.
+    /// </summary>
     public bool HasEnoughFuel(int requiredFuel)
     {
         return (int)_car.Fuel >= requiredFuel;
     }
 
+    /// <summary>
+    /// Visar en varning om låg bränslenivå.
+    /// Testning: Enhetstestning för att säkerställa att varningen visas korrekt.
+    /// </summary>
     public void DisplayLowFuelWarning()
     {
         Console.ForegroundColor = ConsoleColor.Red;
@@ -62,6 +74,10 @@ public class FuelService : IFuelService
         Console.ResetColor();
     }
 
+    /// <summary>
+    /// Förbrukar en viss mängd bränsle.
+    /// Testning: Enhetstestning för att verifiera att bränslenivån reduceras korrekt och att undantag hanteras.
+    /// </summary>
     public void UseFuel(int amount)
     {
         int currentFuel = (int)_car.Fuel;

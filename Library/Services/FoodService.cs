@@ -29,6 +29,10 @@ public class FoodService : IFoodService
         };
     }
 
+    /// <summary>
+    /// Utför handlingen att äta.
+    /// Testning: Enhetstestning för att verifiera att rätt matobjekt väljs och att förarens hungerstatus uppdateras korrekt.
+    /// </summary>
     public void Eat()
     {
         try
@@ -56,6 +60,10 @@ public class FoodService : IFoodService
         }
     }
 
+    /// <summary>
+    /// Kontrollerar förarens hungerstatus.
+    /// Testning: Enhetstestning för att verifiera att rätt varningar visas vid olika nivåer av hunger och att undantag hanteras.
+    /// </summary>
     public void CheckHunger()
     {
         try
