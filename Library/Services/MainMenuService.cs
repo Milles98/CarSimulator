@@ -78,7 +78,7 @@ namespace Library.Services
                     Console.WriteLine("0: Avbryt");
                     Console.ResetColor();
 
-                    Console.Write("\nDitt val: ");
+                    Console.Write("\nVälj ett alternativ: ");
                     string input = Console.ReadLine();
 
                     if (int.TryParse(input, out int brandChoice))
@@ -126,7 +126,7 @@ namespace Library.Services
                     Console.WriteLine($"Du har valt att åka i en {selectedBrand}, {randomExpression.ToString().ToLower()}! säger {driverName}");
                     Console.WriteLine("\nVart vill du börja åka mot?\n \n1: Norr \n2: Öst \n3: Söder \n4: Väst \n5: Jag bryr mig inte, välj något bara!\n0: Avbryt");
                     Console.ResetColor();
-                    Console.Write("\nDitt val: ");
+                    Console.Write("\nVälj ett alternativ: ");
                     string input = Console.ReadLine();
 
                     if (int.TryParse(input, out int directionChoice))

@@ -41,6 +41,7 @@ namespace CarSimulator.Menus
                 Console.WriteLine("Välkommen till bilkörningssimulatorn!");
                 Console.WriteLine("1. Starta simulationen");
                 Console.WriteLine("0. Avsluta");
+                Console.Write("\nVälj ett alternativ: ");
                 Console.ResetColor();
 
                 int choice = _inputService.GetUserChoice();
