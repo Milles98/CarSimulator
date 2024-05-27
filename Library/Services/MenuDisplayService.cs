@@ -142,14 +142,25 @@ namespace Library.Services
                         continue;
                     }
 
-                    Console.WriteLine("Do you want to skip the typing effect? (yes/no)");
-                    string userInput = Console.ReadLine();
-                    skipTypingEffect = userInput?.ToLower() == "yes";
+                    Console.WriteLine("Vill du ha skrivande effekt? (ja/nej)");
+                    Console.Write("\nVälj ett alternativ: ");
+                    string userInput = Console.ReadLine()?.ToLower();
+
+                    while (userInput != "ja" && userInput != "nej")
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Ogiltigt val, försök igen. Vill du ha skrivande effekt? (ja/nej)");
+                        Console.ResetColor();
+                        userInput = Console.ReadLine()?.ToLower();
+                    }
+
+                    skipTypingEffect = userInput == "nej";
 
                     Random random = new Random();
                     var expressions = Enum.GetValues(typeof(Expression)).Cast<Expression>().ToList();
                     var randomExpression = expressions[random.Next(expressions.Count)];
 
+                    Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     TypeText($"Du sätter dig i en sprillans ny {carBrand} och kollar ut från fönstret i framsätet.");
                     TypeText($"Allt ser bra ut. Du tar en tugga av din macka som du köpt på Circle K.");
@@ -164,7 +175,7 @@ namespace Library.Services
 | |\  | |_| | | |_) | (_) | |  | | (_| | |    | | |  __/\__ \ (_| | | | |_|
 |_| \_|\__,_| |_.__/ \___/|_| _/ |\__,_|_|    |_|  \___||___/\__,_|_| |_(_)
                              |__/                                          
-                ");
+                        ");
                     }
                     else
                     {
@@ -175,7 +186,7 @@ namespace Library.Services
 | |\  | |_| | | |_) | (_) | |  | | (_| | |    | | |  __/\__ \ (_| | | | |_|
 |_| \_|\__,_| |_.__/ \___/|_| _/ |\__,_|_|    |_|  \___||___/\__,_|_| |_(_)
                              |__/                                          
-                ", 0);
+                        ", 0);
                     }
 
                     Console.ResetColor();

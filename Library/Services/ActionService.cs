@@ -118,7 +118,9 @@ namespace Library.Services
                         Environment.Exit(0);
                         break;
                     default:
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Ogiltigt val, försök igen.");
+                        Console.ResetColor();
                         break;
                 }
             }
