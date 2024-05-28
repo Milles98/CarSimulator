@@ -19,8 +19,8 @@ namespace CarSimulator
             IRandomUserService randomUserService = new RandomUserService();
             IMainMenuService mainMenuService = new MainMenuService(randomUserService);
             IMenuDisplayService menuDisplayService = new MenuDisplayService();
-            IInputService inputService = new InputService();
             IConsoleService consoleService = new ConsoleService();
+            IInputService inputService = new InputService(consoleService);
 
             IActionServiceFactory actionServiceFactory = new ActionServiceFactory(menuDisplayService, inputService, consoleService);
 
