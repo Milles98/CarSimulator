@@ -14,7 +14,6 @@ namespace CarSimulator.Menus
 
         /// <summary>
         /// Visar actionsmenyn och startar huvudloopen.
-        /// Testning: Integrationstestning för att verifiera att menyn korrekt initierar och kör huvudloopen via IActionService.
         /// </summary>
         public void Menu()
         {

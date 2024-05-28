@@ -14,7 +14,6 @@ namespace Library.Services
 
         /// <summary>
         /// Hämtar användarens val.
-        /// Testning: Enhetstestning för att verifiera att rätt val returneras och att fel hanteras korrekt.
         /// </summary>
         public int GetUserChoice()
         {
