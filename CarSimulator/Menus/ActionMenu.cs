@@ -1,8 +1,9 @@
-﻿using Library.Services.Interfaces;
+﻿using CarSimulator.Menus.Interface;
+using Library.Services.Interfaces;
 
 namespace CarSimulator.Menus
 {
-    public class ActionMenu
+    public class ActionMenu : IActionMenu
     {
         private readonly IActionService _actionService;
 
