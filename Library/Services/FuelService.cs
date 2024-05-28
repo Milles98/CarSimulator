@@ -2,17 +2,20 @@
 using Library.Enums;
 using Library.Models;
 using Library.Services.Interfaces;
+using System;
 
 public class FuelService : IFuelService
 {
     private readonly Car _car;
     private readonly string _carBrand;
     private readonly Faker _faker;
+    private readonly IConsoleService _consoleService;
 
-    public FuelService(Car car, string carBrand)
+    public FuelService(Car car, string carBrand, IConsoleService consoleService)
     {
         _car = car ?? throw new ArgumentNullException(nameof(car));
         _carBrand = !string.IsNullOrWhiteSpace(carBrand) ? carBrand : throw new ArgumentException("Car brand cannot be null or empty", nameof(carBrand));
+        _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
         _faker = new Faker();
     }
 
@@ -26,24 +29,24 @@ public class FuelService : IFuelService
         {
             if (_car.Fuel == Fuel.Full)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Det går inte att tanka {_carBrand}, bilen är redan fulltankad!");
-                Console.ResetColor();
+                _consoleService.SetForegroundColor(ConsoleColor.Red);
+                _consoleService.WriteLine($"Det går inte att tanka {_carBrand}, bilen är redan fulltankad!");
+                _consoleService.ResetColor();
             }
             else
             {
                 _car.Fuel = Fuel.Full;
                 string refuelLocation = _faker.Address.City();
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"{_carBrand} tankade på {refuelLocation} och nu är bilen fulltankad.");
-                Console.ResetColor();
+                _consoleService.SetForegroundColor(ConsoleColor.Green);
+                _consoleService.WriteLine($"{_carBrand} tankade på {refuelLocation} och nu är bilen fulltankad.");
+                _consoleService.ResetColor();
             }
         }
         catch (Exception ex)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"An error occurred while refueling: {ex.Message}");
-            Console.ResetColor();
+            _consoleService.SetForegroundColor(ConsoleColor.Red);
+            _consoleService.WriteLine($"An error occurred while refueling: {ex.Message}");
+            _consoleService.ResetColor();
         }
     }
 
@@ -62,16 +65,16 @@ public class FuelService : IFuelService
     /// </summary>
     public void DisplayLowFuelWarning()
     {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine(@"
+        _consoleService.SetForegroundColor(ConsoleColor.Red);
+        _consoleService.WriteLine(@"
  ____                 _         ____  _       _   _ 
 | __ )  ___ _ __  ___(_)_ __   / ___|| |_   _| |_| |
 |  _ \ / _ \ '_ \/ __| | '_ \  \___ \| | | | | __| |
 | |_) |  __/ | | \__ \ | | | |  ___) | | |_| | |_|_|
 |____/ \___|_| |_|___/_|_| |_| |____/|_|\__,_|\__(_)
                 ");
-        Console.WriteLine($"{_carBrand} är utan bränsle. Du måste tanka.");
-        Console.ResetColor();
+        _consoleService.WriteLine($"{_carBrand} är utan bränsle. Du måste tanka.");
+        _consoleService.ResetColor();
     }
 
     /// <summary>
