@@ -17,8 +17,8 @@ namespace CarSimulator
         {
             Console.OutputEncoding = Encoding.UTF8;
             IRandomUserService randomUserService = new RandomUserService();
-            IMenuDisplayService menuDisplayService = new MenuDisplayService();
             IConsoleService consoleService = new ConsoleService();
+            IMenuDisplayService menuDisplayService = new MenuDisplayService(consoleService);
             IMainMenuService mainMenuService = new MainMenuService(randomUserService, consoleService);
             IInputService inputService = new InputService(consoleService);
 

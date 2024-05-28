@@ -1,11 +1,21 @@
 ﻿using Library.Enums;
+using Library.Models;
 using Library.Services.Interfaces;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Library.Services
 {
     public class MenuDisplayService : IMenuDisplayService
     {
+        private readonly IConsoleService _consoleService;
+
+        public MenuDisplayService(IConsoleService consoleService)
+        {
+            _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
+        }
+
         /// <summary>
         /// Visar huvudmenyn.
         /// Testning: Enhetstestning för att verifiera att menyn visas korrekt och att undantag hanteras.
@@ -18,31 +28,31 @@ namespace Library.Services
                 {
                     if (string.IsNullOrWhiteSpace(driverName))
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Driver name cannot be null or empty. Please provide a valid driver name.");
-                        Console.ResetColor();
-                        driverName = Console.ReadLine();
+                        _consoleService.SetForegroundColor(ConsoleColor.Red);
+                        _consoleService.WriteLine("Driver name cannot be null or empty. Please provide a valid driver name.");
+                        _consoleService.ResetColor();
+                        driverName = _consoleService.ReadLine();
                         continue;
                     }
 
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.WriteLine("1. Sväng vänster");
-                    Console.WriteLine("2. Sväng höger");
-                    Console.WriteLine("3. Köra framåt");
-                    Console.WriteLine("4. Backa");
-                    Console.WriteLine("5. Rasta");
-                    Console.WriteLine("6. Ät mat");
-                    Console.WriteLine("7. Tanka bilen");
-                    Console.WriteLine("0. Avsluta");
-                    Console.Write($"\n{driverName} frågar, vad ska vi göra härnäst?: ");
-                    Console.ResetColor();
+                    _consoleService.SetForegroundColor(ConsoleColor.Cyan);
+                    _consoleService.WriteLine("1. Sväng vänster");
+                    _consoleService.WriteLine("2. Sväng höger");
+                    _consoleService.WriteLine("3. Köra framåt");
+                    _consoleService.WriteLine("4. Backa");
+                    _consoleService.WriteLine("5. Rasta");
+                    _consoleService.WriteLine("6. Ät mat");
+                    _consoleService.WriteLine("7. Tanka bilen");
+                    _consoleService.WriteLine("0. Avsluta");
+                    _consoleService.Write($"\n{driverName} frågar, vad ska vi göra härnäst?: ");
+                    _consoleService.ResetColor();
                     break;
                 }
                 catch (Exception ex)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"An error occurred while displaying the main menu: {ex.Message}");
-                    Console.ResetColor();
+                    _consoleService.SetForegroundColor(ConsoleColor.Red);
+                    _consoleService.WriteLine($"An error occurred while displaying the main menu: {ex.Message}");
+                    _consoleService.ResetColor();
                 }
             }
         }
@@ -55,9 +65,9 @@ namespace Library.Services
         {
             if (status == null)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Status cannot be null.");
-                Console.ResetColor();
+                _consoleService.SetForegroundColor(ConsoleColor.Red);
+                _consoleService.WriteLine("Status cannot be null.");
+                _consoleService.ResetColor();
                 return;
             }
 
@@ -67,44 +77,44 @@ namespace Library.Services
                 {
                     if (string.IsNullOrWhiteSpace(driverName))
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Driver name cannot be null or empty. Please provide a valid driver name.");
-                        Console.ResetColor();
-                        driverName = Console.ReadLine();
+                        _consoleService.SetForegroundColor(ConsoleColor.Red);
+                        _consoleService.WriteLine("Driver name cannot be null or empty. Please provide a valid driver name.");
+                        _consoleService.ResetColor();
+                        driverName = _consoleService.ReadLine();
                         continue;
                     }
 
                     if (string.IsNullOrWhiteSpace(carBrand))
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Car brand cannot be null or empty. Please provide a valid car brand.");
-                        Console.ResetColor();
-                        carBrand = Console.ReadLine();
+                        _consoleService.SetForegroundColor(ConsoleColor.Red);
+                        _consoleService.WriteLine("Car brand cannot be null or empty. Please provide a valid car brand.");
+                        _consoleService.ResetColor();
+                        carBrand = _consoleService.ReadLine();
                         continue;
                     }
 
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine($"\n\nBilens riktning: {status.Direction}");
+                    _consoleService.SetForegroundColor(ConsoleColor.Yellow);
+                    _consoleService.WriteLine($"\n\nBilens riktning: {status.Direction}");
 
                     SetConsoleColorForFuel(status.Fuel);
-                    Console.WriteLine($"{"\nBensin:",-10} {GenerateBar(status.Fuel, 20)} {status.Fuel,2}/20");
-                    Console.ResetColor();
+                    _consoleService.WriteLine($"{"\nBensin:",-10} {GenerateBar(status.Fuel, 20)} {status.Fuel,2}/20");
+                    _consoleService.ResetColor();
 
                     SetConsoleColorForFatigue(status.Fatigue);
-                    Console.WriteLine($"{"\nTrötthet:",-10} {GenerateBar(status.Fatigue, 10)} {status.Fatigue,2}/10");
-                    Console.ResetColor();
+                    _consoleService.WriteLine($"{"\nTrötthet:",-10} {GenerateBar(status.Fatigue, 10)} {status.Fatigue,2}/10");
+                    _consoleService.ResetColor();
 
                     SetConsoleColorForHunger(status.Hunger);
-                    Console.WriteLine($"{"\nHunger:",-10} {GenerateBar(status.Hunger, 10)} {status.Hunger,2}/10\n");
-                    Console.ResetColor();
+                    _consoleService.WriteLine($"{"\nHunger:",-10} {GenerateBar(status.Hunger, 10)} {status.Hunger,2}/10\n");
+                    _consoleService.ResetColor();
 
                     break;
                 }
                 catch (Exception ex)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"An error occurred while displaying the status menu: {ex.Message}");
-                    Console.ResetColor();
+                    _consoleService.SetForegroundColor(ConsoleColor.Red);
+                    _consoleService.WriteLine($"An error occurred while displaying the status menu: {ex.Message}");
+                    _consoleService.ResetColor();
                 }
             }
         }
@@ -135,23 +145,23 @@ namespace Library.Services
                 {
                     if (string.IsNullOrWhiteSpace(driverName))
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Driver name cannot be null or empty. Please provide a valid driver name.");
-                        Console.ResetColor();
-                        driverName = Console.ReadLine();
+                        _consoleService.SetForegroundColor(ConsoleColor.Red);
+                        _consoleService.WriteLine("Driver name cannot be null or empty. Please provide a valid driver name.");
+                        _consoleService.ResetColor();
+                        driverName = _consoleService.ReadLine();
                         continue;
                     }
 
-                    Console.WriteLine("Vill du ha skrivande effekt? (ja/nej)");
-                    Console.Write("\nVälj ett alternativ: ");
-                    string userInput = Console.ReadLine()?.ToLower();
+                    _consoleService.WriteLine("Vill du ha skrivande effekt? (ja/nej)");
+                    _consoleService.Write("\nVälj ett alternativ: ");
+                    string userInput = _consoleService.ReadLine()?.ToLower();
 
                     while (userInput != "ja" && userInput != "nej")
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Ogiltigt val, försök igen. Vill du ha skrivande effekt? (ja/nej)");
-                        Console.ResetColor();
-                        userInput = Console.ReadLine()?.ToLower();
+                        _consoleService.SetForegroundColor(ConsoleColor.Red);
+                        _consoleService.WriteLine("Ogiltigt val, försök igen. Vill du ha skrivande effekt? (ja/nej)");
+                        _consoleService.ResetColor();
+                        userInput = _consoleService.ReadLine()?.ToLower();
                     }
 
                     skipTypingEffect = userInput == "nej";
@@ -160,15 +170,15 @@ namespace Library.Services
                     var expressions = Enum.GetValues(typeof(Expression)).Cast<Expression>().ToList();
                     var randomExpression = expressions[random.Next(expressions.Count)];
 
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    _consoleService.Clear();
+                    _consoleService.SetForegroundColor(ConsoleColor.Cyan);
                     TypeText($"Du sätter dig i en sprillans ny {carBrand} och kollar ut från fönstret i framsätet.");
                     TypeText($"Allt ser bra ut. Du tar en tugga av din macka som du köpt på Circle K.");
                     TypeText($"{driverName} ser {randomExpression.ToString().ToLower()} ut efter att du valde {carBrand} som bil.");
 
                     if (skipTypingEffect)
                     {
-                        Console.WriteLine(@"
+                        _consoleService.WriteLine(@"
  _   _         _     _   _      _                                        _ 
 | \ | |_   _  | |__ (_)_(_)_ __(_) __ _ _ __   _ __ ___  ___  __ _ _ __ | |
 |  \| | | | | | '_ \ / _ \| '__| |/ _` | '__| | '__/ _ \/ __|/ _` | '_ \| |
@@ -189,14 +199,14 @@ namespace Library.Services
                         ", 0);
                     }
 
-                    Console.ResetColor();
+                    _consoleService.ResetColor();
                     break;
                 }
                 catch (Exception ex)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"An error occurred while displaying the introduction: {ex.Message}");
-                    Console.ResetColor();
+                    _consoleService.SetForegroundColor(ConsoleColor.Red);
+                    _consoleService.WriteLine($"An error occurred while displaying the introduction: {ex.Message}");
+                    _consoleService.ResetColor();
                 }
             }
         }
@@ -211,19 +221,19 @@ namespace Library.Services
             {
                 foreach (char c in text)
                 {
-                    Console.Write(c);
+                    _consoleService.Write(c.ToString());
                     if (!skipTypingEffect)
                     {
                         System.Threading.Thread.Sleep(delay);
                     }
                 }
-                Console.WriteLine();
+                _consoleService.WriteLine("");
             }
             catch (Exception ex)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"An error occurred while typing text: {ex.Message}");
-                Console.ResetColor();
+                _consoleService.SetForegroundColor(ConsoleColor.Red);
+                _consoleService.WriteLine($"An error occurred while typing text: {ex.Message}");
+                _consoleService.ResetColor();
             }
         }
 
@@ -235,19 +245,19 @@ namespace Library.Services
         {
             if (fuel >= 11 && fuel <= 20)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
+                _consoleService.SetForegroundColor(ConsoleColor.Green);
             }
             else if (fuel >= 5 && fuel <= 10)
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
+                _consoleService.SetForegroundColor(ConsoleColor.Yellow);
             }
             else if (fuel >= 1 && fuel <= 4)
             {
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                _consoleService.SetForegroundColor(ConsoleColor.DarkYellow);
             }
             else if (fuel == 0)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
+                _consoleService.SetForegroundColor(ConsoleColor.Red);
             }
         }
 
@@ -259,19 +269,19 @@ namespace Library.Services
         {
             if (fatigue >= 0 && fatigue <= 3)
             {
-                Console.ForegroundColor = ConsoleColor.Cyan;
+                _consoleService.SetForegroundColor(ConsoleColor.Cyan);
             }
             else if (fatigue >= 4 && fatigue <= 6)
             {
-                Console.ForegroundColor = ConsoleColor.Magenta;
+                _consoleService.SetForegroundColor(ConsoleColor.Magenta);
             }
             else if (fatigue >= 7 && fatigue <= 9)
             {
-                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                _consoleService.SetForegroundColor(ConsoleColor.DarkMagenta);
             }
             else if (fatigue == 10)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
+                _consoleService.SetForegroundColor(ConsoleColor.Red);
             }
         }
 
@@ -283,15 +293,15 @@ namespace Library.Services
         {
             if (hunger >= 0 && hunger <= 5)
             {
-                Console.ForegroundColor = ConsoleColor.Blue;
+                _consoleService.SetForegroundColor(ConsoleColor.Blue);
             }
             else if (hunger >= 6 && hunger <= 10)
             {
-                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                _consoleService.SetForegroundColor(ConsoleColor.DarkBlue);
             }
             else if (hunger >= 11)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
+                _consoleService.SetForegroundColor(ConsoleColor.Red);
             }
         }
     }
