@@ -95,6 +95,7 @@ namespace Library.Services
 
                     _consoleService.SetForegroundColor(ConsoleColor.Yellow);
                     _consoleService.WriteLine($"\n\nBilens riktning: {status.Direction}");
+                    _consoleService.ResetColor();
 
                     SetConsoleColorForFuel(status.Fuel);
                     _consoleService.WriteLine($"{"\nBensin:",-10} {GenerateBar(status.Fuel, 20)} {status.Fuel,2}/20");
@@ -171,13 +172,19 @@ namespace Library.Services
                     var randomExpression = expressions[random.Next(expressions.Count)];
 
                     _consoleService.Clear();
+
                     _consoleService.SetForegroundColor(ConsoleColor.Cyan);
                     TypeText($"Du sätter dig i en sprillans ny {carBrand} och kollar ut från fönstret i framsätet.");
+
+                    _consoleService.SetForegroundColor(ConsoleColor.Cyan);
                     TypeText($"Allt ser bra ut. Du tar en tugga av din macka som du köpt på Circle K.");
+
+                    _consoleService.SetForegroundColor(ConsoleColor.Cyan);
                     TypeText($"{driverName} ser {randomExpression.ToString().ToLower()} ut efter att du valde {carBrand} som bil.");
 
                     if (skipTypingEffect)
                     {
+                        _consoleService.SetForegroundColor(ConsoleColor.Cyan);
                         _consoleService.WriteLine(@"
  _   _         _     _   _      _                                        _ 
 | \ | |_   _  | |__ (_)_(_)_ __(_) __ _ _ __   _ __ ___  ___  __ _ _ __ | |
@@ -189,6 +196,7 @@ namespace Library.Services
                     }
                     else
                     {
+                        _consoleService.SetForegroundColor(ConsoleColor.Cyan);
                         TypeText(@"
  _   _         _     _   _      _                                        _ 
 | \ | |_   _  | |__ (_)_(_)_ __(_) __ _ _ __   _ __ ___  ___  __ _ _ __ | |
