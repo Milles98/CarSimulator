@@ -1,16 +1,21 @@
 ﻿using Library.Models;
 using Library.Services.Interfaces;
 using Newtonsoft.Json;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Library.Services
 {
     public class RandomUserService : IRandomUserService
     {
-        private readonly HttpClient httpClient;
+        private readonly HttpClient _httpClient;
+        private readonly IConsoleService _consoleService;
 
-        public RandomUserService()
+        public RandomUserService(IConsoleService consoleService)
         {
-            httpClient = new HttpClient();
+            _httpClient = new HttpClient();
+            _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
         }
 
         /// <summary>
@@ -22,7 +27,7 @@ namespace Library.Services
             string url = "https://randomuser.me/api/";
             try
             {
-                var response = await httpClient.GetStringAsync(url);
+                var response = await _httpClient.GetStringAsync(url);
                 var randomUserResponse = JsonConvert.DeserializeObject<RandomUserResponse>(response);
 
                 if (randomUserResponse?.Results != null && randomUserResponse.Results.Count > 0)
@@ -36,23 +41,23 @@ namespace Library.Services
                 }
                 else
                 {
-                    Console.WriteLine("No results found in the response.");
+                    _consoleService.WriteLine("No results found in the response.");
                     return null;
                 }
             }
             catch (HttpRequestException httpRequestException)
             {
-                Console.WriteLine($"An error occurred while fetching data from the API: {httpRequestException.Message}");
+                _consoleService.WriteLine($"An error occurred while fetching data from the API: {httpRequestException.Message}");
                 return null;
             }
             catch (JsonSerializationException jsonSerializationException)
             {
-                Console.WriteLine($"An error occurred while deserializing the response: {jsonSerializationException.Message}");
+                _consoleService.WriteLine($"An error occurred while deserializing the response: {jsonSerializationException.Message}");
                 return null;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+                _consoleService.WriteLine($"An unexpected error occurred: {ex.Message}");
                 return null;
             }
         }

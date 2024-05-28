@@ -16,8 +16,8 @@ namespace CarSimulator
         public async Task AppRun()
         {
             Console.OutputEncoding = Encoding.UTF8;
-            IRandomUserService randomUserService = new RandomUserService();
             IConsoleService consoleService = new ConsoleService();
+            IRandomUserService randomUserService = new RandomUserService(consoleService);
             IMenuDisplayService menuDisplayService = new MenuDisplayService(consoleService);
             IMainMenuService mainMenuService = new MainMenuService(randomUserService, consoleService);
             IInputService inputService = new InputService(consoleService);
