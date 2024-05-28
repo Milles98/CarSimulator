@@ -1,10 +1,17 @@
-﻿using System;
-using Library.Services.Interfaces;
+﻿using Library.Services.Interfaces;
+using System;
 
 namespace Library.Services
 {
     public class InputService : IInputService
     {
+        private readonly IConsoleService _consoleService;
+
+        public InputService(IConsoleService consoleService)
+        {
+            _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
+        }
+
         /// <summary>
         /// Hämtar användarens val.
         /// Testning: Enhetstestning för att verifiera att rätt val returneras och att fel hanteras korrekt.
@@ -13,20 +20,20 @@ namespace Library.Services
         {
             try
             {
-                string input = Console.ReadLine();
+                string input = _consoleService.ReadLine();
                 if (int.TryParse(input, out int choice))
                 {
                     return choice;
                 }
 
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Ogiltigt val, försök igen.");
-                Console.ResetColor();
+                _consoleService.SetForegroundColor(ConsoleColor.Red);
+                _consoleService.WriteLine("Ogiltigt val, försök igen.");
+                _consoleService.ResetColor();
                 return -1;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred while getting user choice: {ex.Message}");
+                _consoleService.WriteLine($"An error occurred while getting user choice: {ex.Message}");
                 return -1;
             }
         }
