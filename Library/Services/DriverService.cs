@@ -2,6 +2,7 @@
 using Library.Enums;
 using Library.Models;
 using Library.Services.Interfaces;
+using System;
 
 public class DriverService : IDriverService
 {
@@ -12,11 +13,13 @@ public class DriverService : IDriverService
     private readonly Driver _driver;
     private readonly string _driverName;
     private readonly Faker _faker;
+    private readonly IConsoleService _consoleService;
 
-    public DriverService(Driver driver, string driverName)
+    public DriverService(Driver driver, string driverName, IConsoleService consoleService)
     {
         _driver = driver ?? throw new ArgumentNullException(nameof(driver));
         _driverName = !string.IsNullOrWhiteSpace(driverName) ? driverName : throw new ArgumentException("Driver name cannot be null or empty", nameof(driverName));
+        _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
         _faker = new Faker();
     }
 
@@ -30,24 +33,24 @@ public class DriverService : IDriverService
         {
             if (_driver.Fatigue == Fatigue.Rested)
             {
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine($"Du och {_driverName} rastade MEN ni blev inte mycket piggare av det.. Ni är ju redan utvilade!");
-                Console.ResetColor();
+                _consoleService.SetForegroundColor(ConsoleColor.Blue);
+                _consoleService.WriteLine($"Du och {_driverName} rastade MEN ni blev inte mycket piggare av det.. Ni är ju redan utvilade!");
+                _consoleService.ResetColor();
             }
             else
             {
                 _driver.Fatigue = (Fatigue)Math.Max((int)_driver.Fatigue - 5, 0);
                 string restLocation = _faker.Address.City();
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"{_driverName} och du tar en rast på {restLocation} och känner sig piggare.");
-                Console.ResetColor();
+                _consoleService.SetForegroundColor(ConsoleColor.Green);
+                _consoleService.WriteLine($"{_driverName} och du tar en rast på {restLocation} och känner sig piggare.");
+                _consoleService.ResetColor();
             }
         }
         catch (Exception ex)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"An error occurred while resting: {ex.Message}");
-            Console.ResetColor();
+            _consoleService.SetForegroundColor(ConsoleColor.Red);
+            _consoleService.WriteLine($"An error occurred while resting: {ex.Message}");
+            _consoleService.ResetColor();
         }
     }
 
@@ -61,29 +64,29 @@ public class DriverService : IDriverService
         {
             if ((int)_driver.Fatigue >= MaxFatigue)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(@"
+                _consoleService.SetForegroundColor(ConsoleColor.Red);
+                _consoleService.WriteLine(@"
  _   _ _                   _   _            _ _ 
 | | | | |_ _ __ ___   __ _| |_| |_ __ _  __| | |
 | | | | __| '_ ` _ \ / _` | __| __/ _` |/ _` | |
 | |_| | |_| | | | | | (_| | |_| || (_| | (_| |_|
  \___/ \__|_| |_| |_|\__,_|\__|\__\__,_|\__,_(_)
                 ");
-                Console.WriteLine($"{_driverName} och du är utmattade! Ta en rast omedelbart.");
-                Console.ResetColor();
+                _consoleService.WriteLine($"{_driverName} och du är utmattade! Ta en rast omedelbart.");
+                _consoleService.ResetColor();
             }
             else if ((int)_driver.Fatigue >= FatigueWarningLevel)
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"{_driverName} och du börjar bli trötta. Det är dags för en rast snart.");
-                Console.ResetColor();
+                _consoleService.SetForegroundColor(ConsoleColor.Yellow);
+                _consoleService.WriteLine($"{_driverName} och du börjar bli trötta. Det är dags för en rast snart.");
+                _consoleService.ResetColor();
             }
         }
         catch (Exception ex)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"An error occurred while checking fatigue: {ex.Message}");
-            Console.ResetColor();
+            _consoleService.SetForegroundColor(ConsoleColor.Red);
+            _consoleService.WriteLine($"An error occurred while checking fatigue: {ex.Message}");
+            _consoleService.ResetColor();
         }
     }
 }

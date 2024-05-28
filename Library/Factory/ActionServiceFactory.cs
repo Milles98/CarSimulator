@@ -20,7 +20,7 @@ namespace Library.Factory
         public IActionService CreateActionService(Driver driver, Car car)
         {
             IFuelService fuelService = new FuelService(car, car.Brand.ToString());
-            IDriverService driverService = new DriverService(driver, driver.Name);
+            IDriverService driverService = new DriverService(driver, driver.Name, _consoleService);
             IFoodService foodService = new FoodService(driver);
             ICarService carService = new CarService(car, driver, fuelService, driverService, foodService, car.Brand.ToString(), _consoleService);
 
