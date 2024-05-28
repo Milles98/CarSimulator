@@ -8,11 +8,13 @@ namespace Library.Factory
     {
         private readonly IMenuDisplayService _menuDisplayService;
         private readonly IInputService _inputService;
+        private readonly IConsoleService _consoleService;
 
-        public ActionServiceFactory(IMenuDisplayService menuDisplayService, IInputService inputService)
+        public ActionServiceFactory(IMenuDisplayService menuDisplayService, IInputService inputService, IConsoleService consoleService)
         {
             _menuDisplayService = menuDisplayService;
             _inputService = inputService;
+            _consoleService = consoleService;
         }
 
         public IActionService CreateActionService(Driver driver, Car car)
@@ -22,7 +24,7 @@ namespace Library.Factory
             IFoodService foodService = new FoodService(driver);
             ICarService carService = new CarService(car, driver, fuelService, driverService, foodService, car.Brand.ToString());
 
-            return new ActionService(carService, fuelService, driverService, foodService, _menuDisplayService, _inputService, driver.Name, car.Brand);
+            return new ActionService(carService, fuelService, driverService, foodService, _menuDisplayService, _inputService, _consoleService, driver.Name, car.Brand);
         }
     }
 }
