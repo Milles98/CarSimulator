@@ -30,7 +30,7 @@ namespace LibraryTests.Factory
         public void CreateActionService_ShouldReturnActionService_WithExpectedDependencies()
         {
             // Arrange
-            var driver = new Driver { FirstName = "John", LastName = "Doe", Fatigue = Fatigue.Rested, Hunger = Hunger.Mätt };
+            var driver = new Driver { FirstName = "John", LastName = "Doe", Fatigue = Fatigue.Rested };
             var car = new Car { Brand = CarBrand.Toyota, Fuel = Fuel.Full, Direction = Direction.Norr };
 
             // Act
@@ -42,17 +42,14 @@ namespace LibraryTests.Factory
             var carServiceField = typeof(ActionService).GetField("_carService", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             var fuelServiceField = typeof(ActionService).GetField("_fuelService", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             var driverServiceField = typeof(ActionService).GetField("_driverService", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            var foodServiceField = typeof(ActionService).GetField("_foodService", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
 
             var carService = carServiceField.GetValue(actionService) as ICarService;
             var fuelService = fuelServiceField.GetValue(actionService) as IFuelService;
             var driverService = driverServiceField.GetValue(actionService) as IDriverService;
-            var foodService = foodServiceField.GetValue(actionService) as IFoodService;
 
             Assert.IsNotNull(carService);
             Assert.IsNotNull(fuelService);
             Assert.IsNotNull(driverService);
-            Assert.IsNotNull(foodService);
         }
     }
 }

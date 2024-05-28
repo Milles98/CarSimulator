@@ -2,7 +2,6 @@
 using Library.Models;
 using Library.Services.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,10 +18,6 @@ namespace Library.Services
             _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
         }
 
-        /// <summary>
-        /// Hämtar förardetaljer.
-        /// Testning: Enhetstestning för att verifiera att rätt förare hämtas och att undantag hanteras korrekt.
-        /// </summary>
         public async Task<Driver> FetchDriverDetails()
         {
             try
@@ -61,10 +56,6 @@ namespace Library.Services
             }
         }
 
-        /// <summary>
-        /// Anger bildetaljer.
-        /// Testning: Enhetstestning för att verifiera att rätt bil och riktning väljs och att undantag hanteras korrekt.
-        /// </summary>
         public Car EnterCarDetails(string driverName)
         {
             CarBrand selectedBrand;
@@ -180,10 +171,6 @@ namespace Library.Services
             return new Car { Brand = selectedBrand, Fuel = (Fuel)20, Direction = direction };
         }
 
-        /// <summary>
-        /// Visar felmeddelande.
-        /// Testning: Enhetstestning för att verifiera att felmeddelanden visas korrekt.
-        /// </summary>
         private void DisplayErrorMessage(string message)
         {
             _consoleService.SetForegroundColor(ConsoleColor.Red);

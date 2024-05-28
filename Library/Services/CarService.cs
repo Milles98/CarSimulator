@@ -3,6 +3,7 @@ using Library;
 using Library.Enums;
 using Library.Models;
 using Library.Services.Interfaces;
+using System;
 
 public class CarService : ICarService
 {
@@ -10,27 +11,21 @@ public class CarService : ICarService
     private readonly Driver _driver;
     private readonly IFuelService _fuelService;
     private readonly IDriverService _driverService;
-    private readonly IFoodService _foodService;
     private readonly string _carBrand;
     private readonly Faker _faker;
     private readonly IConsoleService _consoleService;
 
-    public CarService(Car car, Driver driver, IFuelService fuelService, IDriverService driverService, IFoodService foodService, string carBrand, IConsoleService consoleService)
+    public CarService(Car car, Driver driver, IFuelService fuelService, IDriverService driverService, string carBrand, IConsoleService consoleService)
     {
         _car = car ?? throw new ArgumentNullException(nameof(car));
         _driver = driver ?? throw new ArgumentNullException(nameof(driver));
         _fuelService = fuelService ?? throw new ArgumentNullException(nameof(fuelService));
         _driverService = driverService ?? throw new ArgumentNullException(nameof(driverService));
-        _foodService = foodService ?? throw new ArgumentNullException(nameof(foodService));
         _carBrand = !string.IsNullOrWhiteSpace(carBrand) ? carBrand : throw new ArgumentException("Car brand cannot be null or empty", nameof(carBrand));
         _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
         _faker = new Faker();
     }
 
-    /// <summary>
-    /// Kör bilen i angiven riktning.
-    /// Testning: Enhetstestning för att verifiera att rätt åtgärder vidtas beroende på riktningen och att fel hanteras korrekt.
-    /// </summary>
     public void Drive(string direction)
     {
         try
@@ -48,7 +43,6 @@ public class CarService : ICarService
 
             _fuelService.UseFuel(2);
             _driver.Fatigue += 1;
-            _foodService.CheckHunger();
 
             string location = _faker.Address.City();
 
@@ -80,10 +74,6 @@ public class CarService : ICarService
         }
     }
 
-    /// <summary>
-    /// Svänger bilen i angiven riktning.
-    /// Testning: Enhetstestning för att verifiera att svängningslogiken fungerar korrekt och att fel hanteras.
-    /// </summary>
     public void Turn(string direction)
     {
         try
@@ -101,7 +91,6 @@ public class CarService : ICarService
 
             _fuelService.UseFuel(1);
             _driver.Fatigue += 1;
-            _foodService.CheckHunger();
 
             string location = _faker.Address.City();
 
@@ -119,10 +108,6 @@ public class CarService : ICarService
         }
     }
 
-    /// <summary>
-    /// Hämtar bilens status.
-    /// Testning: Enhetstestning för att verifiera att statusinformationen hämtas korrekt och hanterar undantag.
-    /// </summary>
     public CarStatus GetStatus()
     {
         try
@@ -131,8 +116,7 @@ public class CarService : ICarService
             {
                 Fuel = (int)_car.Fuel,
                 Fatigue = (int)_driver.Fatigue,
-                Direction = _car.Direction.ToString(),
-                Hunger = (int)_driver.Hunger
+                Direction = _car.Direction.ToString()
             };
         }
         catch (Exception ex)
@@ -144,10 +128,6 @@ public class CarService : ICarService
         }
     }
 
-    /// <summary>
-    /// Hämtar motsatt riktning.
-    /// Testning: Enhetstestning för att verifiera att rätt motsatt riktning returneras.
-    /// </summary>
     private Direction GetOppositeDirection(Direction currentDirection)
     {
         return currentDirection switch
@@ -160,10 +140,6 @@ public class CarService : ICarService
         };
     }
 
-    /// <summary>
-    /// Hämtar ny riktning baserat på svängriktningen.
-    /// Testning: Enhetstestning för att verifiera att rätt nya riktning returneras beroende på svängriktningen.
-    /// </summary>
     private Direction GetNewDirection(Direction currentDirection, string turnDirection)
     {
         return turnDirection switch

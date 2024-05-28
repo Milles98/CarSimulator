@@ -36,8 +36,7 @@ namespace LibraryTests.Services
             _consoleServiceMock.Verify(cs => cs.WriteLine("3. Köra framåt"), Times.Once);
             _consoleServiceMock.Verify(cs => cs.WriteLine("4. Backa"), Times.Once);
             _consoleServiceMock.Verify(cs => cs.WriteLine("5. Rasta"), Times.Once);
-            _consoleServiceMock.Verify(cs => cs.WriteLine("6. Ät mat"), Times.Once);
-            _consoleServiceMock.Verify(cs => cs.WriteLine("7. Tanka bilen"), Times.Once);
+            _consoleServiceMock.Verify(cs => cs.WriteLine("6. Tanka bilen"), Times.Once);
             _consoleServiceMock.Verify(cs => cs.WriteLine("0. Avsluta"), Times.Once);
             _consoleServiceMock.Verify(cs => cs.Write($"\n{driverName} frågar, vad ska vi göra härnäst?: "), Times.Once);
             _consoleServiceMock.Verify(cs => cs.ResetColor(), Times.Once);
@@ -52,7 +51,6 @@ namespace LibraryTests.Services
                 Direction = "Norr",
                 Fuel = 15,
                 Fatigue = 5,
-                Hunger = 8
             };
             string driverName = "John Doe";
             string carBrand = "Toyota";
@@ -67,9 +65,7 @@ namespace LibraryTests.Services
             _consoleServiceMock.Verify(cs => cs.WriteLine(It.Is<string>(s => s.Contains("Bensin:"))), Times.Once);
             _consoleServiceMock.Verify(cs => cs.SetForegroundColor(ConsoleColor.Magenta), Times.Once);
             _consoleServiceMock.Verify(cs => cs.WriteLine(It.Is<string>(s => s.Contains("Trötthet:"))), Times.Once);
-            _consoleServiceMock.Verify(cs => cs.SetForegroundColor(ConsoleColor.DarkBlue), Times.Once);
-            _consoleServiceMock.Verify(cs => cs.WriteLine(It.Is<string>(s => s.Contains("Hunger:"))), Times.Once);
-            _consoleServiceMock.Verify(cs => cs.ResetColor(), Times.Exactly(4));
+            _consoleServiceMock.Verify(cs => cs.ResetColor(), Times.Exactly(3));
         }
 
         [TestMethod]

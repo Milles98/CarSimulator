@@ -12,8 +12,9 @@ public class FoodService : IFoodService
     private readonly Faker _faker;
     private readonly List<string> _foodItems;
     private readonly IConsoleService _consoleService;
+    private readonly Action _exitAction;
 
-    public FoodService(Driver driver, IConsoleService consoleService)
+    public FoodService(Driver driver, IConsoleService consoleService, Action exitAction = null)
     {
         _driver = driver ?? throw new ArgumentNullException(nameof(driver));
         _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
@@ -31,12 +32,9 @@ public class FoodService : IFoodService
             "nudlar",
             "soppa"
         };
+        _exitAction = exitAction ?? (() => Environment.Exit(0));
     }
 
-    /// <summary>
-    /// Utför handlingen att äta.
-    /// Testning: Enhetstestning för att verifiera att rätt matobjekt väljs och att förarens hungerstatus uppdateras korrekt.
-    /// </summary>
     public void Eat()
     {
         try
@@ -64,10 +62,6 @@ public class FoodService : IFoodService
         }
     }
 
-    /// <summary>
-    /// Kontrollerar förarens hungerstatus.
-    /// Testning: Enhetstestning för att verifiera att rätt varningar visas vid olika nivåer av hunger och att undantag hanteras.
-    /// </summary>
     public void CheckHunger()
     {
         try
@@ -87,7 +81,7 @@ public class FoodService : IFoodService
                 _consoleService.WriteLine($"{_driver.Name} och du åt ingen mat i tid och dog.");
                 _consoleService.WriteLine("Tryck valfri knapp för att avsluta spelet.");
                 _consoleService.WaitKey();
-                Environment.Exit(0);
+                _exitAction();
             }
             else if ((int)_driver.Hunger >= 11)
             {

@@ -36,7 +36,6 @@ namespace LibraryTests.Services
                 _carServiceMock.Object,
                 _fuelServiceMock.Object,
                 _driverServiceMock.Object,
-                _foodServiceMock.Object,
                 _menuDisplayServiceMock.Object,
                 _inputServiceMock.Object,
                 _consoleServiceMock.Object,
@@ -90,19 +89,10 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public void ExecuteChoice_ShouldCallFoodServiceEat_WhenChoiceIs6()
+        public void ExecuteChoice_ShouldCallFuelServiceRefuel_WhenChoiceIs6()
         {
             bool running = true;
             _sut.ExecuteChoice(6, ref running);
-
-            _foodServiceMock.Verify(x => x.Eat(), Times.Once);
-        }
-
-        [TestMethod]
-        public void ExecuteChoice_ShouldCallFuelServiceRefuel_WhenChoiceIs7()
-        {
-            bool running = true;
-            _sut.ExecuteChoice(7, ref running);
 
             _fuelServiceMock.Verify(x => x.Refuel(), Times.Once);
         }

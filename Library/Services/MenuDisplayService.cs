@@ -16,10 +16,6 @@ namespace Library.Services
             _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
         }
 
-        /// <summary>
-        /// Visar huvudmenyn.
-        /// Testning: Enhetstestning för att verifiera att menyn visas korrekt och att undantag hanteras.
-        /// </summary>
         public void DisplayMainMenu(string driverName)
         {
             while (true)
@@ -41,8 +37,7 @@ namespace Library.Services
                     _consoleService.WriteLine("3. Köra framåt");
                     _consoleService.WriteLine("4. Backa");
                     _consoleService.WriteLine("5. Rasta");
-                    _consoleService.WriteLine("6. Ät mat");
-                    _consoleService.WriteLine("7. Tanka bilen");
+                    _consoleService.WriteLine("6. Tanka bilen");
                     _consoleService.WriteLine("0. Avsluta");
                     _consoleService.Write($"\n{driverName} frågar, vad ska vi göra härnäst?: ");
                     _consoleService.ResetColor();
@@ -57,10 +52,6 @@ namespace Library.Services
             }
         }
 
-        /// <summary>
-        /// Visar statusmenyn.
-        /// Testning: Enhetstestning för att verifiera att statusinformationen visas korrekt och att undantag hanteras.
-        /// </summary>
         public void DisplayStatusMenu(CarStatus status, string driverName, string carBrand)
         {
             if (status == null)
@@ -102,11 +93,7 @@ namespace Library.Services
                     _consoleService.ResetColor();
 
                     SetConsoleColorForFatigue(status.Fatigue);
-                    _consoleService.WriteLine($"{"\nTrötthet:",-10} {GenerateBar(status.Fatigue, 10)} {status.Fatigue,2}/10");
-                    _consoleService.ResetColor();
-
-                    SetConsoleColorForHunger(status.Hunger);
-                    _consoleService.WriteLine($"{"\nHunger:",-10} {GenerateBar(status.Hunger, 10)} {status.Hunger,2}/10\n");
+                    _consoleService.WriteLine($"{"\nTrötthet:",-10} {GenerateBar(status.Fatigue, 10)} {status.Fatigue,2}/10\n");
                     _consoleService.ResetColor();
 
                     break;
@@ -120,10 +107,6 @@ namespace Library.Services
             }
         }
 
-        /// <summary>
-        /// Genererar en stapel för att visa nivåer.
-        /// Testning: Enhetstestning för att verifiera att stapeln genereras korrekt baserat på aktuellt värde och maxvärde.
-        /// </summary>
         private string GenerateBar(int currentValue, int maxValue, int barLength = 20)
         {
             int filledLength = Math.Max(0, Math.Min(barLength, (int)((double)currentValue / maxValue * barLength)));
@@ -134,10 +117,6 @@ namespace Library.Services
 
         private bool skipTypingEffect = false;
 
-        /// <summary>
-        /// Visar introduktionen.
-        /// Testning: Enhetstestning för att verifiera att introduktionstexten visas korrekt och att undantag hanteras.
-        /// </summary>
         public void DisplayIntroduction(string driverName, CarBrand carBrand)
         {
             while (true)
@@ -219,10 +198,6 @@ namespace Library.Services
             }
         }
 
-        /// <summary>
-        /// Skriver ut text med en skriveffekt.
-        /// Testning: Enhetstestning för att verifiera att texten skrivs ut korrekt med rätt fördröjning och att undantag hanteras.
-        /// </summary>
         private void TypeText(string text, int delay = 50)
         {
             try
@@ -245,10 +220,6 @@ namespace Library.Services
             }
         }
 
-        /// <summary>
-        /// Sätter konsolfärgen baserat på bränslenivån.
-        /// Testning: Enhetstestning för att verifiera att rätt färg sätts beroende på bränslenivån.
-        /// </summary>
         private void SetConsoleColorForFuel(int fuel)
         {
             if (fuel >= 11 && fuel <= 20)
@@ -269,10 +240,6 @@ namespace Library.Services
             }
         }
 
-        /// <summary>
-        /// Sätter konsolfärgen baserat på trötthetsnivån.
-        /// Testning: Enhetstestning för att verifiera att rätt färg sätts beroende på trötthetsnivån.
-        /// </summary>
         private void SetConsoleColorForFatigue(int fatigue)
         {
             if (fatigue >= 0 && fatigue <= 3)
@@ -288,26 +255,6 @@ namespace Library.Services
                 _consoleService.SetForegroundColor(ConsoleColor.DarkMagenta);
             }
             else if (fatigue == 10)
-            {
-                _consoleService.SetForegroundColor(ConsoleColor.Red);
-            }
-        }
-
-        /// <summary>
-        /// Sätter konsolfärgen baserat på hungernivån.
-        /// Testning: Enhetstestning för att verifiera att rätt färg sätts beroende på hungernivån.
-        /// </summary>
-        private void SetConsoleColorForHunger(int hunger)
-        {
-            if (hunger >= 0 && hunger <= 5)
-            {
-                _consoleService.SetForegroundColor(ConsoleColor.Blue);
-            }
-            else if (hunger >= 6 && hunger <= 10)
-            {
-                _consoleService.SetForegroundColor(ConsoleColor.DarkBlue);
-            }
-            else if (hunger >= 11)
             {
                 _consoleService.SetForegroundColor(ConsoleColor.Red);
             }
