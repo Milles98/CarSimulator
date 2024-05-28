@@ -1,11 +1,12 @@
-﻿using Library.Models;
+﻿using CarSimulator.Menus.Interface;
+using Library.Models;
 using Library.Services.Interfaces;
 using System;
 using System.Threading.Tasks;
 
 namespace CarSimulator.Menus
 {
-    public class MainMenu
+    public class MainMenu : IMainMenu
     {
         private readonly IMainMenuService _mainMenuService;
         private readonly IMenuDisplayService _menuDisplayService;

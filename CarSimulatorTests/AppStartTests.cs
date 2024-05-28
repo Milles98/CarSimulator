@@ -1,8 +1,41 @@
-﻿namespace CarSimulatorTests
+﻿using CarSimulator.Menus.Interface;
+using Library.Services.Interfaces;
+using Moq;
+
+namespace CarSimulatorTests
 {
     [TestClass]
     public class AppStartTests
     {
+        [TestMethod]
+        public async Task AppRun_ShouldCallMainMenuMenu()
+        {
+            // Arrange
+            var consoleServiceMock = new Mock<IConsoleService>();
+            var randomUserServiceMock = new Mock<IRandomUserService>();
+            var menuDisplayServiceMock = new Mock<IMenuDisplayService>();
+            var mainMenuServiceMock = new Mock<IMainMenuService>();
+            var inputServiceMock = new Mock<IInputService>();
+            var actionServiceFactoryMock = new Mock<IActionServiceFactory>();
+            var mainMenuMock = new Mock<IMainMenu>();
 
+            mainMenuMock.Setup(m => m.Menu()).Returns(Task.CompletedTask);
+
+            var appStart = new AppStart(
+                consoleServiceMock.Object,
+                randomUserServiceMock.Object,
+                menuDisplayServiceMock.Object,
+                mainMenuServiceMock.Object,
+                inputServiceMock.Object,
+                actionServiceFactoryMock.Object,
+                mainMenuMock.Object
+            );
+
+            // Act
+            await appStart.AppRun();
+
+            // Assert
+            mainMenuMock.Verify(m => m.Menu(), Times.Once, "MainMenu.Menu should be called exactly once.");
+        }
     }
 }
