@@ -2,7 +2,6 @@
 using Library.Enums;
 using Library.Services;
 using Library.Services.Interfaces;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
 namespace LibraryTests.Services
@@ -81,7 +80,7 @@ namespace LibraryTests.Services
             _sut.DisplayIntroduction(driverName, carBrand);
 
             // Assert
-            _consoleServiceMock.Verify(cs => cs.SetForegroundColor(ConsoleColor.Cyan), Times.Exactly(4)); // Each TypeText call
+            _consoleServiceMock.Verify(cs => cs.SetForegroundColor(ConsoleColor.Cyan), Times.Exactly(4));
             _consoleServiceMock.Verify(cs => cs.WriteLine("Vill du ha skrivande effekt? (ja/nej)"), Times.Once);
             _consoleServiceMock.Verify(cs => cs.Write("\nVälj ett alternativ: "), Times.Once);
             _consoleServiceMock.Verify(cs => cs.ReadLine(), Times.Once);

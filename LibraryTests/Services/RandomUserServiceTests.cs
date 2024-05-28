@@ -1,13 +1,8 @@
 ﻿using Library.Models;
 using Library.Services.Interfaces;
 using Library.Services;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Moq.Protected;
-using System.Threading;
 using Newtonsoft.Json;
 
 namespace LibraryTests.Services
