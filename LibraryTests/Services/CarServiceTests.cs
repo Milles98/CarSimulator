@@ -60,6 +60,7 @@ namespace LibraryTests.Services
             _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("John Doe med dig i sin Toyota kör framåt mot"))), Times.Once);
             _consoleServiceMock.Verify(x => x.ResetColor(), Times.Once);
             _driverServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
+            Assert.AreEqual(Direction.Norr, _car.Direction);
         }
 
         [TestMethod]
@@ -78,6 +79,47 @@ namespace LibraryTests.Services
             _consoleServiceMock.Verify(x => x.ResetColor(), Times.Once);
             _driverServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
             Assert.AreEqual(Direction.Söder, _car.Direction);
+        }
+
+        [TestMethod]
+        public void Drive_ShouldContinueDrivingBackwardWithoutChangingDirection_WhenAlreadyReversing()
+        {
+            // Arrange
+            _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
+            _sut.Drive("bakåt");
+            Direction initialDirection = _car.Direction;
+
+            // Act
+            _sut.Drive("bakåt");
+
+            // Assert
+            _fuelServiceMock.Verify(x => x.UseFuel(2), Times.Exactly(2));
+            _consoleServiceMock.Verify(x => x.SetForegroundColor(ConsoleColor.Green), Times.Exactly(2));
+            _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("John Doe med dig i sin Toyota kör bakåt mot"))), Times.Exactly(2));
+            _consoleServiceMock.Verify(x => x.ResetColor(), Times.Exactly(2));
+            _driverServiceMock.Verify(x => x.CheckFatigue(), Times.Exactly(2));
+            Assert.AreEqual(initialDirection, _car.Direction);
+        }
+
+        [TestMethod]
+        public void Drive_ShouldDriveForwardAndResetDirection_WhenEnoughFuelAndPreviouslyReversed()
+        {
+            // Arrange
+            _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
+            _sut.Drive("bakåt");
+            _sut.Drive("framåt");
+
+            // Act
+            _sut.Drive("framåt");
+
+            // Assert
+            _fuelServiceMock.Verify(x => x.UseFuel(2), Times.Exactly(3));
+            _consoleServiceMock.Verify(x => x.SetForegroundColor(ConsoleColor.Green), Times.Exactly(3));
+            _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("John Doe med dig i sin Toyota kör framåt mot"))), Times.Exactly(2));
+            _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("John Doe med dig i sin Toyota kör bakåt mot"))), Times.Once);
+            _consoleServiceMock.Verify(x => x.ResetColor(), Times.Exactly(3));
+            _driverServiceMock.Verify(x => x.CheckFatigue(), Times.Exactly(3));
+            Assert.AreEqual(Direction.Norr, _car.Direction);
         }
 
         [TestMethod]
@@ -117,6 +159,62 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
+        public void TurnRightAndReverse_ShouldChangeDirectionsCorrectly()
+        {
+            // Arrange
+            _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
+
+            // Act
+            _sut.Turn("höger");
+            _sut.Drive("bakåt");
+
+            // Assert
+            Assert.AreEqual(Direction.Väst, _car.Direction);
+        }
+
+        [TestMethod]
+        public void TurnLeftAndReverse_ShouldChangeDirectionsCorrectly()
+        {
+            // Arrange
+            _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
+
+            // Act
+            _sut.Turn("vänster");
+            _sut.Drive("bakåt");
+
+            // Assert
+            Assert.AreEqual(Direction.Öst, _car.Direction);
+        }
+
+        [TestMethod]
+        public void DriveNorthTurnRightThenReverse_ShouldChangeDirectionsCorrectly()
+        {
+            // Arrange
+            _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
+
+            // Act
+            _sut.Turn("höger");
+            _sut.Drive("bakåt");
+
+            // Assert
+            Assert.AreEqual(Direction.Väst, _car.Direction);
+        }
+
+        [TestMethod]
+        public void DriveNorthTurnLeftThenReverse_ShouldChangeDirectionsCorrectly()
+        {
+            // Arrange
+            _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
+
+            // Act
+            _sut.Turn("vänster");
+            _sut.Drive("bakåt");
+
+            // Assert
+            Assert.AreEqual(Direction.Öst, _car.Direction);
+        }
+
+        [TestMethod]
         public void GetStatus_ShouldReturnCorrectStatus()
         {
             // Act
@@ -128,5 +226,53 @@ namespace LibraryTests.Services
             Assert.AreEqual((int)_driver.Fatigue, status.Fatigue);
             Assert.AreEqual(_car.Direction.ToString(), status.Direction);
         }
+
+        [TestMethod]
+        public void ComplexDrivingSequence_ShouldChangeDirectionsCorrectly()
+        {
+            // Arrange
+            _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
+
+            // Act
+            _sut.Turn("vänster");
+            Assert.AreEqual(Direction.Väst, _car.Direction);
+
+            _sut.Turn("höger");
+            Assert.AreEqual(Direction.Norr, _car.Direction);
+
+            _sut.Drive("bakåt");
+            Assert.AreEqual(Direction.Söder, _car.Direction);
+
+            _sut.Drive("bakåt");
+            Assert.AreEqual(Direction.Söder, _car.Direction);
+
+            _sut.Drive("bakåt");
+            Assert.AreEqual(Direction.Söder, _car.Direction);
+
+            _sut.Drive("framåt");
+            Assert.AreEqual(Direction.Norr, _car.Direction);
+
+            _sut.Turn("vänster");
+            Assert.AreEqual(Direction.Väst, _car.Direction);
+
+            _sut.Turn("höger");
+            Assert.AreEqual(Direction.Norr, _car.Direction);
+
+            _sut.Turn("höger");
+            Assert.AreEqual(Direction.Öst, _car.Direction);
+
+            _sut.Turn("vänster");
+            Assert.AreEqual(Direction.Norr, _car.Direction);
+
+            _sut.Drive("bakåt");
+            Assert.AreEqual(Direction.Söder, _car.Direction);
+
+            _sut.Drive("bakåt");
+            Assert.AreEqual(Direction.Söder, _car.Direction);
+
+            _sut.Drive("framåt");
+            Assert.AreEqual(Direction.Norr, _car.Direction);
+        }
+
     }
 }

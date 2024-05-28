@@ -14,6 +14,8 @@ public class CarService : ICarService
     private readonly string _carBrand;
     private readonly Faker _faker;
     private readonly IConsoleService _consoleService;
+    private bool _isReversing = false;
+    private Direction _lastForwardDirection;
 
     public CarService(Car car, Driver driver, IFuelService fuelService, IDriverService driverService, string carBrand, IConsoleService consoleService)
     {
@@ -24,6 +26,7 @@ public class CarService : ICarService
         _carBrand = !string.IsNullOrWhiteSpace(carBrand) ? carBrand : throw new ArgumentException("Car brand cannot be null or empty", nameof(carBrand));
         _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
         _faker = new Faker();
+        _lastForwardDirection = _car.Direction; // Initialize the last known forward direction
     }
 
     public void Drive(string direction)
@@ -46,15 +49,28 @@ public class CarService : ICarService
 
             string location = _faker.Address.City();
 
-            if (direction == "framåt" || direction == "bakåt")
+            if (direction == "framåt")
             {
-                _consoleService.SetForegroundColor(ConsoleColor.Green);
-                _consoleService.WriteLine($"{_driver.Name} med dig i sin {_carBrand} kör {direction} mot {location}.");
-                _consoleService.ResetColor();
-                if (direction == "bakåt")
+                if (_isReversing)
                 {
-                    _car.Direction = GetOppositeDirection(_car.Direction);
+                    _car.Direction = _lastForwardDirection; // Reset to the last known forward direction
                 }
+                _isReversing = false;
+                _consoleService.SetForegroundColor(ConsoleColor.Green);
+                _consoleService.WriteLine($"{_driver.Name} med dig i sin {_carBrand} kör framåt mot {location}.");
+                _consoleService.ResetColor();
+            }
+            else if (direction == "bakåt")
+            {
+                if (!_isReversing)
+                {
+                    _lastForwardDirection = _car.Direction; // Save the current forward direction before reversing
+                    _car.Direction = GetOppositeDirection(_car.Direction);
+                    _isReversing = true;
+                }
+                _consoleService.SetForegroundColor(ConsoleColor.Green);
+                _consoleService.WriteLine($"{_driver.Name} med dig i sin {_carBrand} kör bakåt mot {location}.");
+                _consoleService.ResetColor();
             }
             else
             {
