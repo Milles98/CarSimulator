@@ -13,6 +13,7 @@ namespace CarSimulator.Menus
         private readonly IInputService _inputService;
         private readonly IActionServiceFactory _actionServiceFactory;
         private readonly IConsoleService _consoleService;
+        private bool _isTesting = false;
 
         public MainMenu(IMainMenuService mainMenuService, IMenuDisplayService menuDisplayService, IInputService inputService, IActionServiceFactory actionServiceFactory, IConsoleService consoleService)
         {
@@ -53,6 +54,7 @@ namespace CarSimulator.Menus
                 if (choice == -1)
                 {
                     DisplayErrorMessage();
+                    if (_isTesting) break;
                     continue;
                 }
 
@@ -64,7 +66,6 @@ namespace CarSimulator.Menus
                     case 0:
                         DisplayExitMessage();
                         running = false;
-                        Environment.Exit(0);
                         break;
                     default:
                         DisplayErrorMessage();
@@ -119,9 +120,24 @@ namespace CarSimulator.Menus
                 {
                     await WarmUpEngine();
 
-                    var actionService = _actionServiceFactory.CreateActionService(driver, car);
-                    var actionMenu = new ActionMenu(actionService);
-                    actionMenu.Menu();
+                    try
+                    {
+                        var actionService = _actionServiceFactory.CreateActionService(driver, car);
+                        if (actionService == null)
+                        {
+                            throw new InvalidOperationException("Failed to create ActionService.");
+                        }
+
+                        var actionMenu = new ActionMenu(actionService);
+                        actionMenu.Menu();
+                    }
+                    catch (Exception ex)
+                    {
+                        _consoleService.SetForegroundColor(ConsoleColor.Red);
+                        _consoleService.WriteLine($"Error creating ActionService: {ex.Message}");
+                        _consoleService.ResetColor();
+                        throw;
+                    }
                 }
                 else
                 {
@@ -135,6 +151,9 @@ namespace CarSimulator.Menus
                 _consoleService.ResetColor();
             }
         }
+
+
+
 
         /// <summary>
         /// Värmer upp bilens motor.
