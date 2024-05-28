@@ -2,6 +2,7 @@
 using Library.Factory;
 using Library.Services;
 using Library.Services.Interfaces;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,7 +18,8 @@ namespace CarSimulator
         {
             Console.OutputEncoding = Encoding.UTF8;
             IConsoleService consoleService = new ConsoleService();
-            IRandomUserService randomUserService = new RandomUserService(consoleService);
+            HttpClient httpClient = new HttpClient();
+            IRandomUserService randomUserService = new RandomUserService(httpClient, consoleService);
             IMenuDisplayService menuDisplayService = new MenuDisplayService(consoleService);
             IMainMenuService mainMenuService = new MainMenuService(randomUserService, consoleService);
             IInputService inputService = new InputService(consoleService);

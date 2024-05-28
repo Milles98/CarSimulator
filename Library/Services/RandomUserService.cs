@@ -12,9 +12,9 @@ namespace Library.Services
         private readonly HttpClient _httpClient;
         private readonly IConsoleService _consoleService;
 
-        public RandomUserService(IConsoleService consoleService)
+        public RandomUserService(HttpClient httpClient, IConsoleService consoleService)
         {
-            _httpClient = new HttpClient();
+            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
             _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
         }
 
@@ -48,6 +48,11 @@ namespace Library.Services
             catch (HttpRequestException httpRequestException)
             {
                 _consoleService.WriteLine($"An error occurred while fetching data from the API: {httpRequestException.Message}");
+                return null;
+            }
+            catch (JsonReaderException jsonReaderException)
+            {
+                _consoleService.WriteLine($"An error occurred while deserializing the response: {jsonReaderException.Message}");
                 return null;
             }
             catch (JsonSerializationException jsonSerializationException)
