@@ -1,16 +1,22 @@
 ﻿using Library.Enums;
 using Library.Models;
 using Library.Services.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Library.Services
 {
     public class MainMenuService : IMainMenuService
     {
         private readonly IRandomUserService _randomUserService;
+        private readonly IConsoleService _consoleService;
 
-        public MainMenuService(IRandomUserService randomUserService)
+        public MainMenuService(IRandomUserService randomUserService, IConsoleService consoleService)
         {
             _randomUserService = randomUserService ?? throw new ArgumentNullException(nameof(randomUserService));
+            _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
         }
 
         /// <summary>
@@ -21,36 +27,36 @@ namespace Library.Services
         {
             try
             {
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.Write("Hämtar förare");
+                _consoleService.Clear();
+                _consoleService.SetForegroundColor(ConsoleColor.Cyan);
+                _consoleService.Write("Hämtar förare");
                 for (int i = 0; i < 3; i++)
                 {
                     await Task.Delay(1000);
-                    Console.Write(".");
+                    _consoleService.Write(".");
                 }
-                Console.WriteLine();
-                Console.ResetColor();
+                _consoleService.WriteLine("");
+                _consoleService.ResetColor();
 
                 var driver = await _randomUserService.GetRandomDriverAsync();
                 if (driver == null)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Kunde inte hämta ett namn. Försök igen.");
-                    Console.ResetColor();
+                    _consoleService.SetForegroundColor(ConsoleColor.Red);
+                    _consoleService.WriteLine("Kunde inte hämta ett namn. Försök igen.");
+                    _consoleService.ResetColor();
                     return null;
                 }
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"Din förare är: {driver.FirstName} {driver.LastName}");
-                Console.ResetColor();
+                _consoleService.SetForegroundColor(ConsoleColor.Green);
+                _consoleService.WriteLine($"Din förare är: {driver.FirstName} {driver.LastName}");
+                _consoleService.ResetColor();
                 await Task.Delay(2000);
                 return new Driver { FirstName = driver.FirstName, LastName = driver.LastName, Fatigue = Fatigue.Rested };
             }
             catch (Exception ex)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"An error occurred while fetching driver details: {ex.Message}");
-                Console.ResetColor();
+                _consoleService.SetForegroundColor(ConsoleColor.Red);
+                _consoleService.WriteLine($"An error occurred while fetching driver details: {ex.Message}");
+                _consoleService.ResetColor();
                 return null;
             }
         }
@@ -67,27 +73,27 @@ namespace Library.Services
             {
                 try
                 {
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine($"{driverName} undrar vilken bil du vill ta en åktur med?\n");
+                    _consoleService.Clear();
+                    _consoleService.SetForegroundColor(ConsoleColor.Yellow);
+                    _consoleService.WriteLine($"{driverName} undrar vilken bil du vill ta en åktur med?\n");
                     var brands = Enum.GetValues(typeof(CarBrand)).Cast<CarBrand>().ToList();
                     for (int i = 0; i < brands.Count; i++)
                     {
-                        Console.WriteLine($"{i + 1}: {brands[i]}");
+                        _consoleService.WriteLine($"{i + 1}: {brands[i]}");
                     }
-                    Console.WriteLine("0: Avbryt");
-                    Console.ResetColor();
+                    _consoleService.WriteLine("0: Avbryt");
+                    _consoleService.ResetColor();
 
-                    Console.Write("\nVälj ett alternativ: ");
-                    string input = Console.ReadLine();
+                    _consoleService.Write("\nVälj ett alternativ: ");
+                    string input = _consoleService.ReadLine();
 
                     if (int.TryParse(input, out int brandChoice))
                     {
                         if (brandChoice == 0)
                         {
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            Console.WriteLine("Avslutar bilval.");
-                            Console.ResetColor();
+                            _consoleService.SetForegroundColor(ConsoleColor.Yellow);
+                            _consoleService.WriteLine("Avslutar bilval.");
+                            _consoleService.ResetColor();
                             return null;
                         }
 
@@ -118,24 +124,24 @@ namespace Library.Services
             {
                 try
                 {
-                    Console.Clear();
+                    _consoleService.Clear();
                     var random = new Random();
                     var expressions = Enum.GetValues(typeof(Expression)).Cast<Expression>().ToList();
                     var randomExpression = expressions[random.Next(expressions.Count)];
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.WriteLine($"Du har valt att åka i en {selectedBrand}, {randomExpression.ToString().ToLower()}! säger {driverName}");
-                    Console.WriteLine("\nVart vill du börja åka mot?\n \n1: Norr \n2: Öst \n3: Söder \n4: Väst \n5: Jag bryr mig inte, välj något bara!\n0: Avbryt");
-                    Console.ResetColor();
-                    Console.Write("\nVälj ett alternativ: ");
-                    string input = Console.ReadLine();
+                    _consoleService.SetForegroundColor(ConsoleColor.Cyan);
+                    _consoleService.WriteLine($"Du har valt att åka i en {selectedBrand}, {randomExpression.ToString().ToLower()}! säger {driverName}");
+                    _consoleService.WriteLine("\nVart vill du börja åka mot?\n \n1: Norr \n2: Öst \n3: Söder \n4: Väst \n5: Jag bryr mig inte, välj något bara!\n0: Avbryt");
+                    _consoleService.ResetColor();
+                    _consoleService.Write("\nVälj ett alternativ: ");
+                    string input = _consoleService.ReadLine();
 
                     if (int.TryParse(input, out int directionChoice))
                     {
                         if (directionChoice == 0)
                         {
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            Console.WriteLine("Avslutar riktning val.");
-                            Console.ResetColor();
+                            _consoleService.SetForegroundColor(ConsoleColor.Yellow);
+                            _consoleService.WriteLine("Avslutar riktning val.");
+                            _consoleService.ResetColor();
                             return null;
                         }
 
@@ -145,9 +151,9 @@ namespace Library.Services
                             {
                                 directionChoice = random.Next(1, 5);
                                 direction = (Direction)(directionChoice - 1);
-                                Console.ForegroundColor = ConsoleColor.Cyan;
-                                Console.WriteLine($"\nSlumpmässigt vald riktning: {direction}");
-                                Console.ResetColor();
+                                _consoleService.SetForegroundColor(ConsoleColor.Cyan);
+                                _consoleService.WriteLine($"\nSlumpmässigt vald riktning: {direction}");
+                                _consoleService.ResetColor();
                             }
                             else
                             {
@@ -180,9 +186,9 @@ namespace Library.Services
         /// </summary>
         private void DisplayErrorMessage(string message)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(message);
-            Console.ResetColor();
+            _consoleService.SetForegroundColor(ConsoleColor.Red);
+            _consoleService.WriteLine(message);
+            _consoleService.ResetColor();
             Task.Delay(2000).Wait();
         }
     }
