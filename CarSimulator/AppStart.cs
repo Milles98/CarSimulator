@@ -3,6 +3,7 @@ using Library.Factory;
 using Library.Services;
 using Library.Services.Interfaces;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CarSimulator
 {
@@ -19,8 +20,9 @@ namespace CarSimulator
             IMainMenuService mainMenuService = new MainMenuService(randomUserService);
             IMenuDisplayService menuDisplayService = new MenuDisplayService();
             IInputService inputService = new InputService();
+            IConsoleService consoleService = new ConsoleService();
 
-            IActionServiceFactory actionServiceFactory = new ActionServiceFactory(menuDisplayService, inputService);
+            IActionServiceFactory actionServiceFactory = new ActionServiceFactory(menuDisplayService, inputService, consoleService);
 
             var mainMenu = new MainMenu(mainMenuService, menuDisplayService, inputService, actionServiceFactory);
             await mainMenu.Menu();
