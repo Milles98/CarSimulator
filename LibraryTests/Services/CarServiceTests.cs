@@ -12,7 +12,6 @@ namespace LibraryTests.Services
     {
         private Mock<IFuelService> _fuelServiceMock;
         private Mock<IDriverService> _driverServiceMock;
-        private Mock<IFoodService> _foodServiceMock;
         private Mock<IConsoleService> _consoleServiceMock;
         private Car _car;
         private Driver _driver;
@@ -22,14 +21,13 @@ namespace LibraryTests.Services
         public void Setup()
         {
             _car = new Car { Brand = CarBrand.Toyota, Fuel = Fuel.Full, Direction = Direction.Norr };
-            _driver = new Driver { FirstName = "John", LastName = "Doe", Fatigue = Fatigue.Rested, Hunger = Hunger.Mätt };
+            _driver = new Driver { FirstName = "John", LastName = "Doe", Fatigue = Fatigue.Rested, };
 
             _fuelServiceMock = new Mock<IFuelService>();
             _driverServiceMock = new Mock<IDriverService>();
-            _foodServiceMock = new Mock<IFoodService>();
             _consoleServiceMock = new Mock<IConsoleService>();
 
-            _sut = new CarService(_car, _driver, _fuelServiceMock.Object, _driverServiceMock.Object, _foodServiceMock.Object, CarBrand.Toyota.ToString(), _consoleServiceMock.Object);
+            _sut = new CarService(_car, _driver, _fuelServiceMock.Object, _driverServiceMock.Object, CarBrand.Toyota.ToString(), _consoleServiceMock.Object);
         }
 
         [TestMethod]
@@ -129,7 +127,6 @@ namespace LibraryTests.Services
             Assert.AreEqual((int)_car.Fuel, status.Fuel);
             Assert.AreEqual((int)_driver.Fatigue, status.Fatigue);
             Assert.AreEqual(_car.Direction.ToString(), status.Direction);
-            Assert.AreEqual((int)_driver.Hunger, status.Hunger);
         }
     }
 }

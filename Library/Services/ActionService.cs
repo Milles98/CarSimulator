@@ -1,4 +1,5 @@
 ﻿using Library.Enums;
+using Library.Models;
 using Library.Services.Interfaces;
 using System;
 
@@ -9,7 +10,6 @@ namespace Library.Services
         private readonly ICarService _carService;
         private readonly IFuelService _fuelService;
         private readonly IDriverService _driverService;
-        private readonly IFoodService _foodService;
         private readonly IMenuDisplayService _menuDisplayService;
         private readonly IInputService _inputService;
         private readonly IConsoleService _consoleService;
@@ -19,12 +19,11 @@ namespace Library.Services
 
         public Action<int> ExitAction { get; set; } = (code) => Environment.Exit(code);
 
-        public ActionService(ICarService carService, IFuelService fuelService, IDriverService driverService, IFoodService foodService, IMenuDisplayService menuDisplayService, IInputService inputService, IConsoleService consoleService, string driverName, CarBrand carBrand)
+        public ActionService(ICarService carService, IFuelService fuelService, IDriverService driverService, IMenuDisplayService menuDisplayService, IInputService inputService, IConsoleService consoleService, string driverName, CarBrand carBrand)
         {
             _carService = carService ?? throw new ArgumentNullException(nameof(carService));
             _fuelService = fuelService ?? throw new ArgumentNullException(nameof(fuelService));
             _driverService = driverService ?? throw new ArgumentNullException(nameof(driverService));
-            _foodService = foodService ?? throw new ArgumentNullException(nameof(foodService));
             _menuDisplayService = menuDisplayService ?? throw new ArgumentNullException(nameof(menuDisplayService));
             _inputService = inputService ?? throw new ArgumentNullException(nameof(inputService));
             _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
@@ -104,9 +103,6 @@ namespace Library.Services
                         _driverService.Rest();
                         break;
                     case 6:
-                        _foodService.Eat();
-                        break;
-                    case 7:
                         _fuelService.Refuel();
                         break;
                     case 0:
