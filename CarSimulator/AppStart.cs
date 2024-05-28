@@ -2,32 +2,34 @@
 using Library.Factory;
 using Library.Services;
 using Library.Services.Interfaces;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CarSimulator
 {
     public class AppStart
     {
-        /// <summary>
-        /// Kör applikationen.
-        /// Testning: Integrationstestning för att verifiera att hela applikationen startar korrekt och att alla beroenden är korrekt inställda.
-        /// </summary>
+        private IConsoleService _consoleService;
+        private IRandomUserService _randomUserService;
+        private IMenuDisplayService _menuDisplayService;
+        private IMainMenuService _mainMenuService;
+        private IInputService _inputService;
+        private IActionServiceFactory _actionServiceFactory;
+        private MainMenu _mainMenu;
+
+        public AppStart(IConsoleService consoleService, IRandomUserService randomUserService, IMenuDisplayService menuDisplayService, IMainMenuService mainMenuService, IInputService inputService, IActionServiceFactory actionServiceFactory, MainMenu mainMenu)
+        {
+            _consoleService = consoleService;
+            _randomUserService = randomUserService;
+            _menuDisplayService = menuDisplayService;
+            _mainMenuService = mainMenuService;
+            _inputService = inputService;
+            _actionServiceFactory = actionServiceFactory;
+            _mainMenu = mainMenu;
+        }
+
         public async Task AppRun()
         {
-            Console.OutputEncoding = Encoding.UTF8;
-            IConsoleService consoleService = new ConsoleService();
-            HttpClient httpClient = new HttpClient();
-            IRandomUserService randomUserService = new RandomUserService(httpClient, consoleService);
-            IMenuDisplayService menuDisplayService = new MenuDisplayService(consoleService);
-            IMainMenuService mainMenuService = new MainMenuService(randomUserService, consoleService);
-            IInputService inputService = new InputService(consoleService);
-
-            IActionServiceFactory actionServiceFactory = new ActionServiceFactory(menuDisplayService, inputService, consoleService);
-
-            var mainMenu = new MainMenu(mainMenuService, menuDisplayService, inputService, actionServiceFactory, consoleService);
-            await mainMenu.Menu();
+            await _mainMenu.Menu();
         }
     }
 }

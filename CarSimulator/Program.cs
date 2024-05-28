@@ -1,6 +1,7 @@
 ﻿using CarSimulator;
 
-var app = new AppStart();
+var appInitializer = new AppInitializer();
+var app = appInitializer.Initialize();
 await app.AppRun();
 
 /*
