@@ -26,7 +26,6 @@ namespace CarSimulator.Menus
 
         /// <summary>
         /// Visar huvudmenyn och hanterar användarens val.
-        /// Testning: Integrationstestning för att säkerställa att menyn fungerar korrekt och hanterar användarens val.
         /// </summary>
         public async Task Menu()
         {
@@ -76,7 +75,6 @@ namespace CarSimulator.Menus
 
         /// <summary>
         /// Visar felmeddelande vid ogiltigt val.
-        /// Testning: Enhetstestning för att verifiera att felmeddelandet visas korrekt.
         /// </summary>
         private void DisplayErrorMessage()
         {
@@ -88,7 +86,6 @@ namespace CarSimulator.Menus
 
         /// <summary>
         /// Visar avslutsmeddelande.
-        /// Testning: Enhetstestning för att verifiera att avslutsmeddelandet visas korrekt.
         /// </summary>
         private void DisplayExitMessage()
         {
@@ -108,7 +105,6 @@ namespace CarSimulator.Menus
 
         /// <summary>
         /// Startar simuleringen genom att hämta förar- och bildetaljer.
-        /// Testning: Integrationstestning för att verifiera att förar- och bildetaljer hämtas korrekt och att simuleringen startar.
         /// </summary>
         private async Task StartSimulation()
         {
@@ -157,7 +153,6 @@ namespace CarSimulator.Menus
 
         /// <summary>
         /// Värmer upp bilens motor.
-        /// Testning: Enhetstestning för att verifiera att motoruppvärmningen visas korrekt.
         /// </summary>
         private async Task WarmUpEngine()
         {

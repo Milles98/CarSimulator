@@ -25,7 +25,6 @@ public class DriverService : IDriverService
 
     /// <summary>
     /// Utför en rast för föraren.
-    /// Testning: Enhetstestning för att verifiera att rastlogiken fungerar korrekt och att undantag hanteras.
     /// </summary>
     public void Rest()
     {
@@ -56,7 +55,6 @@ public class DriverService : IDriverService
 
     /// <summary>
     /// Kontrollerar förarens trötthet.
-    /// Testning: Enhetstestning för att verifiera att rätt varningar visas vid olika nivåer av trötthet och att undantag hanteras.
     /// </summary>
     public void CheckFatigue()
     {
