@@ -22,7 +22,7 @@ namespace Library.Factory
             IFuelService fuelService = new FuelService(car, car.Brand.ToString());
             IDriverService driverService = new DriverService(driver, driver.Name);
             IFoodService foodService = new FoodService(driver);
-            ICarService carService = new CarService(car, driver, fuelService, driverService, foodService, car.Brand.ToString());
+            ICarService carService = new CarService(car, driver, fuelService, driverService, foodService, car.Brand.ToString(), _consoleService);
 
             return new ActionService(carService, fuelService, driverService, foodService, _menuDisplayService, _inputService, _consoleService, driver.Name, car.Brand);
         }
