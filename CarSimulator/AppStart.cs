@@ -24,7 +24,7 @@ namespace CarSimulator
 
             IActionServiceFactory actionServiceFactory = new ActionServiceFactory(menuDisplayService, inputService, consoleService);
 
-            var mainMenu = new MainMenu(mainMenuService, menuDisplayService, inputService, actionServiceFactory);
+            var mainMenu = new MainMenu(mainMenuService, menuDisplayService, inputService, actionServiceFactory, consoleService);
             await mainMenu.Menu();
         }
     }
