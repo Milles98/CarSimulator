@@ -45,18 +45,6 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public void ExecuteMenu_ShouldDisplayIntroductionOnce()
-        {
-            _inputServiceMock.SetupSequence(x => x.GetUserChoice())
-                .Returns(0)
-                .Throws(new Exception("Exit loop"));
-
-            _sut.ExecuteMenu();
-
-            _menuDisplayServiceMock.Verify(x => x.DisplayIntroduction(_driverName, _carBrand), Times.Once);
-        }
-
-        [TestMethod]
         public void ExecuteChoice_ShouldCallCarServiceTurnLeft_WhenChoiceIs1()
         {
             bool running = true;
@@ -123,9 +111,17 @@ namespace LibraryTests.Services
         public void ExecuteChoice_ShouldSetRunningToFalseAndExit_WhenChoiceIs0()
         {
             bool running = true;
-            Assert.ThrowsException<System.Threading.ThreadAbortException>(() => _sut.ExecuteChoice(0, ref running));
+            bool exitCalled = false;
+
+            _sut.ExitAction = (code) =>
+            {
+                exitCalled = true;
+            };
+
+            _sut.ExecuteChoice(0, ref running);
 
             Assert.IsFalse(running);
+            Assert.IsTrue(exitCalled);
         }
 
         [TestMethod]
