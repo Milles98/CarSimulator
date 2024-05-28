@@ -1,7 +1,6 @@
 ﻿using Library.Enums;
 using Library.Services.Interfaces;
 using System;
-using System.Threading.Tasks;
 
 namespace Library.Services
 {
@@ -17,6 +16,8 @@ namespace Library.Services
         private readonly string _driverName;
         private readonly CarBrand _carBrand;
         private bool _isFirstTime = true;
+
+        public Action<int> ExitAction { get; set; } = (code) => Environment.Exit(code);
 
         public ActionService(ICarService carService, IFuelService fuelService, IDriverService driverService, IFoodService foodService, IMenuDisplayService menuDisplayService, IInputService inputService, IConsoleService consoleService, string driverName, CarBrand carBrand)
         {
@@ -111,7 +112,7 @@ namespace Library.Services
                     case 0:
                         DisplayExitMessage();
                         running = false;
-                        Environment.Exit(0);
+                        ExitAction(0);
                         break;
                     default:
                         _consoleService.SetForegroundColor(ConsoleColor.Red);
