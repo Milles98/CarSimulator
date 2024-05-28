@@ -1,13 +1,135 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Bogus;
+using Library.Enums;
+using Library.Models;
+using Library.Services.Interfaces;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace LibraryTests.Services
 {
     [TestClass]
     public class CarServiceTests
     {
+        private Mock<IFuelService> _fuelServiceMock;
+        private Mock<IDriverService> _driverServiceMock;
+        private Mock<IFoodService> _foodServiceMock;
+        private Mock<IConsoleService> _consoleServiceMock;
+        private Car _car;
+        private Driver _driver;
+        private CarService _sut;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            _car = new Car { Brand = CarBrand.Toyota, Fuel = Fuel.Full, Direction = Direction.Norr };
+            _driver = new Driver { FirstName = "John", LastName = "Doe", Fatigue = Fatigue.Rested, Hunger = Hunger.Mätt };
+
+            _fuelServiceMock = new Mock<IFuelService>();
+            _driverServiceMock = new Mock<IDriverService>();
+            _foodServiceMock = new Mock<IFoodService>();
+            _consoleServiceMock = new Mock<IConsoleService>();
+
+            _sut = new CarService(_car, _driver, _fuelServiceMock.Object, _driverServiceMock.Object, _foodServiceMock.Object, CarBrand.Toyota.ToString(), _consoleServiceMock.Object);
+        }
+
+        [TestMethod]
+        public void Drive_ShouldDisplayLowFuelWarning_WhenNotEnoughFuel()
+        {
+            // Arrange
+            _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(false);
+
+            // Act
+            _sut.Drive("framåt");
+
+            // Assert
+            _fuelServiceMock.Verify(x => x.DisplayLowFuelWarning(), Times.Once);
+            _consoleServiceMock.Verify(x => x.SetForegroundColor(It.IsAny<ConsoleColor>()), Times.Never);
+            _consoleServiceMock.Verify(x => x.WriteLine(It.IsAny<string>()), Times.Never);
+        }
+
+        [TestMethod]
+        public void Drive_ShouldDriveForward_WhenEnoughFuel()
+        {
+            // Arrange
+            _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
+
+            // Act
+            _sut.Drive("framåt");
+
+            // Assert
+            _fuelServiceMock.Verify(x => x.UseFuel(2), Times.Once);
+            _consoleServiceMock.Verify(x => x.SetForegroundColor(ConsoleColor.Green), Times.Once);
+            _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("John Doe med dig i sin Toyota kör framåt mot"))), Times.Once);
+            _consoleServiceMock.Verify(x => x.ResetColor(), Times.Once);
+            _driverServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
+        }
+
+        [TestMethod]
+        public void Drive_ShouldDriveBackwardAndChangeDirection_WhenEnoughFuel()
+        {
+            // Arrange
+            _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
+
+            // Act
+            _sut.Drive("bakåt");
+
+            // Assert
+            _fuelServiceMock.Verify(x => x.UseFuel(2), Times.Once);
+            _consoleServiceMock.Verify(x => x.SetForegroundColor(ConsoleColor.Green), Times.Once);
+            _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("John Doe med dig i sin Toyota kör bakåt mot"))), Times.Once);
+            _consoleServiceMock.Verify(x => x.ResetColor(), Times.Once);
+            _driverServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
+            Assert.AreEqual(Direction.Söder, _car.Direction);
+        }
+
+        [TestMethod]
+        public void Turn_ShouldTurnLeft_WhenEnoughFuel()
+        {
+            // Arrange
+            _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
+
+            // Act
+            _sut.Turn("vänster");
+
+            // Assert
+            _fuelServiceMock.Verify(x => x.UseFuel(1), Times.Once);
+            _consoleServiceMock.Verify(x => x.SetForegroundColor(ConsoleColor.Blue), Times.Once);
+            _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("John Doe med dig i sin Toyota svänger vänster mot"))), Times.Once);
+            _consoleServiceMock.Verify(x => x.ResetColor(), Times.Once);
+            _driverServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
+            Assert.AreEqual(Direction.Väst, _car.Direction);
+        }
+
+        [TestMethod]
+        public void Turn_ShouldTurnRight_WhenEnoughFuel()
+        {
+            // Arrange
+            _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
+
+            // Act
+            _sut.Turn("höger");
+
+            // Assert
+            _fuelServiceMock.Verify(x => x.UseFuel(1), Times.Once);
+            _consoleServiceMock.Verify(x => x.SetForegroundColor(ConsoleColor.Blue), Times.Once);
+            _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("John Doe med dig i sin Toyota svänger höger mot"))), Times.Once);
+            _consoleServiceMock.Verify(x => x.ResetColor(), Times.Once);
+            _driverServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
+            Assert.AreEqual(Direction.Öst, _car.Direction);
+        }
+
+        [TestMethod]
+        public void GetStatus_ShouldReturnCorrectStatus()
+        {
+            // Act
+            var status = _sut.GetStatus();
+
+            // Assert
+            Assert.IsNotNull(status);
+            Assert.AreEqual((int)_car.Fuel, status.Fuel);
+            Assert.AreEqual((int)_driver.Fatigue, status.Fatigue);
+            Assert.AreEqual(_car.Direction.ToString(), status.Direction);
+            Assert.AreEqual((int)_driver.Hunger, status.Hunger);
+        }
     }
 }
