@@ -21,7 +21,7 @@ namespace Library.Factory
         {
             IFuelService fuelService = new FuelService(car, car.Brand.ToString());
             IDriverService driverService = new DriverService(driver, driver.Name, _consoleService);
-            IFoodService foodService = new FoodService(driver);
+            IFoodService foodService = new FoodService(driver, _consoleService);
             ICarService carService = new CarService(car, driver, fuelService, driverService, foodService, car.Brand.ToString(), _consoleService);
 
             return new ActionService(carService, fuelService, driverService, foodService, _menuDisplayService, _inputService, _consoleService, driver.Name, car.Brand);
