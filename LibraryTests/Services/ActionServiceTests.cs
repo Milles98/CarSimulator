@@ -8,7 +8,7 @@ namespace LibraryTests.Services
     [TestClass]
     public class ActionServiceTests
     {
-        private Mock<ICarService> _carServiceMock;
+        private Mock<IDirectionService> _carDirectionMock;
         private Mock<IFuelService> _fuelServiceMock;
         private Mock<IDriverService> _driverServiceMock;
         private Mock<IFoodService> _foodServiceMock;
@@ -22,7 +22,7 @@ namespace LibraryTests.Services
         [TestInitialize]
         public void Setup()
         {
-            _carServiceMock = new Mock<ICarService>();
+            _carDirectionMock = new Mock<IDirectionService>();
             _fuelServiceMock = new Mock<IFuelService>();
             _driverServiceMock = new Mock<IDriverService>();
             _foodServiceMock = new Mock<IFoodService>();
@@ -31,7 +31,7 @@ namespace LibraryTests.Services
             _consoleServiceMock = new Mock<IConsoleService>();
 
             _sut = new ActionService(
-                _carServiceMock.Object,
+                _carDirectionMock.Object,
                 _fuelServiceMock.Object,
                 _driverServiceMock.Object,
                 _menuDisplayServiceMock.Object,
@@ -42,39 +42,39 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public void ExecuteChoice_ShouldCallCarServiceTurnLeft_WhenChoiceIs1()
+        public void ExecuteChoice_ShouldCallDirectionServiceTurnLeft_WhenChoiceIs1()
         {
             bool running = true;
             _sut.ExecuteChoice(1, ref running);
 
-            _carServiceMock.Verify(x => x.Turn("vänster"), Times.Once);
+            _carDirectionMock.Verify(x => x.Turn("vänster"), Times.Once);
         }
 
         [TestMethod]
-        public void ExecuteChoice_ShouldCallCarServiceTurnRight_WhenChoiceIs2()
+        public void ExecuteChoice_ShouldCallDirectionServiceTurnRight_WhenChoiceIs2()
         {
             bool running = true;
             _sut.ExecuteChoice(2, ref running);
 
-            _carServiceMock.Verify(x => x.Turn("höger"), Times.Once);
+            _carDirectionMock.Verify(x => x.Turn("höger"), Times.Once);
         }
 
         [TestMethod]
-        public void ExecuteChoice_ShouldCallCarServiceDriveForward_WhenChoiceIs3()
+        public void ExecuteChoice_ShouldCallDirectionServiceDriveForward_WhenChoiceIs3()
         {
             bool running = true;
             _sut.ExecuteChoice(3, ref running);
 
-            _carServiceMock.Verify(x => x.Drive("framåt"), Times.Once);
+            _carDirectionMock.Verify(x => x.Drive("framåt"), Times.Once);
         }
 
         [TestMethod]
-        public void ExecuteChoice_ShouldCallCarServiceDriveBackward_WhenChoiceIs4()
+        public void ExecuteChoice_ShouldCallDirectionServiceDriveBackward_WhenChoiceIs4()
         {
             bool running = true;
             _sut.ExecuteChoice(4, ref running);
 
-            _carServiceMock.Verify(x => x.Drive("bakåt"), Times.Once);
+            _carDirectionMock.Verify(x => x.Drive("bakåt"), Times.Once);
         }
 
         [TestMethod]

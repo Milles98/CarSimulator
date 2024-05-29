@@ -18,7 +18,7 @@ Den använder metoden Menu för att göra detta.
 4.	Klassen MainMenuService används för att hantera användarens inmatning och åtgärder i huvudmenyn. 
 Metoden EnterCarDetails används för att få användarens val av bil och riktning.
 
-5.	Klassen CarService används för att hantera bilens åtgärder. 
+5.	Klassen DirectionService används för att hantera bilens åtgärder. 
 Metoden GetNewDirection används för att få bilens nya riktning 
 baserat på den nuvarande riktningen och svängriktningen.
 

@@ -1,6 +1,6 @@
 ﻿namespace Library.Services.Interfaces
 {
-    public interface ICarService
+    public interface IDirectionService
     {
         void Drive(string direction);
         void Turn(string direction);
