@@ -1,11 +1,5 @@
-﻿using Library.Models;
-using Library.Services;
+﻿using Library.Services;
 using Library.Services.Interfaces;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace LibraryTests.Services
 {
