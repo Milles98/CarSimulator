@@ -45,7 +45,7 @@ namespace Library.Services
 
                 while (running)
                 {
-                    _menuDisplayService.DisplayMainMenu(_driverName);
+                    _menuDisplayService.DisplayMenu(_driverName);
 
                     int choice;
                     try
