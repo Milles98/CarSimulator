@@ -4,7 +4,7 @@ namespace Library.Services.Interfaces
 {
     public interface IMenuDisplayService
     {
-        void DisplayMainMenu(string driverName);
+        void DisplayMenu(string driverName);
         void DisplayStatusMenu(CarStatus status, string driverName, string carBrand);
         void DisplayIntroduction(string driverName, CarBrand carBrand);
     }

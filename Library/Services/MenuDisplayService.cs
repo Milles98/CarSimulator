@@ -16,7 +16,7 @@ namespace Library.Services
             _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
         }
 
-        public void DisplayMainMenu(string driverName)
+        public void DisplayMenu(string driverName)
         {
             while (true)
             {

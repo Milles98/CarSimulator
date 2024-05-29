@@ -20,13 +20,13 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public void DisplayMainMenu_ShouldDisplayOptions()
+        public void DisplayMenu_ShouldDisplayOptions()
         {
             // Arrange
             string driverName = "John Doe";
 
             // Act
-            _sut.DisplayMainMenu(driverName);
+            _sut.DisplayMenu(driverName);
 
             // Assert
             _consoleServiceMock.Verify(cs => cs.SetForegroundColor(ConsoleColor.Cyan), Times.Once);
