@@ -41,15 +41,15 @@ namespace LibraryTests.Factory
 
             var directionServiceField = typeof(ActionService).GetField("_directionService", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             var fuelServiceField = typeof(ActionService).GetField("_fuelService", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            var driverServiceField = typeof(ActionService).GetField("_driverService", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var fatigueServiceField = typeof(ActionService).GetField("_fatigueService", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
 
             var directionService = directionServiceField.GetValue(actionService) as IDirectionService;
             var fuelService = fuelServiceField.GetValue(actionService) as IFuelService;
-            var driverService = driverServiceField.GetValue(actionService) as IDriverService;
+            var fatigueService = fatigueServiceField.GetValue(actionService) as IFatigueService;
 
             Assert.IsNotNull(directionService);
             Assert.IsNotNull(fuelService);
-            Assert.IsNotNull(driverService);
+            Assert.IsNotNull(fatigueService);
         }
     }
 }

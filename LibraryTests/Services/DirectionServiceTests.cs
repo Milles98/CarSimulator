@@ -9,7 +9,7 @@ namespace LibraryTests.Services
     public class DirectionServiceTests
     {
         private Mock<IFuelService> _fuelServiceMock;
-        private Mock<IDriverService> _driverServiceMock;
+        private Mock<IFatigueService> _fatigueServiceMock;
         private Mock<IConsoleService> _consoleServiceMock;
         private Car _car;
         private Driver _driver;
@@ -22,10 +22,10 @@ namespace LibraryTests.Services
             _driver = new Driver { FirstName = "John", LastName = "Doe", Fatigue = Fatigue.Rested, };
 
             _fuelServiceMock = new Mock<IFuelService>();
-            _driverServiceMock = new Mock<IDriverService>();
+            _fatigueServiceMock = new Mock<IFatigueService>();
             _consoleServiceMock = new Mock<IConsoleService>();
 
-            _sut = new DirectionService(_car, _driver, _fuelServiceMock.Object, _driverServiceMock.Object, CarBrand.Toyota.ToString(), _consoleServiceMock.Object);
+            _sut = new DirectionService(_car, _driver, _fuelServiceMock.Object, _fatigueServiceMock.Object, CarBrand.Toyota.ToString(), _consoleServiceMock.Object);
         }
 
         [TestMethod]
@@ -57,7 +57,7 @@ namespace LibraryTests.Services
             _consoleServiceMock.Verify(x => x.SetForegroundColor(ConsoleColor.Green), Times.Once);
             _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("John Doe med dig i sin Toyota kör framåt mot"))), Times.Once);
             _consoleServiceMock.Verify(x => x.ResetColor(), Times.Once);
-            _driverServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
+            _fatigueServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
             Assert.AreEqual(Direction.Norr, _car.Direction);
         }
 
@@ -75,7 +75,7 @@ namespace LibraryTests.Services
             _consoleServiceMock.Verify(x => x.SetForegroundColor(ConsoleColor.Green), Times.Once);
             _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("John Doe med dig i sin Toyota kör bakåt mot"))), Times.Once);
             _consoleServiceMock.Verify(x => x.ResetColor(), Times.Once);
-            _driverServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
+            _fatigueServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
             Assert.AreEqual(Direction.Söder, _car.Direction);
         }
 
@@ -95,7 +95,7 @@ namespace LibraryTests.Services
             _consoleServiceMock.Verify(x => x.SetForegroundColor(ConsoleColor.Green), Times.Exactly(2));
             _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("John Doe med dig i sin Toyota kör bakåt mot"))), Times.Exactly(2));
             _consoleServiceMock.Verify(x => x.ResetColor(), Times.Exactly(2));
-            _driverServiceMock.Verify(x => x.CheckFatigue(), Times.Exactly(2));
+            _fatigueServiceMock.Verify(x => x.CheckFatigue(), Times.Exactly(2));
             Assert.AreEqual(initialDirection, _car.Direction);
         }
 
@@ -116,7 +116,7 @@ namespace LibraryTests.Services
             _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("John Doe med dig i sin Toyota kör framåt mot"))), Times.Exactly(2));
             _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("John Doe med dig i sin Toyota kör bakåt mot"))), Times.Once);
             _consoleServiceMock.Verify(x => x.ResetColor(), Times.Exactly(3));
-            _driverServiceMock.Verify(x => x.CheckFatigue(), Times.Exactly(3));
+            _fatigueServiceMock.Verify(x => x.CheckFatigue(), Times.Exactly(3));
             Assert.AreEqual(Direction.Norr, _car.Direction);
         }
 
@@ -134,7 +134,7 @@ namespace LibraryTests.Services
             _consoleServiceMock.Verify(x => x.SetForegroundColor(ConsoleColor.Blue), Times.Once);
             _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("John Doe med dig i sin Toyota svänger vänster mot"))), Times.Once);
             _consoleServiceMock.Verify(x => x.ResetColor(), Times.Once);
-            _driverServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
+            _fatigueServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
             Assert.AreEqual(Direction.Väst, _car.Direction);
         }
 
@@ -152,7 +152,7 @@ namespace LibraryTests.Services
             _consoleServiceMock.Verify(x => x.SetForegroundColor(ConsoleColor.Blue), Times.Once);
             _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("John Doe med dig i sin Toyota svänger höger mot"))), Times.Once);
             _consoleServiceMock.Verify(x => x.ResetColor(), Times.Once);
-            _driverServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
+            _fatigueServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
             Assert.AreEqual(Direction.Öst, _car.Direction);
         }
 

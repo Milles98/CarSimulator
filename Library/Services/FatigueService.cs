@@ -4,7 +4,7 @@ using Library.Models;
 using Library.Services.Interfaces;
 using System;
 
-public class DriverService : IDriverService
+public class FatigueService : IFatigueService
 {
     private const int MaxFatigue = 10;
     private const int FatigueWarningLevel = 7;
@@ -15,7 +15,7 @@ public class DriverService : IDriverService
     private readonly Faker _faker;
     private readonly IConsoleService _consoleService;
 
-    public DriverService(Driver driver, string driverName, IConsoleService consoleService)
+    public FatigueService(Driver driver, string driverName, IConsoleService consoleService)
     {
         _driver = driver ?? throw new ArgumentNullException(nameof(driver));
         _driverName = !string.IsNullOrWhiteSpace(driverName) ? driverName : throw new ArgumentException("Driver name cannot be null or empty", nameof(driverName));

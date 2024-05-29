@@ -31,10 +31,10 @@ namespace Library.Factory
             }
 
             IFuelService fuelService = new FuelService(car, car.Brand.ToString(), _consoleService);
-            IDriverService driverService = new DriverService(driver, driver.Name, _consoleService);
-            IDirectionService directionService = new DirectionService(car, driver, fuelService, driverService, car.Brand.ToString(), _consoleService);
+            IFatigueService fatigueService = new FatigueService(driver, driver.Name, _consoleService);
+            IDirectionService directionService = new DirectionService(car, driver, fuelService, fatigueService, car.Brand.ToString(), _consoleService);
 
-            return new ActionService(directionService, fuelService, driverService, _menuDisplayService, _inputService, _consoleService, driver.Name, car.Brand);
+            return new ActionService(directionService, fuelService, fatigueService, _menuDisplayService, _inputService, _consoleService, driver.Name, car.Brand);
         }
     }
 }
