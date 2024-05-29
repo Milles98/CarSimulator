@@ -21,7 +21,7 @@ namespace Library.Services
         /// <summary>
         /// Hämtar en slumpmässig förare från ett API.
         /// </summary>
-        public async Task<Driver> GetRandomDriverAsync()
+        public async Task<Driver?> GetRandomDriverAsync()
         {
             string url = "https://randomuser.me/api/";
             try
