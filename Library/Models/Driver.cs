@@ -4,12 +4,13 @@ namespace Library.Models
 {
     public class Driver
     {
+        public string Title { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Fatigue Fatigue { get; set; }
         public Hunger Hunger { get; set; }
 
-        public string Name => $"{FirstName} {LastName}";
+        public string Name => $"{Title}. {FirstName} {LastName}";
 
     }
 }

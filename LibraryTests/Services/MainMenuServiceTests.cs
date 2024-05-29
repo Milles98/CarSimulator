@@ -25,7 +25,7 @@ namespace LibraryTests.Services
         public async Task FetchDriverDetails_ShouldDisplayDriverDetails_WhenDriverIsFetchedSuccessfully()
         {
             // Arrange
-            var driver = new Driver { FirstName = "John", LastName = "Doe" };
+            var driver = new Driver { Title = "Mr", FirstName = "John", LastName = "Doe" };
             _randomUserServiceMock.Setup(s => s.GetRandomDriverAsync()).ReturnsAsync(driver);
 
             // Act
@@ -33,10 +33,11 @@ namespace LibraryTests.Services
 
             // Assert
             Assert.IsNotNull(result);
+            Assert.AreEqual(driver.Title, result.Title);
             Assert.AreEqual(driver.FirstName, result.FirstName);
             Assert.AreEqual(driver.LastName, result.LastName);
             _consoleServiceMock.Verify(cs => cs.SetForegroundColor(ConsoleColor.Green), Times.Once);
-            _consoleServiceMock.Verify(cs => cs.WriteLine($"Din förare är: {driver.FirstName} {driver.LastName}"), Times.Once);
+            _consoleServiceMock.Verify(cs => cs.WriteLine($"Din förare är: {driver.Title}. {driver.FirstName} {driver.LastName}"), Times.Once);
             _consoleServiceMock.Verify(cs => cs.ResetColor(), Times.Exactly(2));
         }
 

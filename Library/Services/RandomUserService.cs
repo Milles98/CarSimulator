@@ -34,6 +34,7 @@ namespace Library.Services
                     var user = randomUserResponse.Results[0];
                     return new Driver
                     {
+                        Title = user.Name.Title,
                         FirstName = user.Name.First,
                         LastName = user.Name.Last
                     };
