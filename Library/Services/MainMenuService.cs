@@ -42,10 +42,10 @@ namespace Library.Services
                     return null;
                 }
                 _consoleService.SetForegroundColor(ConsoleColor.Green);
-                _consoleService.WriteLine($"Din förare är: {driver.FirstName} {driver.LastName}");
+                _consoleService.WriteLine($"Din förare är: {driver.Title}. {driver.FirstName} {driver.LastName}");
                 _consoleService.ResetColor();
                 await Task.Delay(2000);
-                return new Driver { FirstName = driver.FirstName, LastName = driver.LastName, Fatigue = Fatigue.Rested };
+                return new Driver { Title = driver.Title, FirstName = driver.FirstName, LastName = driver.LastName, Fatigue = Fatigue.Rested };
             }
             catch (Exception ex)
             {

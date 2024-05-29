@@ -38,7 +38,7 @@ namespace CarSimulatorTests.Menus
         public async Task Menu_ShouldStartSimulation_OnChoiceOne()
         {
             // Arrange
-            var driver = new Driver { FirstName = "Test", LastName = "Driver", Fatigue = Fatigue.Rested, Hunger = Hunger.Mätt };
+            var driver = new Driver { Title = "Mr", FirstName = "Test", LastName = "Driver", Fatigue = Fatigue.Rested, Hunger = Hunger.Mätt };
             var car = new Car { Brand = CarBrand.Toyota, Fuel = Fuel.Full, Direction = Direction.Norr };
 
             _inputServiceMock.SetupSequence(s => s.GetUserChoice())
@@ -56,7 +56,7 @@ namespace CarSimulatorTests.Menus
 
             // Assert
             _mainMenuServiceMock.Verify(s => s.FetchDriverDetails(), Times.Once);
-            _mainMenuServiceMock.Verify(s => s.EnterCarDetails(It.Is<string>(name => name == "Test Driver")), Times.Once);
+            _mainMenuServiceMock.Verify(s => s.EnterCarDetails(It.Is<string>(name => name == "Mr. Test Driver")), Times.Once);
             _consoleServiceMock.Verify(c => c.SetForegroundColor(ConsoleColor.Green), Times.AtLeastOnce);
             _actionServiceFactoryMock.Verify(f => f.CreateActionService(driver, car), Times.Once);
         }
