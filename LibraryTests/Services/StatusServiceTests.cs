@@ -1,8 +1,5 @@
 ﻿using Library.Enums;
 using Library.Models;
-using Library.Services;
-using Library.Services.Interfaces;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LibraryTests.Services
 {
