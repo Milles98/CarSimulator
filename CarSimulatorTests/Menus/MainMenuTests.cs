@@ -10,7 +10,7 @@ namespace CarSimulatorTests.Menus
     public class MainMenuTests
     {
         private Mock<IConsoleService> _consoleServiceMock;
-        private Mock<IMainMenuService> _mainMenuServiceMock;
+        private Mock<ISimulationSetupService> _simulationSetupServiceMock;
         private Mock<IMenuDisplayService> _menuDisplayServiceMock;
         private Mock<IInputService> _inputServiceMock;
         private Mock<IActionServiceFactory> _actionServiceFactoryMock;
@@ -20,13 +20,13 @@ namespace CarSimulatorTests.Menus
         public void Setup()
         {
             _consoleServiceMock = new Mock<IConsoleService>();
-            _mainMenuServiceMock = new Mock<IMainMenuService>();
+            _simulationSetupServiceMock = new Mock<ISimulationSetupService>();
             _menuDisplayServiceMock = new Mock<IMenuDisplayService>();
             _inputServiceMock = new Mock<IInputService>();
             _actionServiceFactoryMock = new Mock<IActionServiceFactory>();
 
             _mainMenu = new MainMenu(
-                _mainMenuServiceMock.Object,
+                _simulationSetupServiceMock.Object,
                 _menuDisplayServiceMock.Object,
                 _inputServiceMock.Object,
                 _actionServiceFactoryMock.Object,
@@ -45,8 +45,8 @@ namespace CarSimulatorTests.Menus
                 .Returns(1)
                 .Returns(0);
 
-            _mainMenuServiceMock.Setup(s => s.FetchDriverDetails()).ReturnsAsync(driver);
-            _mainMenuServiceMock.Setup(s => s.EnterCarDetails(It.IsAny<string>())).Returns(car);
+            _simulationSetupServiceMock.Setup(s => s.FetchDriverDetails()).ReturnsAsync(driver);
+            _simulationSetupServiceMock.Setup(s => s.EnterCarDetails(It.IsAny<string>())).Returns(car);
 
             var actionServiceMock = new Mock<IActionService>();
             _actionServiceFactoryMock.Setup(f => f.CreateActionService(driver, car)).Returns(actionServiceMock.Object);
@@ -55,8 +55,8 @@ namespace CarSimulatorTests.Menus
             await _mainMenu.Menu();
 
             // Assert
-            _mainMenuServiceMock.Verify(s => s.FetchDriverDetails(), Times.Once);
-            _mainMenuServiceMock.Verify(s => s.EnterCarDetails(It.Is<string>(name => name == "Mr. Test Driver")), Times.Once);
+            _simulationSetupServiceMock.Verify(s => s.FetchDriverDetails(), Times.Once);
+            _simulationSetupServiceMock.Verify(s => s.EnterCarDetails(It.Is<string>(name => name == "Mr. Test Driver")), Times.Once);
             _consoleServiceMock.Verify(c => c.SetForegroundColor(ConsoleColor.Green), Times.AtLeastOnce);
             _actionServiceFactoryMock.Verify(f => f.CreateActionService(driver, car), Times.Once);
         }

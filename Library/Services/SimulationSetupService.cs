@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Library.Services
 {
-    public class MainMenuService : IMainMenuService
+    public class SimulationSetupService : ISimulationSetupService
     {
         private readonly IRandomUserService _randomUserService;
         private readonly IConsoleService _consoleService;
 
-        public MainMenuService(IRandomUserService randomUserService, IConsoleService consoleService)
+        public SimulationSetupService(IRandomUserService randomUserService, IConsoleService consoleService)
         {
             _randomUserService = randomUserService ?? throw new ArgumentNullException(nameof(randomUserService));
             _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));

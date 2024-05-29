@@ -7,18 +7,18 @@ using Moq;
 namespace LibraryTests.Services
 {
     [TestClass]
-    public class MainMenuServiceTests
+    public class SimulationSetupServiceTests
     {
         private Mock<IRandomUserService> _randomUserServiceMock;
         private Mock<IConsoleService> _consoleServiceMock;
-        private MainMenuService _sut;
+        private SimulationSetupService _sut;
 
         [TestInitialize]
         public void Setup()
         {
             _randomUserServiceMock = new Mock<IRandomUserService>();
             _consoleServiceMock = new Mock<IConsoleService>();
-            _sut = new MainMenuService(_randomUserServiceMock.Object, _consoleServiceMock.Object);
+            _sut = new SimulationSetupService(_randomUserServiceMock.Object, _consoleServiceMock.Object);
         }
 
         [TestMethod]

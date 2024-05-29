@@ -20,7 +20,7 @@ namespace CarSimulatorTests
             Assert.IsInstanceOfType(GetPrivateField(appStart, "_consoleService"), typeof(ConsoleService));
             Assert.IsInstanceOfType(GetPrivateField(appStart, "_randomUserService"), typeof(RandomUserService));
             Assert.IsInstanceOfType(GetPrivateField(appStart, "_menuDisplayService"), typeof(MenuDisplayService));
-            Assert.IsInstanceOfType(GetPrivateField(appStart, "_mainMenuService"), typeof(MainMenuService));
+            Assert.IsInstanceOfType(GetPrivateField(appStart, "_simulationSetupService"), typeof(SimulationSetupService));
             Assert.IsInstanceOfType(GetPrivateField(appStart, "_inputService"), typeof(InputService));
             Assert.IsInstanceOfType(GetPrivateField(appStart, "_actionServiceFactory"), typeof(ActionServiceFactory));
             Assert.IsInstanceOfType(GetPrivateField(appStart, "_mainMenu"), typeof(MainMenu));

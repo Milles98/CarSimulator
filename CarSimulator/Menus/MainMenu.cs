@@ -8,16 +8,16 @@ namespace CarSimulator.Menus
 {
     public class MainMenu : IMainMenu
     {
-        private readonly IMainMenuService _mainMenuService;
+        private readonly ISimulationSetupService _simulationSetupService;
         private readonly IMenuDisplayService _menuDisplayService;
         private readonly IInputService _inputService;
         private readonly IActionServiceFactory _actionServiceFactory;
         private readonly IConsoleService _consoleService;
         private bool _isTesting = false;
 
-        public MainMenu(IMainMenuService mainMenuService, IMenuDisplayService menuDisplayService, IInputService inputService, IActionServiceFactory actionServiceFactory, IConsoleService consoleService)
+        public MainMenu(ISimulationSetupService simulationSetupService, IMenuDisplayService menuDisplayService, IInputService inputService, IActionServiceFactory actionServiceFactory, IConsoleService consoleService)
         {
-            _mainMenuService = mainMenuService;
+            _simulationSetupService = simulationSetupService;
             _menuDisplayService = menuDisplayService;
             _inputService = inputService;
             _actionServiceFactory = actionServiceFactory;
@@ -108,10 +108,10 @@ namespace CarSimulator.Menus
         /// </summary>
         private async Task StartSimulation()
         {
-            Driver driver = await _mainMenuService.FetchDriverDetails();
+            Driver driver = await _simulationSetupService.FetchDriverDetails();
             if (driver != null)
             {
-                Car car = _mainMenuService.EnterCarDetails(driver.Name);
+                Car car = _simulationSetupService.EnterCarDetails(driver.Name);
                 if (car != null)
                 {
                     await WarmUpEngine();

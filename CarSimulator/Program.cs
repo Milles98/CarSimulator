@@ -7,7 +7,7 @@ await app.AppRun();
 
 1.	Applikationen startar med klassen AppInitializer, specifikt metoden Initialize. 
 Denna metod ställer in alla nödvändiga tjänster och objekt som applikationen kommer att använda, 
-såsom ConsoleService, RandomUserService, MenuDisplayService, MainMenuService, InputService, ActionServiceFactory och MainMenu.
+såsom ConsoleService, RandomUserService, MenuDisplayService, SimulationSetupService, InputService, ActionServiceFactory och MainMenu.
 
 2.	Klassen AppStart instansieras sedan med alla dessa tjänster och objekt. 
 Metoden AppRun i AppStart anropas för att starta applikationen.
@@ -15,7 +15,7 @@ Metoden AppRun i AppStart anropas för att starta applikationen.
 3.	Klassen MainMenu ansvarar för att visa huvudmenyn för användaren. 
 Den använder metoden Menu för att göra detta.
 
-4.	Klassen MainMenuService används för att hantera användarens inmatning och åtgärder i huvudmenyn. 
+4.	Klassen SimulationSetupService används för att hantera användarens inmatning och åtgärder i huvudmenyn. 
 Metoden EnterCarDetails används för att få användarens val av bil och riktning.
 
 5.	Klassen DirectionService används för att hantera bilens åtgärder. 
