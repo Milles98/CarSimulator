@@ -27,14 +27,14 @@ Den har metoder som UseFuel för att minska bilens bränsle,
 HasEnoughFuel för att kontrollera om bilen har tillräckligt med 
 bränsle för en viss åtgärd, och Refuel för att fylla på bilens bränsle.
 
-7.	Klassen FoodService används för att hantera förarens hunger. 
+7.	Klassen HungerService används för att hantera förarens hunger. 
 Metoden CheckHunger används för att kontrollera om förarens hunger har nått en kritisk nivå.
 
 8.	Klassen ActionService används för att utföra användarens valda åtgärd. 
 Metoden ExecuteChoice används för att utföra åtgärden baserat på användarens val.
 
 9.	Applikationen har också flera testklasser 
-(AppStartTests, ActionServiceTests, AppInitializerTests, FuelServiceTests, FoodServiceTests) 
+(AppStartTests, ActionServiceTests, AppInitializerTests, FuelServiceTests, HungerServiceTests) 
 för att säkerställa att metoderna i klasserna fungerar som förväntat.
 
  */

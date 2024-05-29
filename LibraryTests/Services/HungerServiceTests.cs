@@ -6,11 +6,11 @@ using Moq;
 namespace LibraryTests.Services
 {
     [TestClass]
-    public class FoodServiceTests
+    public class HungerServiceTests
     {
         private Mock<IConsoleService> _consoleServiceMock;
         private Driver _driver;
-        private FoodService _sut;
+        private HungerService _sut;
         private Mock<Action> _exitActionMock;
 
         [TestInitialize]
@@ -19,7 +19,7 @@ namespace LibraryTests.Services
             _consoleServiceMock = new Mock<IConsoleService>();
             _exitActionMock = new Mock<Action>();
             _driver = new Driver { FirstName = "Test", LastName = "Driver", Hunger = Hunger.Mätt };
-            _sut = new FoodService(_driver, _consoleServiceMock.Object, _exitActionMock.Object);
+            _sut = new HungerService(_driver, _consoleServiceMock.Object, _exitActionMock.Object);
         }
 
         [TestMethod]
