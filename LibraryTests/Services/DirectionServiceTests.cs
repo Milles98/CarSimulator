@@ -6,14 +6,14 @@ using Moq;
 namespace LibraryTests.Services
 {
     [TestClass]
-    public class CarServiceTests
+    public class DirectionServiceTests
     {
         private Mock<IFuelService> _fuelServiceMock;
         private Mock<IDriverService> _driverServiceMock;
         private Mock<IConsoleService> _consoleServiceMock;
         private Car _car;
         private Driver _driver;
-        private CarService _sut;
+        private DirectionService _sut;
 
         [TestInitialize]
         public void Setup()
@@ -25,7 +25,7 @@ namespace LibraryTests.Services
             _driverServiceMock = new Mock<IDriverService>();
             _consoleServiceMock = new Mock<IConsoleService>();
 
-            _sut = new CarService(_car, _driver, _fuelServiceMock.Object, _driverServiceMock.Object, CarBrand.Toyota.ToString(), _consoleServiceMock.Object);
+            _sut = new DirectionService(_car, _driver, _fuelServiceMock.Object, _driverServiceMock.Object, CarBrand.Toyota.ToString(), _consoleServiceMock.Object);
         }
 
         [TestMethod]

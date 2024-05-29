@@ -5,7 +5,7 @@ using Library.Models;
 using Library.Services.Interfaces;
 using System;
 
-public class CarService : ICarService
+public class DirectionService : IDirectionService
 {
     private readonly Car _car;
     private readonly Driver _driver;
@@ -17,7 +17,7 @@ public class CarService : ICarService
     private bool _isReversing = false;
     private Direction _lastForwardDirection;
 
-    public CarService(Car car, Driver driver, IFuelService fuelService, IDriverService driverService, string carBrand, IConsoleService consoleService)
+    public DirectionService(Car car, Driver driver, IFuelService fuelService, IDriverService driverService, string carBrand, IConsoleService consoleService)
     {
         _car = car ?? throw new ArgumentNullException(nameof(car));
         _driver = driver ?? throw new ArgumentNullException(nameof(driver));
@@ -26,7 +26,7 @@ public class CarService : ICarService
         _carBrand = !string.IsNullOrWhiteSpace(carBrand) ? carBrand : throw new ArgumentException("Car brand cannot be null or empty", nameof(carBrand));
         _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
         _faker = new Faker();
-        _lastForwardDirection = _car.Direction; // Initialize the last known forward direction
+        _lastForwardDirection = _car.Direction;
     }
 
     public void Drive(string direction)
@@ -53,7 +53,7 @@ public class CarService : ICarService
             {
                 if (_isReversing)
                 {
-                    _car.Direction = _lastForwardDirection; // Reset to the last known forward direction
+                    _car.Direction = _lastForwardDirection;
                 }
                 _isReversing = false;
                 _consoleService.SetForegroundColor(ConsoleColor.Green);
@@ -64,7 +64,7 @@ public class CarService : ICarService
             {
                 if (!_isReversing)
                 {
-                    _lastForwardDirection = _car.Direction; // Save the current forward direction before reversing
+                    _lastForwardDirection = _car.Direction;
                     _car.Direction = GetOppositeDirection(_car.Direction);
                     _isReversing = true;
                 }

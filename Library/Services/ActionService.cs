@@ -7,7 +7,7 @@ namespace Library.Services
 {
     public class ActionService : IActionService
     {
-        private readonly ICarService _carService;
+        private readonly IDirectionService _directionService;
         private readonly IFuelService _fuelService;
         private readonly IDriverService _driverService;
         private readonly IMenuDisplayService _menuDisplayService;
@@ -19,9 +19,9 @@ namespace Library.Services
 
         public Action<int> ExitAction { get; set; } = (code) => Environment.Exit(code);
 
-        public ActionService(ICarService carService, IFuelService fuelService, IDriverService driverService, IMenuDisplayService menuDisplayService, IInputService inputService, IConsoleService consoleService, string driverName, CarBrand carBrand)
+        public ActionService(IDirectionService directionService, IFuelService fuelService, IDriverService driverService, IMenuDisplayService menuDisplayService, IInputService inputService, IConsoleService consoleService, string driverName, CarBrand carBrand)
         {
-            _carService = carService ?? throw new ArgumentNullException(nameof(carService));
+            _directionService = directionService ?? throw new ArgumentNullException(nameof(directionService));
             _fuelService = fuelService ?? throw new ArgumentNullException(nameof(fuelService));
             _driverService = driverService ?? throw new ArgumentNullException(nameof(driverService));
             _menuDisplayService = menuDisplayService ?? throw new ArgumentNullException(nameof(menuDisplayService));
@@ -66,7 +66,7 @@ namespace Library.Services
                     ExecuteChoice(choice, ref running);
                     try
                     {
-                        _menuDisplayService.DisplayStatusMenu(_carService.GetStatus(), _driverName, _carBrand.ToString());
+                        _menuDisplayService.DisplayStatusMenu(_directionService.GetStatus(), _driverName, _carBrand.ToString());
                     }
                     catch (Exception ex)
                     {
@@ -88,16 +88,16 @@ namespace Library.Services
                 switch (choice)
                 {
                     case 1:
-                        _carService.Turn("vänster");
+                        _directionService.Turn("vänster");
                         break;
                     case 2:
-                        _carService.Turn("höger");
+                        _directionService.Turn("höger");
                         break;
                     case 3:
-                        _carService.Drive("framåt");
+                        _directionService.Drive("framåt");
                         break;
                     case 4:
-                        _carService.Drive("bakåt");
+                        _directionService.Drive("bakåt");
                         break;
                     case 5:
                         _driverService.Rest();
