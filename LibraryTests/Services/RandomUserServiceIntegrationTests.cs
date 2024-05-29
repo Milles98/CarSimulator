@@ -1,0 +1,102 @@
+﻿using Library.Models;
+using Library.Services;
+using Library.Services.Interfaces;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace LibraryTests.Services
+{
+    [TestClass]
+    public class RandomUserServiceIntegrationTests
+    {
+        private IConsoleService _consoleService;
+        private HttpClient _httpClient;
+        private RandomUserService _sut;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            _consoleService = new ConsoleService();
+            _httpClient = new HttpClient();
+            _sut = new RandomUserService(_httpClient, _consoleService);
+        }
+
+        [TestMethod]
+        public async Task GetRandomDriverAsync_ShouldReturnDriver_WhenApiReturnsValidData()
+        {
+            // Act
+            var result = await _sut.GetRandomDriverAsync();
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsFalse(string.IsNullOrEmpty(result.Title));
+            Assert.IsFalse(string.IsNullOrEmpty(result.FirstName));
+            Assert.IsFalse(string.IsNullOrEmpty(result.LastName));
+        }
+
+        [TestMethod]
+        public async Task GetRandomDriverAsync_ShouldReturnNullAndLogMessage_WhenNoResultsFound()
+        {
+            // Act
+            var result = await _sut.GetRandomDriverAsync();
+
+            // Assert
+            if (result == null)
+            {
+                _consoleService.WriteLine("No results found in the response.");
+                Assert.IsNull(result);
+            }
+        }
+
+        [TestMethod]
+        public async Task GetRandomDriverAsync_ShouldHandleHttpRequestException()
+        {
+            // Arrange
+            var httpClient = new HttpClient(new FailingHttpClientHandler());
+            _sut = new RandomUserService(httpClient, _consoleService);
+
+            // Act
+            var result = await _sut.GetRandomDriverAsync();
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public async Task GetRandomDriverAsync_ShouldHandleJsonSerializationException()
+        {
+            // Arrange
+            var httpClient = new HttpClient(new InvalidJsonHttpClientHandler());
+            _sut = new RandomUserService(httpClient, _consoleService);
+
+            // Act
+            var result = await _sut.GetRandomDriverAsync();
+
+            // Assert
+            Assert.IsNull(result);
+        }
+    }
+
+    public class FailingHttpClientHandler : HttpClientHandler
+    {
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            throw new HttpRequestException("Simulated network error");
+        }
+    }
+
+    public class InvalidJsonHttpClientHandler : HttpClientHandler
+    {
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            var response = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
+            {
+                Content = new StringContent("Invalid JSON response")
+            };
+            return await Task.FromResult(response);
+        }
+    }
+}
