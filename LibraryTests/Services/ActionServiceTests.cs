@@ -11,7 +11,7 @@ namespace LibraryTests.Services
         private Mock<IDirectionService> _carDirectionMock;
         private Mock<IFuelService> _fuelServiceMock;
         private Mock<IDriverService> _driverServiceMock;
-        private Mock<IFoodService> _foodServiceMock;
+        private Mock<IHungerService> _hungerServiceMock;
         private Mock<IMenuDisplayService> _menuDisplayServiceMock;
         private Mock<IInputService> _inputServiceMock;
         private Mock<IConsoleService> _consoleServiceMock;
@@ -25,7 +25,7 @@ namespace LibraryTests.Services
             _carDirectionMock = new Mock<IDirectionService>();
             _fuelServiceMock = new Mock<IFuelService>();
             _driverServiceMock = new Mock<IDriverService>();
-            _foodServiceMock = new Mock<IFoodService>();
+            _hungerServiceMock = new Mock<IHungerService>();
             _menuDisplayServiceMock = new Mock<IMenuDisplayService>();
             _inputServiceMock = new Mock<IInputService>();
             _consoleServiceMock = new Mock<IConsoleService>();

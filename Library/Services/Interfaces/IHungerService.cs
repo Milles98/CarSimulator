@@ -1,6 +1,6 @@
 ﻿namespace Library.Services.Interfaces
 {
-    public interface IFoodService
+    public interface IHungerService
     {
         void Eat();
         void CheckHunger();

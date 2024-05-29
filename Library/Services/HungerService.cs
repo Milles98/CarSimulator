@@ -5,7 +5,7 @@ using Library.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 
-public class FoodService : IFoodService
+public class HungerService : IHungerService
 {
     private const int HungerIncreaseRate = 2;
     private readonly Driver _driver;
@@ -14,7 +14,7 @@ public class FoodService : IFoodService
     private readonly IConsoleService _consoleService;
     private readonly Action _exitAction;
 
-    public FoodService(Driver driver, IConsoleService consoleService, Action exitAction = null)
+    public HungerService(Driver driver, IConsoleService consoleService, Action exitAction = null)
     {
         _driver = driver ?? throw new ArgumentNullException(nameof(driver));
         _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
