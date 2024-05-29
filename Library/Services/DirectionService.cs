@@ -124,26 +124,6 @@ public class DirectionService : IDirectionService
         }
     }
 
-    public CarStatus GetStatus()
-    {
-        try
-        {
-            return new CarStatus
-            {
-                Fuel = (int)_car.Fuel,
-                Fatigue = (int)_driver.Fatigue,
-                Direction = _car.Direction.ToString()
-            };
-        }
-        catch (Exception ex)
-        {
-            _consoleService.SetForegroundColor(ConsoleColor.Red);
-            _consoleService.WriteLine($"An error occurred while getting status: {ex.Message}");
-            _consoleService.ResetColor();
-            return null;
-        }
-    }
-
     private Direction GetOppositeDirection(Direction currentDirection)
     {
         return currentDirection switch

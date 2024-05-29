@@ -4,6 +4,5 @@
     {
         void Drive(string direction);
         void Turn(string direction);
-        CarStatus GetStatus();
     }
 }

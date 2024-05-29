@@ -15,6 +15,7 @@ namespace LibraryTests.Services
         private Mock<IMenuDisplayService> _menuDisplayServiceMock;
         private Mock<IInputService> _inputServiceMock;
         private Mock<IConsoleService> _consoleServiceMock;
+        private Mock<IStatusService> _statusServiceMock;
         private ActionService _sut;
         private string _driverName = "Test Driver";
         private CarBrand _carBrand = CarBrand.Toyota;
@@ -29,6 +30,7 @@ namespace LibraryTests.Services
             _menuDisplayServiceMock = new Mock<IMenuDisplayService>();
             _inputServiceMock = new Mock<IInputService>();
             _consoleServiceMock = new Mock<IConsoleService>();
+            _statusServiceMock = new Mock<IStatusService>();
 
             _sut = new ActionService(
                 _carDirectionMock.Object,
@@ -38,7 +40,8 @@ namespace LibraryTests.Services
                 _inputServiceMock.Object,
                 _consoleServiceMock.Object,
                 _driverName,
-                _carBrand);
+                _carBrand,
+                _statusServiceMock.Object);
         }
 
         [TestMethod]
