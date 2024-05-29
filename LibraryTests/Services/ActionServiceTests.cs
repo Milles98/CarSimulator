@@ -10,7 +10,7 @@ namespace LibraryTests.Services
     {
         private Mock<IDirectionService> _carDirectionMock;
         private Mock<IFuelService> _fuelServiceMock;
-        private Mock<IDriverService> _driverServiceMock;
+        private Mock<IFatigueService> _fatigueServiceMock;
         private Mock<IHungerService> _hungerServiceMock;
         private Mock<IMenuDisplayService> _menuDisplayServiceMock;
         private Mock<IInputService> _inputServiceMock;
@@ -24,7 +24,7 @@ namespace LibraryTests.Services
         {
             _carDirectionMock = new Mock<IDirectionService>();
             _fuelServiceMock = new Mock<IFuelService>();
-            _driverServiceMock = new Mock<IDriverService>();
+            _fatigueServiceMock = new Mock<IFatigueService>();
             _hungerServiceMock = new Mock<IHungerService>();
             _menuDisplayServiceMock = new Mock<IMenuDisplayService>();
             _inputServiceMock = new Mock<IInputService>();
@@ -33,7 +33,7 @@ namespace LibraryTests.Services
             _sut = new ActionService(
                 _carDirectionMock.Object,
                 _fuelServiceMock.Object,
-                _driverServiceMock.Object,
+                _fatigueServiceMock.Object,
                 _menuDisplayServiceMock.Object,
                 _inputServiceMock.Object,
                 _consoleServiceMock.Object,
@@ -78,12 +78,12 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public void ExecuteChoice_ShouldCallDriverServiceRest_WhenChoiceIs5()
+        public void ExecuteChoice_ShouldCallFatigueServiceRest_WhenChoiceIs5()
         {
             bool running = true;
             _sut.ExecuteChoice(5, ref running);
 
-            _driverServiceMock.Verify(x => x.Rest(), Times.Once);
+            _fatigueServiceMock.Verify(x => x.Rest(), Times.Once);
         }
 
         [TestMethod]

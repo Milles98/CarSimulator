@@ -10,19 +10,19 @@ public class DirectionService : IDirectionService
     private readonly Car _car;
     private readonly Driver _driver;
     private readonly IFuelService _fuelService;
-    private readonly IDriverService _driverService;
+    private readonly IFatigueService _fatigueService;
     private readonly string _carBrand;
     private readonly Faker _faker;
     private readonly IConsoleService _consoleService;
     private bool _isReversing = false;
     private Direction _lastForwardDirection;
 
-    public DirectionService(Car car, Driver driver, IFuelService fuelService, IDriverService driverService, string carBrand, IConsoleService consoleService)
+    public DirectionService(Car car, Driver driver, IFuelService fuelService, IFatigueService fatigueService, string carBrand, IConsoleService consoleService)
     {
         _car = car ?? throw new ArgumentNullException(nameof(car));
         _driver = driver ?? throw new ArgumentNullException(nameof(driver));
         _fuelService = fuelService ?? throw new ArgumentNullException(nameof(fuelService));
-        _driverService = driverService ?? throw new ArgumentNullException(nameof(driverService));
+        _fatigueService = fatigueService ?? throw new ArgumentNullException(nameof(fatigueService));
         _carBrand = !string.IsNullOrWhiteSpace(carBrand) ? carBrand : throw new ArgumentException("Car brand cannot be null or empty", nameof(carBrand));
         _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
         _faker = new Faker();
@@ -80,7 +80,7 @@ public class DirectionService : IDirectionService
                 return;
             }
 
-            _driverService.CheckFatigue();
+            _fatigueService.CheckFatigue();
         }
         catch (Exception ex)
         {
@@ -114,7 +114,7 @@ public class DirectionService : IDirectionService
             _consoleService.SetForegroundColor(ConsoleColor.Blue);
             _consoleService.WriteLine($"{_driver.Name} med dig i sin {_carBrand} svänger {direction} mot {location}.");
             _consoleService.ResetColor();
-            _driverService.CheckFatigue();
+            _fatigueService.CheckFatigue();
         }
         catch (Exception ex)
         {

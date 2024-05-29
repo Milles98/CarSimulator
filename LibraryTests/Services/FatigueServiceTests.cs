@@ -6,11 +6,11 @@ using Moq;
 namespace LibraryTests.Services
 {
     [TestClass]
-    public class DriverServiceTests
+    public class FatigueServiceTests
     {
         private Mock<IConsoleService> _consoleServiceMock;
         private Driver _driver;
-        private DriverService _sut;
+        private FatigueService _sut;
         private string _driverName;
 
         [TestInitialize]
@@ -20,7 +20,7 @@ namespace LibraryTests.Services
             _driver = new Driver { FirstName = "John", LastName = "Doe", Fatigue = Fatigue.Rested, Hunger = Hunger.Mätt };
             _consoleServiceMock = new Mock<IConsoleService>();
 
-            _sut = new DriverService(_driver, _driverName, _consoleServiceMock.Object);
+            _sut = new FatigueService(_driver, _driverName, _consoleServiceMock.Object);
         }
 
         [TestMethod]

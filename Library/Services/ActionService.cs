@@ -9,7 +9,7 @@ namespace Library.Services
     {
         private readonly IDirectionService _directionService;
         private readonly IFuelService _fuelService;
-        private readonly IDriverService _driverService;
+        private readonly IFatigueService _fatigueService;
         private readonly IMenuDisplayService _menuDisplayService;
         private readonly IInputService _inputService;
         private readonly IConsoleService _consoleService;
@@ -19,11 +19,11 @@ namespace Library.Services
 
         public Action<int> ExitAction { get; set; } = (code) => Environment.Exit(code);
 
-        public ActionService(IDirectionService directionService, IFuelService fuelService, IDriverService driverService, IMenuDisplayService menuDisplayService, IInputService inputService, IConsoleService consoleService, string driverName, CarBrand carBrand)
+        public ActionService(IDirectionService directionService, IFuelService fuelService, IFatigueService fatigueService, IMenuDisplayService menuDisplayService, IInputService inputService, IConsoleService consoleService, string driverName, CarBrand carBrand)
         {
             _directionService = directionService ?? throw new ArgumentNullException(nameof(directionService));
             _fuelService = fuelService ?? throw new ArgumentNullException(nameof(fuelService));
-            _driverService = driverService ?? throw new ArgumentNullException(nameof(driverService));
+            _fatigueService = fatigueService ?? throw new ArgumentNullException(nameof(fatigueService));
             _menuDisplayService = menuDisplayService ?? throw new ArgumentNullException(nameof(menuDisplayService));
             _inputService = inputService ?? throw new ArgumentNullException(nameof(inputService));
             _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
@@ -100,7 +100,7 @@ namespace Library.Services
                         _directionService.Drive("bakåt");
                         break;
                     case 5:
-                        _driverService.Rest();
+                        _fatigueService.Rest();
                         break;
                     case 6:
                         _fuelService.Refuel();
