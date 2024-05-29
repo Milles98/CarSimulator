@@ -38,6 +38,7 @@ namespace LibraryTests.Services
                     {
                         Name = new Name
                         {
+                            Title = "Mr",
                             First = "John",
                             Last = "Doe"
                         }
@@ -62,6 +63,7 @@ namespace LibraryTests.Services
 
             // Assert
             Assert.IsNotNull(result);
+            Assert.AreEqual("Mr", result.Title);
             Assert.AreEqual("John", result.FirstName);
             Assert.AreEqual("Doe", result.LastName);
         }
