@@ -13,13 +13,14 @@ namespace Library.Services
         private readonly IMenuDisplayService _menuDisplayService;
         private readonly IInputService _inputService;
         private readonly IConsoleService _consoleService;
+        private readonly IStatusService _statusService;
         private readonly string _driverName;
         private readonly CarBrand _carBrand;
         private bool _isFirstTime = true;
 
         public Action<int> ExitAction { get; set; } = (code) => Environment.Exit(code);
 
-        public ActionService(IDirectionService directionService, IFuelService fuelService, IFatigueService fatigueService, IMenuDisplayService menuDisplayService, IInputService inputService, IConsoleService consoleService, string driverName, CarBrand carBrand)
+        public ActionService(IDirectionService directionService, IFuelService fuelService, IFatigueService fatigueService, IMenuDisplayService menuDisplayService, IInputService inputService, IConsoleService consoleService, string driverName, CarBrand carBrand, IStatusService statusService)
         {
             _directionService = directionService ?? throw new ArgumentNullException(nameof(directionService));
             _fuelService = fuelService ?? throw new ArgumentNullException(nameof(fuelService));
@@ -27,6 +28,7 @@ namespace Library.Services
             _menuDisplayService = menuDisplayService ?? throw new ArgumentNullException(nameof(menuDisplayService));
             _inputService = inputService ?? throw new ArgumentNullException(nameof(inputService));
             _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
+            _statusService = statusService ?? throw new ArgumentNullException(nameof(statusService));
             _driverName = !string.IsNullOrWhiteSpace(driverName) ? driverName : throw new ArgumentException("Driver name cannot be null or empty", nameof(driverName));
             _carBrand = carBrand;
         }
@@ -66,7 +68,7 @@ namespace Library.Services
                     ExecuteChoice(choice, ref running);
                     try
                     {
-                        _menuDisplayService.DisplayStatusMenu(_directionService.GetStatus(), _driverName, _carBrand.ToString());
+                        _menuDisplayService.DisplayStatusMenu(_statusService.GetStatus(), _driverName, _carBrand.ToString());
                     }
                     catch (Exception ex)
                     {

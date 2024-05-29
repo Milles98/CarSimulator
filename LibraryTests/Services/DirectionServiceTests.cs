@@ -213,19 +213,6 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public void GetStatus_ShouldReturnCorrectStatus()
-        {
-            // Act
-            var status = _sut.GetStatus();
-
-            // Assert
-            Assert.IsNotNull(status);
-            Assert.AreEqual((int)_car.Fuel, status.Fuel);
-            Assert.AreEqual((int)_driver.Fatigue, status.Fatigue);
-            Assert.AreEqual(_car.Direction.ToString(), status.Direction);
-        }
-
-        [TestMethod]
         public void ComplexDrivingSequence_ShouldChangeDirectionsCorrectly()
         {
             // Arrange
