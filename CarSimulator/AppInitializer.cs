@@ -4,9 +4,9 @@ using Library.Services;
 
 namespace CarSimulator
 {
-    public class AppInitializer
+    public static class AppInitializer
     {
-        public AppStart Initialize()
+        public static AppStart Initialize()
         {
             var consoleService = new ConsoleService();
             var httpClient = new HttpClient();

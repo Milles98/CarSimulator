@@ -12,11 +12,8 @@ namespace CarSimulatorTests
         [TestMethod]
         public void Initialize_ShouldReturnAppStartWithCorrectDependencies()
         {
-            // Arrange
-            var appInitializer = new AppInitializer();
-
-            // Act
-            var appStart = appInitializer.Initialize();
+            // Arrange & act
+            var appStart = AppInitializer.Initialize();
 
             // Assert
             Assert.IsNotNull(appStart);
