@@ -155,7 +155,7 @@ namespace Library.Services
                     TypeText($"Allt ser bra ut. Du tar en tugga av din macka som du köpt på Circle K.");
 
                     _consoleService.SetForegroundColor(ConsoleColor.Cyan);
-                    TypeText($"{driverName} ser {randomExpression.ToString().ToLower()} ut efter att du valde {carBrand} som bil.");
+                    TypeText($"{driverName} ser ut att vara {randomExpression.ToString().ToLower()} efter att du valde {carBrand} som bil.");
 
                     if (skipTypingEffect)
                     {

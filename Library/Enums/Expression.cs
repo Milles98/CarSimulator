@@ -2,14 +2,16 @@
 {
     public enum Expression
     {
-        Kul,
-        Fantastiskt,
-        Utmärkt,
-        Bra,
-        Okej,
-        Tråkigt,
-        Dåligt,
-        Fruktansvärt,
-        Hemskt
+        Glad,
+        Intresserad,
+        Nyfiken,
+        Förbluffad,
+        Orolig,
+        Arg,
+        Förvånad,
+        Förvirrad,
+        Förbannad,
+        Störd,
+        Lugn
     }
 }
