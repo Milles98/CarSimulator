@@ -117,7 +117,7 @@ namespace Library.Services
                     var expressions = Enum.GetValues(typeof(Expression)).Cast<Expression>().ToList();
                     var randomExpression = expressions[random.Next(expressions.Count)];
                     _consoleService.SetForegroundColor(ConsoleColor.Cyan);
-                    _consoleService.WriteLine($"Du har valt att åka i en {selectedBrand}, {randomExpression.ToString().ToLower()}! säger {driverName}");
+                    _consoleService.WriteLine($"Du har valt att åka i en {selectedBrand}, {driverName} känner sig {randomExpression.ToString().ToLower()}!");
                     _consoleService.WriteLine("\nVart vill du börja åka mot?\n \n1: Norr \n2: Öst \n3: Söder \n4: Väst \n5: Jag bryr mig inte, välj något bara!\n0: Avbryt");
                     _consoleService.ResetColor();
                     _consoleService.Write("\nVälj ett alternativ: ");
