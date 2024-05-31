@@ -6,11 +6,12 @@ Car Simulator 2.0 is a console-based simulation application that allows users to
 
 The application is built using C# and demonstrates several key software engineering principles and design patterns, including SOLID, DRY, and Separation of Concerns (SoC).
 
-The application uses MS Tests and NUnit for testing different scenarios such as:
+The application uses MS Tests and NUnit for unit and integration testing different scenarios such as:
 * Fatigue
 * Fuel
 * Direction
 * Menu choices
+* Integration test for API
 * Hunger (Tests added but feature not implemented)
 
 ## Features
