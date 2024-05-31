@@ -1,8 +1,6 @@
 ﻿using CarSimulator.Menus.Interface;
 using Library.Models;
 using Library.Services.Interfaces;
-using System;
-using System.Threading.Tasks;
 
 namespace CarSimulator.Menus
 {
