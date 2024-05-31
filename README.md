@@ -16,6 +16,8 @@ The application uses MS Tests and NUnit for unit and integration testing differe
 
 ## Features
 
+* Autofac for Dependency Injection
+
 * Fetch Driver Details: Retrieve a random driver from an API.
 
 * Enter Car Details: Select a car brand and driving direction.
