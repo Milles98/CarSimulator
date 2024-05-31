@@ -2,9 +2,9 @@
 
 ## Overview
 
-Car Simulator 2.0 is a console-based simulation application that allows users to interactively control a car and driver in various simulated activities. 
+Car Simulator 2.0 is a console-based simulation that allows users to interactively control a car and driver in various simulated activities. 
 
-The application is built using C# and demonstrates several key software engineering principles and design patterns, including SOLID, DRY, and Separation of Concerns (SoC).
+The project is built using C# 12, .NET 8.0 and demonstrates several key software engineering principles and design patterns, including SOLID, DRY, and Separation of Concerns (SoC).
 
 The application uses MS Tests and NUnit for unit and integration testing different scenarios such as:
 * Fatigue
