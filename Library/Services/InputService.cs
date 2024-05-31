@@ -25,6 +25,7 @@ namespace Library.Services
                     return choice;
                 }
 
+                _consoleService.Clear();
                 _consoleService.SetForegroundColor(ConsoleColor.Red);
                 _consoleService.WriteLine("Ogiltigt val, försök igen.");
                 _consoleService.ResetColor();
