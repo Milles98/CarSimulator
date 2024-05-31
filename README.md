@@ -1,6 +1,10 @@
 # Car Simulator 2.0
+
 ## Overview
-Car Simulator 2.0 is a console-based simulation application that allows users to interactively control a car and driver in various simulated activities. The application is built using C# and demonstrates several key software engineering principles and design patterns, including SOLID, DRY, and Separation of Concerns (SoC).
+
+Car Simulator 2.0 is a console-based simulation application that allows users to interactively control a car and driver in various simulated activities. 
+
+The application is built using C# and demonstrates several key software engineering principles and design patterns, including SOLID, DRY, and Separation of Concerns (SoC).
 
 ## Features
 
@@ -14,53 +18,53 @@ Car Simulator 2.0 is a console-based simulation application that allows users to
 
 ## Architecture and Design Principles
 
-* SOLID Principles
+### SOLID Principles
 
-* Single Responsibility Principle (SRP):
+#### Single Responsibility Principle (SRP):
 
 * Each service class (MainMenuService, RandomUserService, CarService, etc.) has a single responsibility.
 
 * The ActionMenu and MainMenu classes handle user interactions and delegate tasks to respective services.
 
-## Open/Closed Principle (OCP):
+#### Open/Closed Principle (OCP):
 
-Services and interfaces can be extended with additional functionalities without modifying existing code.
+* Services and interfaces can be extended with additional functionalities without modifying existing code.
 
-New services can be added without changing the existing structure.
+* New services can be added without changing the existing structure.
 
-## Liskov Substitution Principle (LSP):
+#### Liskov Substitution Principle (LSP):
 
-The application relies on interfaces for dependency injection, ensuring that derived classes can be used interchangeably.
+* The application relies on interfaces for dependency injection, ensuring that derived classes can be used interchangeably.
 
-## Interface Segregation Principle (ISP):
+#### Interface Segregation Principle (ISP):
 
-Interfaces are specific to the functionality they provide (ICarService, IDriverService, IFoodService, etc.), ensuring clients only need to implement methods they use.
+* Interfaces are specific to the functionality they provide (ICarService, IDriverService, IFoodService, etc.), ensuring clients only need to implement methods they use.
 
-## Dependency Inversion Principle (DIP):
+#### Dependency Inversion Principle (DIP):
 
-High-level modules depend on abstractions (IRandomUserService, IMainMenuService, etc.) rather than concrete implementations.
+* High-level modules depend on abstractions (IRandomUserService, IMainMenuService, etc.) rather than concrete implementations.
 
-## DRY (Don't Repeat Yourself)
+### DRY (Don't Repeat Yourself)
 
-Reusable services and interfaces are used across the application to prevent code duplication.
+* Reusable services and interfaces are used across the application to prevent code duplication.
 
-Common functionalities are encapsulated within service classes.
+* Common functionalities are encapsulated within service classes.
 
-## Separation of Concerns (SoC)
+### Separation of Concerns (SoC)
 
 Clear separation between different concerns:
 
-Data Retrieval: RandomUserService handles data fetching from the API.
+* Data Retrieval: RandomUserService handles data fetching from the API.
 
-User Interaction: MainMenu, ActionMenu manage user input and display.
+* User Interaction: MainMenu, ActionMenu manage user input and display.
 
-Business Logic: Individual services (CarService, DriverService, etc.) handle specific business logic.
+* Business Logic: Individual services (CarService, DriverService, etc.) handle specific business logic.
 
 ## Dependencies
 
 The application utilizes the following models, enums, and services:
 
-### Enums
+## Enums
 
 * CarBrand
 
@@ -72,8 +76,7 @@ The application utilizes the following models, enums, and services:
 
 * Hunger
 
-
-### Models
+## Models
 
 * Car
 
@@ -85,8 +88,7 @@ The application utilizes the following models, enums, and services:
 
 * Result
 
-
-### Services and Interfaces
+## Services and Interfaces
 
 * ICarService: Manages car operations (drive, turn, get status).
 
@@ -104,51 +106,57 @@ The application utilizes the following models, enums, and services:
 
 * IRandomUserService: Fetches random driver details from an API.
 
+* IActionService: Manages execution of menu actions.
+
+* IActionServiceFactory: Creates instances of IActionService.
+
+* IConsoleService: Manages console operations (write, read, clear, etc.).
+
+* ISimulationSetupService: Manages simulation setup operations (fetch driver details, enter car details).
 
 ## Usage
 
-AppStart: Entry point of the application.
+### AppStart: Entry point of the application.
 
-Initializes required services and dependencies.
+* Initializes required services and dependencies.
 
-Starts the main menu.
+* Starts the main menu.
 
 ### MainMenu: Handles the main menu interactions.
 
-Fetches driver details.
+* Fetches driver details.
 
-Enters car details.
+* Enters car details.
 
-Transitions to ActionMenu.
+* Transitions to ActionMenu.
 
 ### ActionMenu: Handles the action menu interactions.
 
-Executes various actions such as driving, turning, refueling, and resting.
+* Executes various actions such as driving, turning, refueling, and resting.
 
-Displays the status menu after each action.
+* Displays the status menu after each action.
 
 ## Running the Application
 
-Setup and Initialization:
+### Setup and Initialization:
 
-Clone the repository or download the source code.
+* Clone the repository or download the source code.
 
-Open the solution in Visual Studio.
+* Open the solution in Visual Studio.
 
-Restore the NuGet packages.
+* Restore the NuGet packages.
 
-Run the Application:
+### Run the Application:
 
-Set CarSimulator as the startup project.
+* Set CarSimulator as the startup project.
 
-Press F5 or click on Start to run the application.
+* Press F5 or click on Start to run the application.
 
-Follow the on-screen instructions to interact with the simulation.
+* Follow the on-screen instructions to interact with the simulation.
 
 ## Conclusion
+* Car Simulator 2.0 is a comprehensive example of a console application that adheres to key software engineering principles and design patterns.
 
-* Car Simulator 2.0 is a comprehensive example of a console application that adheres to key software engineering principles and design patterns. 
-
-* By following SOLID, DRY, and SoC principles, the application ensures maintainability, scalability, and ease of testing. 
+* By following SOLID, DRY, and SoC principles, the application ensures maintainability, scalability, and ease of testing.
 
 * The use of interfaces and dependency injection further enhances the flexibility and modularity of the codebase.
