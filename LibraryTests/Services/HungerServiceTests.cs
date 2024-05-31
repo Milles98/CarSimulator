@@ -94,7 +94,5 @@ namespace LibraryTests.Services
             // Assert
             _exitActionMock.Verify(e => e(), Times.Once);
         }
-
-        // Add more tests to cover different scenarios as needed
     }
 }
