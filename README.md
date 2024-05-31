@@ -64,7 +64,7 @@ Clear separation between different concerns:
 
 The application utilizes the following models, enums, and services:
 
-## Enums
+### Enums
 
 * CarBrand
 
@@ -76,7 +76,7 @@ The application utilizes the following models, enums, and services:
 
 * Hunger
 
-## Models
+### Models
 
 * Car
 
