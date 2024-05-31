@@ -14,7 +14,7 @@ namespace CarSimulatorTests.Menus
         private Mock<IMenuDisplayService> _menuDisplayServiceMock;
         private Mock<IInputService> _inputServiceMock;
         private Mock<IActionServiceFactory> _actionServiceFactoryMock;
-        private MainMenu _mainMenu;
+        private MainMenu _sut;
 
         [TestInitialize]
         public void Setup()
@@ -25,7 +25,7 @@ namespace CarSimulatorTests.Menus
             _inputServiceMock = new Mock<IInputService>();
             _actionServiceFactoryMock = new Mock<IActionServiceFactory>();
 
-            _mainMenu = new MainMenu(
+            _sut = new MainMenu(
                 _simulationSetupServiceMock.Object,
                 _menuDisplayServiceMock.Object,
                 _inputServiceMock.Object,
@@ -52,7 +52,7 @@ namespace CarSimulatorTests.Menus
             _actionServiceFactoryMock.Setup(f => f.CreateActionService(driver, car)).Returns(actionServiceMock.Object);
 
             // Act
-            await _mainMenu.Menu();
+            await _sut.Menu();
 
             // Assert
             _simulationSetupServiceMock.Verify(s => s.FetchDriverDetails(), Times.Once);
@@ -66,10 +66,10 @@ namespace CarSimulatorTests.Menus
         {
             // Arrange
             _inputServiceMock.Setup(s => s.GetUserChoice()).Returns(-1);
-            _mainMenu.GetType().GetField("_isTesting", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(_mainMenu, true);
+            _sut.GetType().GetField("_isTesting", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(_sut, true);
 
             // Act
-            var menuTask = _mainMenu.Menu();
+            var menuTask = _sut.Menu();
             await Task.Delay(500);
 
             // Assert
@@ -87,7 +87,7 @@ namespace CarSimulatorTests.Menus
                 .Returns(0);
 
             // Act
-            await _mainMenu.Menu();
+            await _sut.Menu();
 
             // Assert
             _consoleServiceMock.Verify(c => c.Clear(), Times.Exactly(2));
