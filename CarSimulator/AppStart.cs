@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using CarSimulator.Menus.Interface;
+﻿using CarSimulator.Menus.Interface;
 using Library.Services.Interfaces;
 
 namespace CarSimulator
