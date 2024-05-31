@@ -41,6 +41,7 @@ namespace LibraryTests.Services
 
             // Assert
             Assert.AreEqual(-1, result);
+            _consoleServiceMock.Verify(cs => cs.Clear(), Times.Once);
             _consoleServiceMock.Verify(cs => cs.SetForegroundColor(ConsoleColor.Red), Times.Once);
             _consoleServiceMock.Verify(cs => cs.WriteLine("Ogiltigt val, försök igen."), Times.Once);
             _consoleServiceMock.Verify(cs => cs.ResetColor(), Times.Once);
