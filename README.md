@@ -11,6 +11,7 @@ The application uses MS Tests and NUnit for testing different scenarios such as:
 * Fuel
 * Direction
 * Menu choices
+* Hunger (Tests added but feature not implemented)
 
 ## Features
 
