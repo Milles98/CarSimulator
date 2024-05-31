@@ -11,7 +11,7 @@ The application uses MS Tests and NUnit for unit and integration testing differe
 * Fuel
 * Direction
 * Menu choices
-* Integration test for API
+* API (Integration Test)
 * Hunger (Tests added but feature not implemented)
 
 ## Features
