@@ -2,10 +2,11 @@
 using Library.Models;
 using Library.Services.Interfaces;
 using Moq;
+using NUnit.Framework;
 
-namespace LibraryTests.Services
+namespace LibraryNUnitTests.Services
 {
-    [TestClass]
+    [TestFixture]
     public class FatigueServiceTests
     {
         private Mock<IConsoleService> _consoleServiceMock;
@@ -13,7 +14,7 @@ namespace LibraryTests.Services
         private FatigueService _sut;
         private string _driverName;
 
-        [TestInitialize]
+        [SetUp]
         public void Setup()
         {
             _driverName = "John Doe";
@@ -23,7 +24,7 @@ namespace LibraryTests.Services
             _sut = new FatigueService(_driver, _driverName, _consoleServiceMock.Object);
         }
 
-        [TestMethod]
+        [Test]
         public void Rest_ShouldDisplayMessage_WhenDriverIsAlreadyRested()
         {
             // Arrange
@@ -38,7 +39,7 @@ namespace LibraryTests.Services
             _consoleServiceMock.Verify(x => x.ResetColor(), Times.Once);
         }
 
-        [TestMethod]
+        [Test]
         public void Rest_ShouldReduceFatigue_WhenDriverIsTired()
         {
             // Arrange
@@ -54,49 +55,30 @@ namespace LibraryTests.Services
             _consoleServiceMock.Verify(x => x.ResetColor(), Times.Once);
         }
 
-        [TestMethod]
-        public void CheckFatigue_ShouldDisplayMaxFatigueMessage_WhenFatigueIsMax()
+        [TestCase(Fatigue.Exhausted, ConsoleColor.Red, "John Doe och du är utmattade! Ta en rast omedelbart.")]
+        [TestCase((Fatigue)8, ConsoleColor.Yellow, "John Doe och du börjar bli trötta. Det är dags för en rast snart.")]
+        [TestCase(Fatigue.Rested, null, null)]
+        public void CheckFatigue_ShouldDisplayAppropriateMessage(Fatigue fatigueLevel, ConsoleColor? expectedColor, string expectedMessage)
         {
             // Arrange
-            _driver.Fatigue = Fatigue.Exhausted;
+            _driver.Fatigue = fatigueLevel;
 
             // Act
             _sut.CheckFatigue();
 
             // Assert
-            _consoleServiceMock.Verify(x => x.SetForegroundColor(ConsoleColor.Red), Times.Once);
-            _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("John Doe och du är utmattade! Ta en rast omedelbart."))), Times.Once);
-            _consoleServiceMock.Verify(x => x.ResetColor(), Times.Once);
-        }
-
-        [TestMethod]
-        public void CheckFatigue_ShouldDisplayWarningMessage_WhenFatigueIsHigh()
-        {
-            // Arrange
-            _driver.Fatigue = (Fatigue)8;
-
-            // Act
-            _sut.CheckFatigue();
-
-            // Assert
-            _consoleServiceMock.Verify(x => x.SetForegroundColor(ConsoleColor.Yellow), Times.Once);
-            _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("John Doe och du börjar bli trötta. Det är dags för en rast snart."))), Times.Once);
-            _consoleServiceMock.Verify(x => x.ResetColor(), Times.Once);
-        }
-
-        [TestMethod]
-        public void CheckFatigue_ShouldNotDisplayMessage_WhenFatigueIsLow()
-        {
-            // Arrange
-            _driver.Fatigue = Fatigue.Rested;
-
-            // Act
-            _sut.CheckFatigue();
-
-            // Assert
-            _consoleServiceMock.Verify(x => x.SetForegroundColor(It.IsAny<ConsoleColor>()), Times.Never);
-            _consoleServiceMock.Verify(x => x.WriteLine(It.IsAny<string>()), Times.Never);
-            _consoleServiceMock.Verify(x => x.ResetColor(), Times.Never);
+            if (expectedColor.HasValue)
+            {
+                _consoleServiceMock.Verify(x => x.SetForegroundColor(expectedColor.Value), Times.Once);
+                _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains(expectedMessage))), Times.Once);
+                _consoleServiceMock.Verify(x => x.ResetColor(), Times.Once);
+            }
+            else
+            {
+                _consoleServiceMock.Verify(x => x.SetForegroundColor(It.IsAny<ConsoleColor>()), Times.Never);
+                _consoleServiceMock.Verify(x => x.WriteLine(It.IsAny<string>()), Times.Never);
+                _consoleServiceMock.Verify(x => x.ResetColor(), Times.Never);
+            }
         }
     }
 }
