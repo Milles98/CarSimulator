@@ -1,7 +1,12 @@
-﻿using CarSimulator;
+﻿using Autofac;
+using CarSimulator;
+using CarSimulator.Autofac;
 
-var app = AppInitializer.Initialize();
-await app.AppRun();
+using (var container = RegisterAutofac.RegisteredContainers())
+{
+    var app = container.Resolve<AppStart>();
+    await app.AppRun();
+}
 
 /*
 
