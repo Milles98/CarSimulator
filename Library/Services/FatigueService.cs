@@ -31,7 +31,7 @@ public class FatigueService : IFatigueService
             if (_driver.Fatigue == Fatigue.Rested)
             {
                 _consoleService.SetForegroundColor(ConsoleColor.Blue);
-                _consoleService.WriteLine($"Du och {_driverName} rastade MEN ni blev inte mycket piggare av det.. Ni är ju redan utvilade!");
+                _consoleService.WriteLine($"{_driverName} rastade MEN blev inte mycket piggare av det.. {_driverName} är ju redan utvilad!");
                 _consoleService.ResetColor();
             }
             else
@@ -39,7 +39,7 @@ public class FatigueService : IFatigueService
                 _driver.Fatigue = (Fatigue)Math.Min((int)_driver.Fatigue + 5, (int)Fatigue.Rested);
                 string restLocation = _faker.Address.City();
                 _consoleService.SetForegroundColor(ConsoleColor.Green);
-                _consoleService.WriteLine($"{_driverName} och du tar en rast på {restLocation} och känner sig piggare.");
+                _consoleService.WriteLine($"{_driverName} tar en rast på {restLocation} och känner sig piggare.");
                 _consoleService.ResetColor();
             }
         }
@@ -68,19 +68,19 @@ public class FatigueService : IFatigueService
 | |_| | |_| | | | | | (_| | |_| || (_| | (_| |_|
  \___/ \__|_| |_| |_|\__,_|\__|\__\__,_|\__,_(_)
                 ");
-                _consoleService.WriteLine($"{_driverName} och du är utmattade! Ta en rast omedelbart.");
+                _consoleService.WriteLine($"{_driverName} är utmattad! Ta en rast omedelbart.");
                 _consoleService.ResetColor();
             }
             else if (_driver.Fatigue < Fatigue.Exhausted)
             {
                 _consoleService.SetForegroundColor(ConsoleColor.Red);
-                _consoleService.WriteLine($"{_driverName} och helt slutkörda! Ta en rast omedelbart, annars kanske ni krockar!");
+                _consoleService.WriteLine($"{_driverName} är helt slut! Ta en rast omedelbart, annars kanske ni krockar!");
                 _consoleService.ResetColor();
             }
             else if ((int)_driver.Fatigue > 0 && (int)_driver.Fatigue <= 5)
             {
                 _consoleService.SetForegroundColor(ConsoleColor.Yellow);
-                _consoleService.WriteLine($"{_driverName} och du börjar bli trötta. Det är dags för en rast snart.");
+                _consoleService.WriteLine($"{_driverName} gäspar och börjar känna sig trött. Kanske är det dags för en rast snart?");
                 _consoleService.ResetColor();
             }
 
@@ -96,6 +96,6 @@ public class FatigueService : IFatigueService
     public void IncreaseDriverFatigue()
     {
         _driver.Fatigue -= 1;
-        _consoleService.WriteLine("Föraren blir tröttare efter att ha tankat.");
+        _consoleService.WriteLine($"{_driverName} blir tröttare efter att ha tankat.");
     }
 }

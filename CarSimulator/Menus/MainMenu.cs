@@ -1,5 +1,4 @@
 ﻿using CarSimulator.Menus.Interface;
-using Library.Models;
 using Library.Services.Interfaces;
 
 namespace CarSimulator.Menus
@@ -145,9 +144,6 @@ namespace CarSimulator.Menus
                 _consoleService.ResetColor();
             }
         }
-
-
-
 
         /// <summary>
         /// Värmer upp bilens motor.

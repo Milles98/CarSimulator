@@ -57,7 +57,7 @@ public class DirectionService : IDirectionService
                 }
                 _isReversing = false;
                 _consoleService.SetForegroundColor(ConsoleColor.Green);
-                _consoleService.WriteLine($"{_driver.Name} med dig i sin {_carBrand} kör framåt mot {location}.");
+                _consoleService.WriteLine($"{_driver.Name} i sin {_carBrand} kör framåt mot {location}.");
                 _consoleService.ResetColor();
             }
             else if (direction == "bakåt")
@@ -69,7 +69,7 @@ public class DirectionService : IDirectionService
                     _isReversing = true;
                 }
                 _consoleService.SetForegroundColor(ConsoleColor.Green);
-                _consoleService.WriteLine($"{_driver.Name} med dig i sin {_carBrand} kör bakåt mot {location}.");
+                _consoleService.WriteLine($"{_driver.Name} i sin {_carBrand} backar mot {location}.");
                 _consoleService.ResetColor();
             }
             else
@@ -112,7 +112,7 @@ public class DirectionService : IDirectionService
 
             _car.Direction = GetNewDirection(_car.Direction, direction);
             _consoleService.SetForegroundColor(ConsoleColor.Blue);
-            _consoleService.WriteLine($"{_driver.Name} med dig i sin {_carBrand} svänger {direction} mot {location}.");
+            _consoleService.WriteLine($"{_driver.Name} i sin {_carBrand} svänger {direction} mot {location}.");
             _consoleService.ResetColor();
             _fatigueService.CheckFatigue();
         }
