@@ -47,7 +47,7 @@ namespace Library.Services
             catch (Exception ex)
             {
                 _consoleService.SetForegroundColor(ConsoleColor.Red);
-                _consoleService.WriteLine($"An error occurred while fetching driver details: {ex.Message}");
+                _consoleService.WriteLine($"Fel uppstod vid hämtandet av förare från APIet: {ex.Message}");
                 _consoleService.ResetColor();
                 return null;
             }
@@ -102,7 +102,7 @@ namespace Library.Services
                 }
                 catch (Exception ex)
                 {
-                    DisplayErrorMessage($"An error occurred while entering car details: {ex.Message}");
+                    DisplayErrorMessage($"Fel uppstod vid val av bil: {ex.Message}");
                 }
             }
 
@@ -161,7 +161,7 @@ namespace Library.Services
                 }
                 catch (Exception ex)
                 {
-                    DisplayErrorMessage($"An error occurred while entering direction details: {ex.Message}");
+                    DisplayErrorMessage($"Fel uppstod vid val av riktning: {ex.Message}");
                 }
             }
 
