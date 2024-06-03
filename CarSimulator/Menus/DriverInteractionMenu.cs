@@ -3,7 +3,7 @@ using Library.Services.Interfaces;
 
 namespace CarSimulator.Menus
 {
-    public class DriverInteractionMenu : IActionMenu
+    public class DriverInteractionMenu : IDriverInteractionMenu
     {
         private readonly IDriverInteractionService _driverInteractionService;
 
