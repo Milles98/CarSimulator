@@ -8,7 +8,6 @@ namespace Library.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Fatigue Fatigue { get; set; }
-        public Hunger Hunger { get; set; }
 
         public string Name => $"{Title}. {FirstName} {LastName}";
 
