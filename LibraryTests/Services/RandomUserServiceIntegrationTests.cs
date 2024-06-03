@@ -32,7 +32,7 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public async Task GetRandomDriverAsync_ShouldReturnNullAndLogMessage_WhenNoResultsFound()
+        public async Task GetRandomDriverAsync_ShouldReturnNull_WhenNoResultsFound()
         {
             // Act
             var result = await _sut.GetRandomDriverAsync();
@@ -40,7 +40,6 @@ namespace LibraryTests.Services
             // Assert
             if (result == null)
             {
-                _consoleService.WriteLine("No results found in the response.");
                 Assert.IsNull(result);
             }
         }

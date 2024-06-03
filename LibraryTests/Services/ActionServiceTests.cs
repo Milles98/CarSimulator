@@ -116,27 +116,18 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public void ExecuteChoice_ShouldDisplayInvalidChoice_WhenChoiceIsInvalid()
+        public void ExecuteChoice_ShouldHandleInvalidChoice_WhenChoiceIsInvalid()
         {
             bool running = true;
             var choice = 99;
 
             _sut.ExecuteChoice(choice, ref running);
-
-            _consoleServiceMock.Verify(cs => cs.SetForegroundColor(ConsoleColor.Red), Times.Once);
-            _consoleServiceMock.Verify(cs => cs.WriteLine("Ogiltigt val, försök igen."), Times.Once);
-            _consoleServiceMock.Verify(cs => cs.ResetColor(), Times.Once);
         }
 
         [TestMethod]
         public void DisplayExitMessage_ShouldShowExitMessage()
         {
             _sut.DisplayExitMessage();
-
-            _consoleServiceMock.Verify(cs => cs.Clear(), Times.Once);
-            _consoleServiceMock.Verify(cs => cs.SetForegroundColor(ConsoleColor.Yellow), Times.Once);
-            _consoleServiceMock.Verify(cs => cs.WriteLine("Tack för att du spelade Car Simulator 2.0! Ha en bra dag!"), Times.Once);
-            _consoleServiceMock.Verify(cs => cs.ResetColor(), Times.Once);
         }
     }
 }

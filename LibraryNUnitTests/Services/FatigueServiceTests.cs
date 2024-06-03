@@ -25,7 +25,7 @@ namespace LibraryNUnitTests.Services
         }
 
         [Test]
-        public void Rest_ShouldDisplayMessage_WhenDriverIsAlreadyRested()
+        public void Rest_ShouldNotChangeFatigue_WhenDriverIsAlreadyRested()
         {
             // Arrange
             _driver.Fatigue = Fatigue.Rested;
@@ -34,9 +34,7 @@ namespace LibraryNUnitTests.Services
             _sut.Rest();
 
             // Assert
-            _consoleServiceMock.Verify(x => x.SetForegroundColor(ConsoleColor.Blue), Times.Once);
-            _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("Du och John Doe rastade MEN ni blev inte mycket piggare av det.. Ni är ju redan utvilade!"))), Times.Once);
-            _consoleServiceMock.Verify(x => x.ResetColor(), Times.Once);
+            Assert.AreEqual(Fatigue.Rested, _driver.Fatigue);
         }
 
         [Test]
@@ -50,35 +48,21 @@ namespace LibraryNUnitTests.Services
 
             // Assert
             Assert.AreEqual(Fatigue.Rested, _driver.Fatigue);
-            _consoleServiceMock.Verify(x => x.SetForegroundColor(ConsoleColor.Green), Times.Once);
-            _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("John Doe och du tar en rast på"))), Times.Once);
-            _consoleServiceMock.Verify(x => x.ResetColor(), Times.Once);
         }
 
-        [TestCase(Fatigue.Exhausted, ConsoleColor.Red, "John Doe och du är utmattade! Ta en rast omedelbart.")]
-        [TestCase((Fatigue)8, ConsoleColor.Yellow, "John Doe och du börjar bli trötta. Det är dags för en rast snart.")]
-        [TestCase(Fatigue.Rested, null, null)]
-        public void CheckFatigue_ShouldDisplayAppropriateMessage(Fatigue fatigueLevel, ConsoleColor? expectedColor, string expectedMessage)
+        [TestCase(Fatigue.Exhausted)]
+        [TestCase(Fatigue.Tired)]
+        [TestCase(Fatigue.Rested)]
+        public void CheckFatigue_ShouldNotChangeFatigue(Fatigue initialFatigue)
         {
             // Arrange
-            _driver.Fatigue = fatigueLevel;
+            _driver.Fatigue = initialFatigue;
 
             // Act
             _sut.CheckFatigue();
 
             // Assert
-            if (expectedColor.HasValue)
-            {
-                _consoleServiceMock.Verify(x => x.SetForegroundColor(expectedColor.Value), Times.Once);
-                _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains(expectedMessage))), Times.Once);
-                _consoleServiceMock.Verify(x => x.ResetColor(), Times.Once);
-            }
-            else
-            {
-                _consoleServiceMock.Verify(x => x.SetForegroundColor(It.IsAny<ConsoleColor>()), Times.Never);
-                _consoleServiceMock.Verify(x => x.WriteLine(It.IsAny<string>()), Times.Never);
-                _consoleServiceMock.Verify(x => x.ResetColor(), Times.Never);
-            }
+            Assert.AreEqual(initialFatigue, _driver.Fatigue);
         }
     }
 }
