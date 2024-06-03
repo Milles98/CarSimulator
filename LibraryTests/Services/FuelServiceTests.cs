@@ -2,6 +2,7 @@
 using Library.Models;
 using Library.Services.Interfaces;
 using Moq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LibraryTests.Services
 {
@@ -9,6 +10,7 @@ namespace LibraryTests.Services
     public class FuelServiceTests
     {
         private Mock<IConsoleService> _consoleServiceMock;
+        private Mock<IFatigueService> _fatigueServiceMock;
         private Car _car;
         private FuelService _sut;
 
@@ -17,7 +19,8 @@ namespace LibraryTests.Services
         {
             _car = new Car { Brand = CarBrand.Toyota, Fuel = Fuel.Half };
             _consoleServiceMock = new Mock<IConsoleService>();
-            _sut = new FuelService(_car, _car.Brand.ToString(), _consoleServiceMock.Object);
+            _fatigueServiceMock = new Mock<IFatigueService>();
+            _sut = new FuelService(_car, _car.Brand.ToString(), _consoleServiceMock.Object, _fatigueServiceMock.Object);
         }
 
         [TestMethod]
@@ -44,6 +47,7 @@ namespace LibraryTests.Services
 
             // Assert
             Assert.AreEqual(Fuel.Full, _car.Fuel);
+            _fatigueServiceMock.Verify(f => f.IncreaseDriverFatigue(), Times.Once);
         }
 
         [TestMethod]
