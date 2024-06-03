@@ -106,10 +106,10 @@ namespace CarSimulator.Menus
         /// </summary>
         private async Task StartSimulation()
         {
-            Driver driver = await _simulationSetupService.FetchDriverDetails();
+            var driver = await _simulationSetupService.FetchDriverDetails();
             if (driver != null)
             {
-                Car car = _simulationSetupService.EnterCarDetails(driver.Name);
+                var car = _simulationSetupService.EnterCarDetails(driver.Name);
                 if (car != null)
                 {
                     await WarmUpEngine();
