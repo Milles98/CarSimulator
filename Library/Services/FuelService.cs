@@ -48,7 +48,7 @@ public class FuelService : IFuelService
         catch (Exception ex)
         {
             _consoleService.SetForegroundColor(ConsoleColor.Red);
-            _consoleService.WriteLine($"An error occurred while refueling: {ex.Message}");
+            _consoleService.WriteLine($"Fel inträffade vid tankning: {ex.Message}");
             _consoleService.ResetColor();
         }
     }
