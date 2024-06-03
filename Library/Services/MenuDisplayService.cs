@@ -250,22 +250,24 @@ namespace Library.Services
         {
             int fatigueValue = (int)fatigue;
 
-            if (fatigueValue >= 0 && fatigueValue <= 3)
+            if (fatigueValue >= 7 && fatigueValue <= 10)
             {
                 _consoleService.SetForegroundColor(ConsoleColor.Cyan);
             }
-            else if (fatigueValue >= 4 && fatigueValue <= 6)
+            else if (fatigueValue >= 4 && fatigueValue < 7)
             {
                 _consoleService.SetForegroundColor(ConsoleColor.Magenta);
             }
-            else if (fatigueValue >= 7 && fatigueValue <= 10)
+            else if (fatigueValue >= 0 && fatigueValue < 4)
             {
-                _consoleService.SetForegroundColor(ConsoleColor.Red);
+                _consoleService.SetForegroundColor(ConsoleColor.DarkRed);
             }
             else
             {
-                _consoleService.SetForegroundColor(ConsoleColor.Gray);
+                _consoleService.SetForegroundColor(ConsoleColor.Red);
             }
         }
+
+
     }
 }

@@ -51,7 +51,7 @@ namespace LibraryTests.Services
             _sut.Drive("framåt");
 
             // Assert
-            _fuelServiceMock.Verify(x => x.UseFuel(2), Times.Once);
+            _fuelServiceMock.Verify(x => x.UseFuel(4), Times.Once);
             _fatigueServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
             Assert.AreEqual(Direction.Norr, _car.Direction);
         }
@@ -66,7 +66,7 @@ namespace LibraryTests.Services
             _sut.Drive("bakåt");
 
             // Assert
-            _fuelServiceMock.Verify(x => x.UseFuel(2), Times.Once);
+            _fuelServiceMock.Verify(x => x.UseFuel(4), Times.Once);
             _fatigueServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
             Assert.AreEqual(Direction.Söder, _car.Direction);
         }
@@ -83,7 +83,7 @@ namespace LibraryTests.Services
             _sut.Drive("bakåt");
 
             // Assert
-            _fuelServiceMock.Verify(x => x.UseFuel(2), Times.Exactly(2));
+            _fuelServiceMock.Verify(x => x.UseFuel(4), Times.Exactly(2));
             _fatigueServiceMock.Verify(x => x.CheckFatigue(), Times.Exactly(2));
             Assert.AreEqual(initialDirection, _car.Direction);
         }
@@ -100,7 +100,7 @@ namespace LibraryTests.Services
             _sut.Drive("framåt");
 
             // Assert
-            _fuelServiceMock.Verify(x => x.UseFuel(2), Times.Exactly(3));
+            _fuelServiceMock.Verify(x => x.UseFuel(4), Times.Exactly(3));
             _fatigueServiceMock.Verify(x => x.CheckFatigue(), Times.Exactly(3));
             Assert.AreEqual(Direction.Norr, _car.Direction);
         }
@@ -115,7 +115,7 @@ namespace LibraryTests.Services
             _sut.Turn("vänster");
 
             // Assert
-            _fuelServiceMock.Verify(x => x.UseFuel(1), Times.Once);
+            _fuelServiceMock.Verify(x => x.UseFuel(2), Times.Once);
             _fatigueServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
             Assert.AreEqual(Direction.Väst, _car.Direction);
         }
@@ -130,7 +130,7 @@ namespace LibraryTests.Services
             _sut.Turn("höger");
 
             // Assert
-            _fuelServiceMock.Verify(x => x.UseFuel(1), Times.Once);
+            _fuelServiceMock.Verify(x => x.UseFuel(2), Times.Once);
             _fatigueServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
             Assert.AreEqual(Direction.Öst, _car.Direction);
         }

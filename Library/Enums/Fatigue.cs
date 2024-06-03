@@ -2,8 +2,8 @@
 {
     public enum Fatigue
     {
-        Rested = 0,
+        Exhausted = 0,
         Tired = 5,
-        Exhausted = 10
+        Rested = 10
     }
 }

@@ -7,8 +7,6 @@ using System;
 public class FatigueService : IFatigueService
 {
     private const int MaxFatigue = 10;
-    private const int FatigueWarningLevel = 7;
-    private const int HungerIncreaseRate = 2;
 
     private readonly Driver _driver;
     private readonly string _driverName;
@@ -38,7 +36,7 @@ public class FatigueService : IFatigueService
             }
             else
             {
-                _driver.Fatigue = (Fatigue)Math.Max((int)_driver.Fatigue - 5, 0);
+                _driver.Fatigue = (Fatigue)Math.Min((int)_driver.Fatigue + 5, (int)Fatigue.Rested);
                 string restLocation = _faker.Address.City();
                 _consoleService.SetForegroundColor(ConsoleColor.Green);
                 _consoleService.WriteLine($"{_driverName} och du tar en rast på {restLocation} och känner sig piggare.");
@@ -60,7 +58,7 @@ public class FatigueService : IFatigueService
     {
         try
         {
-            if ((int)_driver.Fatigue >= MaxFatigue)
+            if (_driver.Fatigue == Fatigue.Exhausted)
             {
                 _consoleService.SetForegroundColor(ConsoleColor.Red);
                 _consoleService.WriteLine(@"
@@ -73,12 +71,19 @@ public class FatigueService : IFatigueService
                 _consoleService.WriteLine($"{_driverName} och du är utmattade! Ta en rast omedelbart.");
                 _consoleService.ResetColor();
             }
-            else if ((int)_driver.Fatigue >= FatigueWarningLevel)
+            else if (_driver.Fatigue < Fatigue.Exhausted)
+            {
+                _consoleService.SetForegroundColor(ConsoleColor.Red);
+                _consoleService.WriteLine($"{_driverName} och helt slutkörda! Ta en rast omedelbart, annars kanske ni krockar!");
+                _consoleService.ResetColor();
+            }
+            else if ((int)_driver.Fatigue > 0 && (int)_driver.Fatigue <= 5)
             {
                 _consoleService.SetForegroundColor(ConsoleColor.Yellow);
                 _consoleService.WriteLine($"{_driverName} och du börjar bli trötta. Det är dags för en rast snart.");
                 _consoleService.ResetColor();
             }
+
         }
         catch (Exception ex)
         {
