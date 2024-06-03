@@ -36,7 +36,7 @@ namespace CarSimulatorTests
             await appStart.AppRun();
 
             // Assert
-            mainMenuMock.Verify(m => m.Menu(), Times.Once, "MainMenu.Menu should be called exactly once.");
+            mainMenuMock.Verify(m => m.Menu(), Times.Once, "MainMenu.Menu bör kallas på enbart en gång");
         }
     }
 }

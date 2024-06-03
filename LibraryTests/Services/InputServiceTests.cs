@@ -34,7 +34,7 @@ namespace LibraryTests.Services
         public void GetUserChoice_ShouldReturnMinusOne_WhenInputIsInvalid()
         {
             // Arrange
-            _consoleServiceMock.Setup(cs => cs.ReadLine()).Returns("invalid");
+            _consoleServiceMock.Setup(cs => cs.ReadLine()).Returns("ogiltigt");
 
             // Act
             var result = _sut.GetUserChoice();

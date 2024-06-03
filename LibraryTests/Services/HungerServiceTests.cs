@@ -1,8 +1,6 @@
 ﻿using Library.Models;
 using Library.Services.Interfaces;
 using Moq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace LibraryTests.Services
 {
@@ -30,7 +28,7 @@ namespace LibraryTests.Services
         {
             _exitActionMock = new Mock<Action>();
             _hungerServiceMock = new Mock<IHungerService>();
-            _driver = new TestDriver { FirstName = "Test", LastName = "Driver", Hunger = Hunger.Full };
+            _driver = new TestDriver { FirstName = "Mille", LastName = "Elfver", Hunger = Hunger.Full };
         }
 
         [TestMethod]

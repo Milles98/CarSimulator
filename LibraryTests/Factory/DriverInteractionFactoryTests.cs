@@ -30,7 +30,7 @@ namespace LibraryTests.Factory
         public void CreateActionService_ShouldReturnDriverInteractionService()
         {
             // Arrange
-            var driver = new Driver { FirstName = "John", LastName = "Doe", Fatigue = Fatigue.Rested };
+            var driver = new Driver { FirstName = "Mille", LastName = "Elfver", Fatigue = Fatigue.Rested };
             var car = new Car { Brand = CarBrand.Toyota, Fuel = Fuel.Full, Direction = Direction.Norr };
 
             // Act

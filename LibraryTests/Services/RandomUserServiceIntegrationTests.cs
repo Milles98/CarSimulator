@@ -77,7 +77,7 @@ namespace LibraryTests.Services
     {
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            throw new HttpRequestException("Simulated network error");
+            throw new HttpRequestException("Simulerat nätverksfel");
         }
     }
 
@@ -87,7 +87,7 @@ namespace LibraryTests.Services
         {
             var response = new HttpResponseMessage(System.Net.HttpStatusCode.OK)
             {
-                Content = new StringContent("Invalid JSON response")
+                Content = new StringContent("Ogiltigt JSON svar")
             };
             return await Task.FromResult(response);
         }

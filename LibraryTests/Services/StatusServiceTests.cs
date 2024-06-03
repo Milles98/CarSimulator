@@ -22,8 +22,8 @@ namespace LibraryTests.Services
 
             _driver = new Driver
             {
-                FirstName = "John",
-                LastName = "Doe",
+                FirstName = "Mille",
+                LastName = "Elfver",
                 Fatigue = Fatigue.Rested
             };
 

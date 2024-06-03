@@ -25,7 +25,7 @@ namespace LibraryTests.Services
         public async Task FetchDriverDetails_ShouldReturnDriver_WhenDriverIsFetchedSuccessfully()
         {
             // Arrange
-            var driver = new Driver { Title = "Mr", FirstName = "John", LastName = "Doe" };
+            var driver = new Driver { Title = "Mr", FirstName = "Mille", LastName = "Elfver" };
             _randomUserServiceMock.Setup(s => s.GetRandomDriverAsync()).ReturnsAsync(driver);
 
             // Act
@@ -68,7 +68,7 @@ namespace LibraryTests.Services
         public void EnterCarDetails_ShouldReturnCar_WhenValidInputIsProvided()
         {
             // Arrange
-            string driverName = "John Doe";
+            string driverName = "Mille Elfver";
             _consoleServiceMock.SetupSequence(cs => cs.ReadLine())
                 .Returns("1")
                 .Returns("1");
@@ -86,7 +86,7 @@ namespace LibraryTests.Services
         public void EnterCarDetails_ShouldReturnNull_WhenCancelled()
         {
             // Arrange
-            string driverName = "John Doe";
+            string driverName = "Mille Elfver";
             _consoleServiceMock.SetupSequence(cs => cs.ReadLine())
                 .Returns("0")
                 .Returns("0");
