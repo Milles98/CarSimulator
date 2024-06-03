@@ -1,9 +1,11 @@
-﻿namespace Library
+﻿using Library.Enums;
+
+namespace Library
 {
     public class CarStatus
     {
-        public int Fuel { get; set; }
-        public int Fatigue { get; set; }
-        public string Direction { get; set; }
+        public Fuel Fuel { get; set; }
+        public Fatigue Fatigue { get; set; }
+        public Direction Direction { get; set; }
     }
 }
