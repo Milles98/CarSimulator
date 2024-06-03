@@ -18,7 +18,7 @@ namespace LibraryNUnitTests.Services
         public void Setup()
         {
             _driverName = "John Doe";
-            _driver = new Driver { FirstName = "John", LastName = "Doe", Fatigue = Fatigue.Rested, Hunger = Hunger.Mätt };
+            _driver = new Driver { FirstName = "John", LastName = "Doe", Fatigue = Fatigue.Rested };
             _consoleServiceMock = new Mock<IConsoleService>();
 
             _sut = new FatigueService(_driver, _driverName, _consoleServiceMock.Object);

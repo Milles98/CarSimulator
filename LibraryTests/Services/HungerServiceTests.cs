@@ -1,5 +1,4 @@
-﻿using Library.Enums;
-using Library.Models;
+﻿using Library.Models;
 using Library.Services.Interfaces;
 using Moq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -10,16 +9,28 @@ namespace LibraryTests.Services
     [TestClass]
     public class HungerServiceTests
     {
-        private Driver _driver;
+        private TestDriver _driver;
         private Mock<Action> _exitActionMock;
         private Mock<IHungerService> _hungerServiceMock;
+
+        private enum Hunger //Privat enum för testet
+        {
+            Mätt = 0,
+            Hungrig = 6,
+            Svälter = 11
+        }
+
+        private class TestDriver : Driver //derived klass lägger till enumet i driver modellen för testet
+        {
+            public Hunger Hunger { get; set; }
+        }
 
         [TestInitialize]
         public void Setup()
         {
             _exitActionMock = new Mock<Action>();
             _hungerServiceMock = new Mock<IHungerService>();
-            _driver = new Driver { FirstName = "Test", LastName = "Driver", Hunger = Hunger.Mätt };
+            _driver = new TestDriver { FirstName = "Test", LastName = "Driver", Hunger = Hunger.Mätt };
         }
 
         [TestMethod]
@@ -28,7 +39,7 @@ namespace LibraryTests.Services
             // Arrange
             _driver.Hunger = Hunger.Hungrig;
             _hungerServiceMock.Setup(s => s.Eat(It.IsAny<Driver>()))
-                .Callback<Driver>(driver => driver.Hunger = Hunger.Mätt);
+                .Callback<Driver>(driver => ((TestDriver)driver).Hunger = Hunger.Mätt);
 
             // Act
             _hungerServiceMock.Object.Eat(_driver);
@@ -56,24 +67,28 @@ namespace LibraryTests.Services
             // Arrange
             _driver.Hunger = Hunger.Mätt;
             _hungerServiceMock.Setup(s => s.CheckHunger(It.IsAny<Driver>(), It.IsAny<Action>()))
-                .Callback<Driver, Action>((driver, exitAction) => driver.Hunger += 2);
+                .Callback<Driver, Action>((driver, exitAction) =>
+                {
+                    var testDriver = (TestDriver)driver;
+                    testDriver.Hunger = (Hunger)((int)testDriver.Hunger + 2);
+                });
 
             // Act
             _hungerServiceMock.Object.CheckHunger(_driver, _exitActionMock.Object);
 
             // Assert
-            Assert.AreEqual((Hunger)2, _driver.Hunger);
+            Assert.AreEqual((Hunger)((int)Hunger.Mätt + 2), _driver.Hunger);
         }
 
         [TestMethod]
         public void CheckHunger_ShouldCallExitAction_WhenHungerReachesCriticalLevel()
         {
             // Arrange
-            _driver.Hunger = (Hunger)14;
+            _driver.Hunger = (Hunger)16;
             _hungerServiceMock.Setup(s => s.CheckHunger(It.IsAny<Driver>(), It.IsAny<Action>()))
                 .Callback<Driver, Action>((driver, exitAction) =>
                 {
-                    if ((int)driver.Hunger >= 14)
+                    if ((int)((TestDriver)driver).Hunger == 16)
                     {
                         exitAction();
                     }
