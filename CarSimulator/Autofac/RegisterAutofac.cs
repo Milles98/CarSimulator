@@ -1,9 +1,9 @@
-﻿using CarSimulator.Menus.Interface;
+﻿using Autofac;
+using CarSimulator.Menus.Interface;
 using CarSimulator.Menus;
 using Library.Factory;
 using Library.Services.Interfaces;
 using Library.Services;
-using Autofac;
 
 namespace CarSimulator.Autofac
 {
@@ -22,6 +22,7 @@ namespace CarSimulator.Autofac
             builder.RegisterType<DriverInteractionFactory>().As<IDriverInteractionFactory>().SingleInstance();
             builder.RegisterType<MainMenu>().As<IMainMenu>().SingleInstance();
             builder.RegisterType<AppStart>().SingleInstance();
+            builder.RegisterType<FuelService>().As<IFuelService>().SingleInstance();
 
             return builder.Build();
         }

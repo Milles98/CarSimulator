@@ -38,7 +38,7 @@ namespace LibraryNUnitTests.Services
         }
 
         [Test]
-        public void Rest_ShouldReduceFatigue_WhenDriverIsTired()
+        public void Rest_ShouldIncreaseFatigue_WhenDriverIsTired()
         {
             // Arrange
             _driver.Fatigue = Fatigue.Tired;
@@ -63,6 +63,32 @@ namespace LibraryNUnitTests.Services
 
             // Assert
             Assert.AreEqual(initialFatigue, _driver.Fatigue);
+        }
+
+        [Test]
+        public void IncreaseDriverFatigue_ShouldDecreaseFatigue()
+        {
+            // Arrange
+            _driver.Fatigue = Fatigue.Tired;
+
+            // Act
+            _sut.IncreaseDriverFatigue();
+
+            // Assert
+            Assert.AreEqual(Fatigue.Tired - 1, _driver.Fatigue);
+        }
+
+        [Test]
+        public void IncreaseDriverFatigue_ShouldDecreaseFatigueBelowExhausted()
+        {
+            // Arrange
+            _driver.Fatigue = Fatigue.Exhausted;
+
+            // Act
+            _sut.IncreaseDriverFatigue();
+
+            // Assert
+            Assert.AreEqual(Fatigue.Exhausted - 1, _driver.Fatigue);
         }
     }
 }

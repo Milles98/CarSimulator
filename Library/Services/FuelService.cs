@@ -10,13 +10,15 @@ public class FuelService : IFuelService
     private readonly string _carBrand;
     private readonly Faker _faker;
     private readonly IConsoleService _consoleService;
+    private readonly IFatigueService _fatigueService;
 
-    public FuelService(Car car, string carBrand, IConsoleService consoleService)
+    public FuelService(Car car, string carBrand, IConsoleService consoleService, IFatigueService fatigueService)
     {
         _car = car;
         _carBrand = carBrand;
         _consoleService = consoleService;
         _faker = new Faker();
+        _fatigueService = fatigueService;
     }
 
     /// <summary>
@@ -39,6 +41,8 @@ public class FuelService : IFuelService
                 _consoleService.SetForegroundColor(ConsoleColor.Green);
                 _consoleService.WriteLine($"{_carBrand} tankade på {refuelLocation} och nu är bilen fulltankad.");
                 _consoleService.ResetColor();
+
+                _fatigueService.IncreaseDriverFatigue();
             }
         }
         catch (Exception ex)

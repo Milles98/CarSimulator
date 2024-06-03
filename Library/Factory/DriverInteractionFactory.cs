@@ -30,8 +30,8 @@ namespace Library.Factory
                 throw new ArgumentNullException(nameof(car), "Car cannot be null");
             }
 
-            IFuelService fuelService = new FuelService(car, car.Brand.ToString(), _consoleService);
             IFatigueService fatigueService = new FatigueService(driver, driver.Name, _consoleService);
+            IFuelService fuelService = new FuelService(car, car.Brand.ToString(), _consoleService, fatigueService);
             IDirectionService directionService = new DirectionService(car, driver, fuelService, fatigueService, car.Brand.ToString(), _consoleService);
             IStatusService statusService = new StatusService(car, driver);
 

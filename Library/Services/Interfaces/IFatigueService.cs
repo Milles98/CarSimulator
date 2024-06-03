@@ -4,5 +4,6 @@
     {
         void Rest();
         void CheckFatigue();
+        void IncreaseDriverFatigue();
     }
 }

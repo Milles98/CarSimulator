@@ -92,4 +92,10 @@ public class FatigueService : IFatigueService
             _consoleService.ResetColor();
         }
     }
+
+    public void IncreaseDriverFatigue()
+    {
+        _driver.Fatigue -= 1;
+        _consoleService.WriteLine("Föraren blir tröttare efter att ha tankat.");
+    }
 }
