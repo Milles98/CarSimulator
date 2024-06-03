@@ -33,7 +33,7 @@ namespace Library.Services
             }
             catch (Exception ex)
             {
-                _consoleService.WriteLine($"An error occurred while getting user choice: {ex.Message}");
+                _consoleService.WriteLine($"Fel inträffade vid hämtning av val: {ex.Message}");
                 return -1;
             }
         }
