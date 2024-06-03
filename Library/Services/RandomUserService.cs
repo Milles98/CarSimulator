@@ -41,28 +41,28 @@ namespace Library.Services
                 }
                 else
                 {
-                    _consoleService.WriteLine("No results found in the response.");
+                    _consoleService.WriteLine("Inget resultat i response!.");
                     return null;
                 }
             }
             catch (HttpRequestException httpRequestException)
             {
-                _consoleService.WriteLine($"An error occurred while fetching data from the API: {httpRequestException.Message}");
+                _consoleService.WriteLine($"Fel inträffade vid hämtning från APIet: {httpRequestException.Message}");
                 return null;
             }
             catch (JsonReaderException jsonReaderException)
             {
-                _consoleService.WriteLine($"An error occurred while deserializing the response: {jsonReaderException.Message}");
+                _consoleService.WriteLine($"Fel inträffade vid deserializing av responsen från APIet: {jsonReaderException.Message}");
                 return null;
             }
             catch (JsonSerializationException jsonSerializationException)
             {
-                _consoleService.WriteLine($"An error occurred while deserializing the response: {jsonSerializationException.Message}");
+                _consoleService.WriteLine($"Fel inträffade vid deserializing av responsen från APIet: {jsonSerializationException.Message}");
                 return null;
             }
             catch (Exception ex)
             {
-                _consoleService.WriteLine($"An unexpected error occurred: {ex.Message}");
+                _consoleService.WriteLine($"Oväntat fel uppstod: {ex.Message}");
                 return null;
             }
         }
