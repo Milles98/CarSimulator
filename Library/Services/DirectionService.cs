@@ -38,14 +38,14 @@ public class DirectionService : IDirectionService
                 throw new ArgumentException("Direction cannot be null or empty", nameof(direction));
             }
 
-            if (!_fuelService.HasEnoughFuel(2))
+            if (!_fuelService.HasEnoughFuel(4))
             {
                 _fuelService.DisplayLowFuelWarning();
                 return;
             }
 
-            _fuelService.UseFuel(2);
-            _driver.Fatigue += 1;
+            _fuelService.UseFuel(4);
+            _driver.Fatigue -= 1;
 
             string location = _faker.Address.City();
 
@@ -99,14 +99,14 @@ public class DirectionService : IDirectionService
                 throw new ArgumentException("Direction cannot be null or empty", nameof(direction));
             }
 
-            if (!_fuelService.HasEnoughFuel(1))
+            if (!_fuelService.HasEnoughFuel(2))
             {
                 _fuelService.DisplayLowFuelWarning();
                 return;
             }
 
-            _fuelService.UseFuel(1);
-            _driver.Fatigue += 1;
+            _fuelService.UseFuel(2);
+            _driver.Fatigue -= 1;
 
             string location = _faker.Address.City();
 
