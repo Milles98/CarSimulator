@@ -9,7 +9,7 @@ namespace Library.Services
 
         public MenuDisplayService(IConsoleService consoleService)
         {
-            _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
+            _consoleService = consoleService;
         }
 
         public void DisplayOptions(string driverName)

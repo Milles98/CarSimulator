@@ -9,7 +9,7 @@ namespace Library.Services
 
         public InputService(IConsoleService consoleService)
         {
-            _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
+            _consoleService = consoleService;
         }
 
         /// <summary>

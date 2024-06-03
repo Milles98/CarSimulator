@@ -22,14 +22,14 @@ namespace Library.Services
 
         public ActionService(IDirectionService directionService, IFuelService fuelService, IFatigueService fatigueService, IMenuDisplayService menuDisplayService, IInputService inputService, IConsoleService consoleService, string driverName, CarBrand carBrand, IStatusService statusService)
         {
-            _directionService = directionService ?? throw new ArgumentNullException(nameof(directionService));
-            _fuelService = fuelService ?? throw new ArgumentNullException(nameof(fuelService));
-            _fatigueService = fatigueService ?? throw new ArgumentNullException(nameof(fatigueService));
-            _menuDisplayService = menuDisplayService ?? throw new ArgumentNullException(nameof(menuDisplayService));
-            _inputService = inputService ?? throw new ArgumentNullException(nameof(inputService));
-            _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
-            _statusService = statusService ?? throw new ArgumentNullException(nameof(statusService));
-            _driverName = !string.IsNullOrWhiteSpace(driverName) ? driverName : throw new ArgumentException("Driver name cannot be null or empty", nameof(driverName));
+            _directionService = directionService;
+            _fuelService = fuelService;
+            _fatigueService = fatigueService;
+            _menuDisplayService = menuDisplayService;
+            _inputService = inputService;
+            _consoleService = consoleService;
+            _statusService = statusService;
+            _driverName = driverName;
             _carBrand = carBrand;
         }
 

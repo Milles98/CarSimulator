@@ -13,9 +13,9 @@ public class FuelService : IFuelService
 
     public FuelService(Car car, string carBrand, IConsoleService consoleService)
     {
-        _car = car ?? throw new ArgumentNullException(nameof(car));
-        _carBrand = !string.IsNullOrWhiteSpace(carBrand) ? carBrand : throw new ArgumentException("Car brand cannot be null or empty", nameof(carBrand));
-        _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
+        _car = car;
+        _carBrand = carBrand;
+        _consoleService = consoleService;
         _faker = new Faker();
     }
 

@@ -19,12 +19,12 @@ public class DirectionService : IDirectionService
 
     public DirectionService(Car car, Driver driver, IFuelService fuelService, IFatigueService fatigueService, string carBrand, IConsoleService consoleService)
     {
-        _car = car ?? throw new ArgumentNullException(nameof(car));
-        _driver = driver ?? throw new ArgumentNullException(nameof(driver));
-        _fuelService = fuelService ?? throw new ArgumentNullException(nameof(fuelService));
-        _fatigueService = fatigueService ?? throw new ArgumentNullException(nameof(fatigueService));
-        _carBrand = !string.IsNullOrWhiteSpace(carBrand) ? carBrand : throw new ArgumentException("Car brand cannot be null or empty", nameof(carBrand));
-        _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
+        _car = car;
+        _driver = driver;
+        _fuelService = fuelService;
+        _fatigueService = fatigueService;
+        _carBrand = carBrand;
+        _consoleService = consoleService;
         _faker = new Faker();
         _lastForwardDirection = _car.Direction;
     }

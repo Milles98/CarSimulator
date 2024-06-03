@@ -9,8 +9,8 @@ public class StatusService : IStatusService
 
     public StatusService(Car car, Driver driver)
     {
-        _car = car ?? throw new ArgumentNullException(nameof(car));
-        _driver = driver ?? throw new ArgumentNullException(nameof(driver));
+        _car = car;
+        _driver = driver;
     }
 
     public CarStatus GetStatus()
