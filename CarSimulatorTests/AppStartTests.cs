@@ -17,7 +17,7 @@ namespace CarSimulatorTests
             var menuDisplayServiceMock = new Mock<IMenuDisplayService>();
             var simulationSetupServiceMock = new Mock<ISimulationSetupService>();
             var inputServiceMock = new Mock<IInputService>();
-            var actionServiceFactoryMock = new Mock<IActionServiceFactory>();
+            var driverInteractionFactoryMock = new Mock<IDriverInteractionFactory>();
             var mainMenuMock = new Mock<IMainMenu>();
 
             mainMenuMock.Setup(m => m.Menu()).Returns(Task.CompletedTask);
@@ -28,7 +28,7 @@ namespace CarSimulatorTests
                 menuDisplayServiceMock.Object,
                 simulationSetupServiceMock.Object,
                 inputServiceMock.Object,
-                actionServiceFactoryMock.Object,
+                driverInteractionFactoryMock.Object,
                 mainMenuMock.Object
             );
 

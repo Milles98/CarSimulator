@@ -15,7 +15,7 @@ namespace CarSimulatorTests.Menus
         private Mock<ISimulationSetupService> _simulationSetupServiceMock;
         private Mock<IMenuDisplayService> _menuDisplayServiceMock;
         private Mock<IInputService> _inputServiceMock;
-        private Mock<IActionServiceFactory> _actionServiceFactoryMock;
+        private Mock<IDriverInteractionFactory> _driverInteractionFactoryMock;
         private MainMenu _sut;
 
         [TestInitialize]
@@ -25,13 +25,13 @@ namespace CarSimulatorTests.Menus
             _simulationSetupServiceMock = new Mock<ISimulationSetupService>();
             _menuDisplayServiceMock = new Mock<IMenuDisplayService>();
             _inputServiceMock = new Mock<IInputService>();
-            _actionServiceFactoryMock = new Mock<IActionServiceFactory>();
+            _driverInteractionFactoryMock = new Mock<IDriverInteractionFactory>();
 
             _sut = new MainMenu(
                 _simulationSetupServiceMock.Object,
                 _menuDisplayServiceMock.Object,
                 _inputServiceMock.Object,
-                _actionServiceFactoryMock.Object,
+                _driverInteractionFactoryMock.Object,
                 _consoleServiceMock.Object
             );
 
@@ -52,8 +52,8 @@ namespace CarSimulatorTests.Menus
             _simulationSetupServiceMock.Setup(s => s.FetchDriverDetails()).ReturnsAsync(driver);
             _simulationSetupServiceMock.Setup(s => s.EnterCarDetails(It.IsAny<string>())).Returns(car);
 
-            var actionServiceMock = new Mock<IActionService>();
-            _actionServiceFactoryMock.Setup(f => f.CreateActionService(driver, car)).Returns(actionServiceMock.Object);
+            var driverInteractionMock = new Mock<IDriverInteractionService>();
+            _driverInteractionFactoryMock.Setup(f => f.CreateDriverInteractionService(driver, car)).Returns(driverInteractionMock.Object);
 
             // Act
             await _sut.Menu();
@@ -61,7 +61,7 @@ namespace CarSimulatorTests.Menus
             // Assert
             _simulationSetupServiceMock.Verify(s => s.FetchDriverDetails(), Times.Once);
             _simulationSetupServiceMock.Verify(s => s.EnterCarDetails(It.Is<string>(name => name == "Mr. Test Driver")), Times.Once);
-            _actionServiceFactoryMock.Verify(f => f.CreateActionService(driver, car), Times.Once);
+            _driverInteractionFactoryMock.Verify(f => f.CreateDriverInteractionService(driver, car), Times.Once);
         }
 
         [TestMethod]

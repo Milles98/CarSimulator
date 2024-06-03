@@ -9,12 +9,12 @@ using Moq;
 namespace LibraryTests.Factory
 {
     [TestClass]
-    public class ActionServiceFactoryTests
+    public class DriverInteractionFactoryTests
     {
         private Mock<IMenuDisplayService> _menuDisplayServiceMock;
         private Mock<IInputService> _inputServiceMock;
         private Mock<IConsoleService> _consoleServiceMock;
-        private ActionServiceFactory _sut;
+        private DriverInteractionFactory _sut;
 
         [TestInitialize]
         public void Setup()
@@ -23,21 +23,21 @@ namespace LibraryTests.Factory
             _inputServiceMock = new Mock<IInputService>();
             _consoleServiceMock = new Mock<IConsoleService>();
 
-            _sut = new ActionServiceFactory(_menuDisplayServiceMock.Object, _inputServiceMock.Object, _consoleServiceMock.Object);
+            _sut = new DriverInteractionFactory(_menuDisplayServiceMock.Object, _inputServiceMock.Object, _consoleServiceMock.Object);
         }
 
         [TestMethod]
-        public void CreateActionService_ShouldReturnActionService()
+        public void CreateActionService_ShouldReturnDriverInteractionService()
         {
             // Arrange
             var driver = new Driver { FirstName = "John", LastName = "Doe", Fatigue = Fatigue.Rested };
             var car = new Car { Brand = CarBrand.Toyota, Fuel = Fuel.Full, Direction = Direction.Norr };
 
             // Act
-            var actionService = _sut.CreateActionService(driver, car);
+            var driverInteractionService = _sut.CreateDriverInteractionService(driver, car);
 
             // Assert
-            Assert.IsNotNull(actionService);
+            Assert.IsNotNull(driverInteractionService);
         }
     }
 }

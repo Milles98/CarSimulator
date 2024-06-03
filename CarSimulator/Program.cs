@@ -12,7 +12,7 @@ using (var container = RegisterAutofac.RegisteredContainers())
 
 1.	Applikationen startar med klassen AppInitializer, specifikt metoden Initialize. 
 Denna metod ställer in alla nödvändiga tjänster och objekt som applikationen kommer att använda, 
-såsom ConsoleService, RandomUserService, MenuDisplayService, SimulationSetupService, InputService, ActionServiceFactory och MainMenu.
+såsom ConsoleService, RandomUserService, MenuDisplayService, SimulationSetupService, InputService, DriverInteractionFactory och MainMenu.
 
 2.	Klassen AppStart instansieras sedan med alla dessa tjänster och objekt. 
 Metoden AppRun i AppStart anropas för att starta applikationen.
@@ -35,11 +35,11 @@ bränsle för en viss åtgärd, och Refuel för att fylla på bilens bränsle.
 7.	Klassen HungerService används för att hantera förarens hunger. 
 Metoden CheckHunger används för att kontrollera om förarens hunger har nått en kritisk nivå.
 
-8.	Klassen ActionService används för att utföra användarens valda åtgärd. 
+8.	Klassen DriverInteractionService används för att utföra användarens valda åtgärd. 
 Metoden ExecuteChoice används för att utföra åtgärden baserat på användarens val.
 
 9.	Applikationen har också flera testklasser 
-(AppStartTests, ActionServiceTests, AppInitializerTests, FuelServiceTests, HungerServiceTests) 
+(AppStartTests, DriverInteractionServiceTests, AppInitializerTests, FuelServiceTests, HungerServiceTests) 
 för att säkerställa att metoderna i klasserna fungerar som förväntat.
 
  */
