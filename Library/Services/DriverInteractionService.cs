@@ -5,7 +5,7 @@ using System;
 
 namespace Library.Services
 {
-    public class ActionService : IActionService
+    public class DriverInteractionService : IDriverInteractionService
     {
         private readonly IDirectionService _directionService;
         private readonly IFuelService _fuelService;
@@ -20,7 +20,7 @@ namespace Library.Services
 
         public Action<int> ExitAction { get; set; } = (code) => Environment.Exit(code);
 
-        public ActionService(IDirectionService directionService, IFuelService fuelService, IFatigueService fatigueService, IMenuDisplayService menuDisplayService, IInputService inputService, IConsoleService consoleService, string driverName, CarBrand carBrand, IStatusService statusService)
+        public DriverInteractionService(IDirectionService directionService, IFuelService fuelService, IFatigueService fatigueService, IMenuDisplayService menuDisplayService, IInputService inputService, IConsoleService consoleService, string driverName, CarBrand carBrand, IStatusService statusService)
         {
             _directionService = directionService;
             _fuelService = fuelService;

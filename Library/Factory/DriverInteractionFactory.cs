@@ -5,20 +5,20 @@ using System;
 
 namespace Library.Factory
 {
-    public class ActionServiceFactory : IActionServiceFactory
+    public class DriverInteractionFactory : IDriverInteractionFactory
     {
         private readonly IMenuDisplayService _menuDisplayService;
         private readonly IInputService _inputService;
         private readonly IConsoleService _consoleService;
 
-        public ActionServiceFactory(IMenuDisplayService menuDisplayService, IInputService inputService, IConsoleService consoleService)
+        public DriverInteractionFactory(IMenuDisplayService menuDisplayService, IInputService inputService, IConsoleService consoleService)
         {
             _menuDisplayService = menuDisplayService;
             _inputService = inputService;
             _consoleService = consoleService;
         }
 
-        public IActionService CreateActionService(Driver driver, Car car)
+        public IDriverInteractionService CreateDriverInteractionService(Driver driver, Car car)
         {
             if (driver == null)
             {
@@ -35,7 +35,7 @@ namespace Library.Factory
             IDirectionService directionService = new DirectionService(car, driver, fuelService, fatigueService, car.Brand.ToString(), _consoleService);
             IStatusService statusService = new StatusService(car, driver);
 
-            return new ActionService(directionService, fuelService, fatigueService, _menuDisplayService, _inputService, _consoleService, driver.Name, car.Brand, statusService);
+            return new DriverInteractionService(directionService, fuelService, fatigueService, _menuDisplayService, _inputService, _consoleService, driver.Name, car.Brand, statusService);
         }
     }
 }

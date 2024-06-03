@@ -9,16 +9,16 @@ namespace CarSimulator.Menus
         private readonly ISimulationSetupService _simulationSetupService;
         private readonly IMenuDisplayService _menuDisplayService;
         private readonly IInputService _inputService;
-        private readonly IActionServiceFactory _actionServiceFactory;
+        private readonly IDriverInteractionFactory _driverInteractionFactory;
         private readonly IConsoleService _consoleService;
         private bool _isTesting = false;
 
-        public MainMenu(ISimulationSetupService simulationSetupService, IMenuDisplayService menuDisplayService, IInputService inputService, IActionServiceFactory actionServiceFactory, IConsoleService consoleService)
+        public MainMenu(ISimulationSetupService simulationSetupService, IMenuDisplayService menuDisplayService, IInputService inputService, IDriverInteractionFactory driverInteractionFactory, IConsoleService consoleService)
         {
             _simulationSetupService = simulationSetupService;
             _menuDisplayService = menuDisplayService;
             _inputService = inputService;
-            _actionServiceFactory = actionServiceFactory;
+            _driverInteractionFactory = driverInteractionFactory;
             _consoleService = consoleService;
         }
 
@@ -116,19 +116,19 @@ namespace CarSimulator.Menus
 
                     try
                     {
-                        var actionService = _actionServiceFactory.CreateActionService(driver, car);
-                        if (actionService == null)
+                        var driverInteractionService = _driverInteractionFactory.CreateDriverInteractionService(driver, car);
+                        if (driverInteractionService == null)
                         {
-                            throw new InvalidOperationException("Failed to create ActionService.");
+                            throw new InvalidOperationException("Failed to create Driver Interaction Service.");
                         }
 
-                        var actionMenu = new ActionMenu(actionService);
-                        actionMenu.Menu();
+                        var driverInteractionMenu = new DriverInteractionMenu(driverInteractionService);
+                        driverInteractionMenu.Menu();
                     }
                     catch (Exception ex)
                     {
                         _consoleService.SetForegroundColor(ConsoleColor.Red);
-                        _consoleService.WriteLine($"Error creating ActionService: {ex.Message}");
+                        _consoleService.WriteLine($"Error creating Driver Interaction Service: {ex.Message}");
                         _consoleService.ResetColor();
                         throw;
                     }

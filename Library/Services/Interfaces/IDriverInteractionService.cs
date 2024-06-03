@@ -1,6 +1,6 @@
 ﻿namespace Library.Services.Interfaces
 {
-    public interface IActionService
+    public interface IDriverInteractionService
     {
         void ExecuteMenu();
     }

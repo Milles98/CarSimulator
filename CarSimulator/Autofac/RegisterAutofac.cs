@@ -19,7 +19,7 @@ namespace CarSimulator.Autofac
             builder.RegisterType<MenuDisplayService>().As<IMenuDisplayService>().SingleInstance();
             builder.RegisterType<SimulationSetupService>().As<ISimulationSetupService>().SingleInstance();
             builder.RegisterType<InputService>().As<IInputService>().SingleInstance();
-            builder.RegisterType<ActionServiceFactory>().As<IActionServiceFactory>().SingleInstance();
+            builder.RegisterType<DriverInteractionFactory>().As<IDriverInteractionFactory>().SingleInstance();
             builder.RegisterType<MainMenu>().As<IMainMenu>().SingleInstance();
             builder.RegisterType<AppStart>().SingleInstance();
 

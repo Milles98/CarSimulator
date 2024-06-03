@@ -10,7 +10,7 @@ namespace CarSimulator
         private readonly IMenuDisplayService _menuDisplayService;
         private readonly ISimulationSetupService _simulationSetupService;
         private readonly IInputService _inputService;
-        private readonly IActionServiceFactory _actionServiceFactory;
+        private readonly IDriverInteractionFactory _driverInteractionFactory;
         private readonly IMainMenu _mainMenu;
 
         public AppStart(
@@ -19,7 +19,7 @@ namespace CarSimulator
             IMenuDisplayService menuDisplayService,
             ISimulationSetupService simulationSetupService,
             IInputService inputService,
-            IActionServiceFactory actionServiceFactory,
+            IDriverInteractionFactory driverInteractionFactory,
             IMainMenu mainMenu)
         {
             _consoleService = consoleService;
@@ -27,7 +27,7 @@ namespace CarSimulator
             _menuDisplayService = menuDisplayService;
             _simulationSetupService = simulationSetupService;
             _inputService = inputService;
-            _actionServiceFactory = actionServiceFactory;
+            _driverInteractionFactory = driverInteractionFactory;
             _mainMenu = mainMenu;
         }
 
