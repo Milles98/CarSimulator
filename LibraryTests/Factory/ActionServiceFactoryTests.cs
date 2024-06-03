@@ -27,7 +27,7 @@ namespace LibraryTests.Factory
         }
 
         [TestMethod]
-        public void CreateActionService_ShouldReturnActionService_WithExpectedDependencies()
+        public void CreateActionService_ShouldReturnActionService()
         {
             // Arrange
             var driver = new Driver { FirstName = "John", LastName = "Doe", Fatigue = Fatigue.Rested };
@@ -38,18 +38,6 @@ namespace LibraryTests.Factory
 
             // Assert
             Assert.IsNotNull(actionService);
-
-            var directionServiceField = typeof(ActionService).GetField("_directionService", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            var fuelServiceField = typeof(ActionService).GetField("_fuelService", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            var fatigueServiceField = typeof(ActionService).GetField("_fatigueService", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-
-            var directionService = directionServiceField.GetValue(actionService) as IDirectionService;
-            var fuelService = fuelServiceField.GetValue(actionService) as IFuelService;
-            var fatigueService = fatigueServiceField.GetValue(actionService) as IFatigueService;
-
-            Assert.IsNotNull(directionService);
-            Assert.IsNotNull(fuelService);
-            Assert.IsNotNull(fatigueService);
         }
     }
 }

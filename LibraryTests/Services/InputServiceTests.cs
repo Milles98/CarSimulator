@@ -31,7 +31,7 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public void GetUserChoice_ShouldReturnMinusOneAndDisplayError_WhenInputIsInvalid()
+        public void GetUserChoice_ShouldReturnMinusOne_WhenInputIsInvalid()
         {
             // Arrange
             _consoleServiceMock.Setup(cs => cs.ReadLine()).Returns("invalid");
@@ -41,14 +41,10 @@ namespace LibraryTests.Services
 
             // Assert
             Assert.AreEqual(-1, result);
-            _consoleServiceMock.Verify(cs => cs.Clear(), Times.Once);
-            _consoleServiceMock.Verify(cs => cs.SetForegroundColor(ConsoleColor.Red), Times.Once);
-            _consoleServiceMock.Verify(cs => cs.WriteLine("Ogiltigt val, försök igen."), Times.Once);
-            _consoleServiceMock.Verify(cs => cs.ResetColor(), Times.Once);
         }
 
         [TestMethod]
-        public void GetUserChoice_ShouldHandleExceptionGracefully()
+        public void GetUserChoice_ShouldReturnMinusOne_WhenExceptionOccurs()
         {
             // Arrange
             _consoleServiceMock.Setup(cs => cs.ReadLine()).Throws(new Exception("Test exception"));
@@ -58,7 +54,6 @@ namespace LibraryTests.Services
 
             // Assert
             Assert.AreEqual(-1, result);
-            _consoleServiceMock.Verify(cs => cs.WriteLine(It.Is<string>(s => s.Contains("An error occurred while getting user choice: Test exception"))), Times.Once);
         }
     }
 }

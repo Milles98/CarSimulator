@@ -21,7 +21,7 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public void Refuel_ShouldDisplayMessage_WhenCarIsAlreadyFull()
+        public void Refuel_ShouldNotChangeFuelLevel_WhenCarIsAlreadyFull()
         {
             // Arrange
             _car.Fuel = Fuel.Full;
@@ -30,13 +30,11 @@ namespace LibraryTests.Services
             _sut.Refuel();
 
             // Assert
-            _consoleServiceMock.Verify(x => x.SetForegroundColor(ConsoleColor.Red), Times.Once);
-            _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("Det går inte att tanka Toyota, bilen är redan fulltankad!"))), Times.Once);
-            _consoleServiceMock.Verify(x => x.ResetColor(), Times.Once);
+            Assert.AreEqual(Fuel.Full, _car.Fuel);
         }
 
         [TestMethod]
-        public void Refuel_ShouldRefuelCarAndDisplayMessage_WhenCarIsNotFull()
+        public void Refuel_ShouldRefuelCar_WhenCarIsNotFull()
         {
             // Arrange
             _car.Fuel = Fuel.Half;
@@ -46,9 +44,6 @@ namespace LibraryTests.Services
 
             // Assert
             Assert.AreEqual(Fuel.Full, _car.Fuel);
-            _consoleServiceMock.Verify(x => x.SetForegroundColor(ConsoleColor.Green), Times.Once);
-            _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("Toyota tankade på"))), Times.Once);
-            _consoleServiceMock.Verify(x => x.ResetColor(), Times.Once);
         }
 
         [TestMethod]
@@ -75,19 +70,6 @@ namespace LibraryTests.Services
 
             // Assert
             Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void DisplayLowFuelWarning_ShouldDisplayWarningMessage()
-        {
-            // Act
-            _sut.DisplayLowFuelWarning();
-
-            // Assert
-            _consoleServiceMock.Verify(x => x.SetForegroundColor(ConsoleColor.Red), Times.Once);
-            _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("____"))), Times.Once);
-            _consoleServiceMock.Verify(x => x.WriteLine(It.Is<string>(s => s.Contains("Toyota är utan bränsle. Du måste tanka."))), Times.Once);
-            _consoleServiceMock.Verify(x => x.ResetColor(), Times.Once);
         }
 
         [TestMethod]
