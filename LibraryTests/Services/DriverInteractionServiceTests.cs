@@ -17,7 +17,7 @@ namespace LibraryTests.Services
         private Mock<IConsoleService> _consoleServiceMock;
         private Mock<IStatusService> _statusServiceMock;
         private DriverInteractionService _sut;
-        private string _driverName = "Test Driver";
+        private string _driverName = "Mille Elfver";
         private CarBrand _carBrand = CarBrand.Toyota;
 
         [TestInitialize]

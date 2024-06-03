@@ -23,7 +23,7 @@ namespace LibraryTests.Services
         public void DisplayOptions_ShouldInvokeWriteMethods()
         {
             // Arrange
-            string driverName = "John Doe";
+            string driverName = "Mille Elfver";
 
             // Act
             _sut.DisplayOptions(driverName);
@@ -40,7 +40,7 @@ namespace LibraryTests.Services
                 Fuel = Fuel.Half,
                 Fatigue = Fatigue.Tired,
             };
-            string driverName = "John Doe";
+            string driverName = "Mille Elfver";
             string carBrand = "Toyota";
 
             // Act
@@ -52,7 +52,7 @@ namespace LibraryTests.Services
         public void DisplayIntroduction_ShouldInvokeReadAndWriteMethods()
         {
             // Arrange
-            string driverName = "John Doe";
+            string driverName = "Mille Elfver";
             CarBrand carBrand = CarBrand.Toyota;
 
             _consoleServiceMock.Setup(cs => cs.ReadLine()).Returns("nej");

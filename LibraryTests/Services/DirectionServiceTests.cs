@@ -19,7 +19,7 @@ namespace LibraryTests.Services
         public void Setup()
         {
             _car = new Car { Brand = CarBrand.Toyota, Fuel = Fuel.Full, Direction = Direction.Norr };
-            _driver = new Driver { FirstName = "John", LastName = "Doe", Fatigue = Fatigue.Rested, };
+            _driver = new Driver { FirstName = "Mille", LastName = "Elfver", Fatigue = Fatigue.Rested, };
 
             _fuelServiceMock = new Mock<IFuelService>();
             _fatigueServiceMock = new Mock<IFatigueService>();
