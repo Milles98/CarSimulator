@@ -35,7 +35,7 @@ public class DirectionService : IDirectionService
         {
             if (string.IsNullOrWhiteSpace(direction))
             {
-                throw new ArgumentException("Direction cannot be null or empty", nameof(direction));
+                throw new ArgumentException("Riktningen får inte vara tom!", nameof(direction));
             }
 
             if (!_fuelService.HasEnoughFuel(4))
@@ -85,7 +85,7 @@ public class DirectionService : IDirectionService
         catch (Exception ex)
         {
             _consoleService.SetForegroundColor(ConsoleColor.Red);
-            _consoleService.WriteLine($"An error occurred while driving: {ex.Message}");
+            _consoleService.WriteLine($"Fel inträffade vid bilkörningen: {ex.Message}");
             _consoleService.ResetColor();
         }
     }
@@ -96,7 +96,7 @@ public class DirectionService : IDirectionService
         {
             if (string.IsNullOrWhiteSpace(direction))
             {
-                throw new ArgumentException("Direction cannot be null or empty", nameof(direction));
+                throw new ArgumentException("Förare kan ej vara tom", nameof(direction));
             }
 
             if (!_fuelService.HasEnoughFuel(2))
@@ -119,7 +119,7 @@ public class DirectionService : IDirectionService
         catch (Exception ex)
         {
             _consoleService.SetForegroundColor(ConsoleColor.Red);
-            _consoleService.WriteLine($"An error occurred while turning: {ex.Message}");
+            _consoleService.WriteLine($"Fel inträffade vid svängning: {ex.Message}");
             _consoleService.ResetColor();
         }
     }
@@ -132,7 +132,7 @@ public class DirectionService : IDirectionService
             Direction.Söder => Direction.Norr,
             Direction.Öst => Direction.Väst,
             Direction.Väst => Direction.Öst,
-            _ => throw new ArgumentOutOfRangeException(nameof(currentDirection), $"Invalid direction: {currentDirection}")
+            _ => throw new ArgumentOutOfRangeException(nameof(currentDirection), $"Ogiltig riktning: {currentDirection}")
         };
     }
 
@@ -146,7 +146,7 @@ public class DirectionService : IDirectionService
                 Direction.Väst => Direction.Söder,
                 Direction.Söder => Direction.Öst,
                 Direction.Öst => Direction.Norr,
-                _ => throw new ArgumentOutOfRangeException(nameof(currentDirection), $"Invalid direction: {currentDirection}")
+                _ => throw new ArgumentOutOfRangeException(nameof(currentDirection), $"Ogiltig riktning: {currentDirection}")
             },
             "höger" => currentDirection switch
             {
@@ -154,9 +154,9 @@ public class DirectionService : IDirectionService
                 Direction.Öst => Direction.Söder,
                 Direction.Söder => Direction.Väst,
                 Direction.Väst => Direction.Norr,
-                _ => throw new ArgumentOutOfRangeException(nameof(currentDirection), $"Invalid direction: {currentDirection}")
+                _ => throw new ArgumentOutOfRangeException(nameof(currentDirection), $"Ogiltig riktning: {currentDirection}")
             },
-            _ => throw new ArgumentException("Invalid turn direction", nameof(turnDirection))
+            _ => throw new ArgumentException("Ogiltig riktning", nameof(turnDirection))
         };
     }
 }
