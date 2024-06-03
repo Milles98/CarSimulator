@@ -21,7 +21,7 @@ namespace Library.Services
                     if (string.IsNullOrWhiteSpace(driverName))
                     {
                         _consoleService.SetForegroundColor(ConsoleColor.Red);
-                        _consoleService.WriteLine("Driver name cannot be null or empty. Please provide a valid driver name.");
+                        _consoleService.WriteLine("Förarnamn ska inte vara tomt, något fel kan ha skett vid hämtningen från APIet!");
                         _consoleService.ResetColor();
                         driverName = _consoleService.ReadLine();
                         continue;
@@ -42,7 +42,7 @@ namespace Library.Services
                 catch (Exception ex)
                 {
                     _consoleService.SetForegroundColor(ConsoleColor.Red);
-                    _consoleService.WriteLine($"An error occurred while displaying the main menu: {ex.Message}");
+                    _consoleService.WriteLine($"Fel uppstod vid visandet av huvudmenyn: {ex.Message}");
                     _consoleService.ResetColor();
                 }
             }
@@ -53,7 +53,7 @@ namespace Library.Services
             if (status == null)
             {
                 _consoleService.SetForegroundColor(ConsoleColor.Red);
-                _consoleService.WriteLine("Status cannot be null.");
+                _consoleService.WriteLine("Status ska ej vara tomt.");
                 _consoleService.ResetColor();
                 return;
             }
@@ -65,7 +65,7 @@ namespace Library.Services
                     if (string.IsNullOrWhiteSpace(driverName))
                     {
                         _consoleService.SetForegroundColor(ConsoleColor.Red);
-                        _consoleService.WriteLine("Driver name cannot be null or empty. Please provide a valid driver name.");
+                        _consoleService.WriteLine("Förarnamn ska inte vara tomt, något fel kan ha skett vid hämtningen från APIet!");
                         _consoleService.ResetColor();
                         driverName = _consoleService.ReadLine();
                         continue;
@@ -74,7 +74,7 @@ namespace Library.Services
                     if (string.IsNullOrWhiteSpace(carBrand))
                     {
                         _consoleService.SetForegroundColor(ConsoleColor.Red);
-                        _consoleService.WriteLine("Car brand cannot be null or empty. Please provide a valid car brand.");
+                        _consoleService.WriteLine("Bilmärke kan ej vara tomt, något fel har skett vid val av bilmärke.");
                         _consoleService.ResetColor();
                         carBrand = _consoleService.ReadLine();
                         continue;
@@ -97,7 +97,7 @@ namespace Library.Services
                 catch (Exception ex)
                 {
                     _consoleService.SetForegroundColor(ConsoleColor.Red);
-                    _consoleService.WriteLine($"An error occurred while displaying the status menu: {ex.Message}");
+                    _consoleService.WriteLine($"Problem uppstod vid hämtningen av status menyn: {ex.Message}");
                     _consoleService.ResetColor();
                 }
             }
@@ -122,7 +122,7 @@ namespace Library.Services
                     if (string.IsNullOrWhiteSpace(driverName))
                     {
                         _consoleService.SetForegroundColor(ConsoleColor.Red);
-                        _consoleService.WriteLine("Driver name cannot be null or empty. Please provide a valid driver name.");
+                        _consoleService.WriteLine("Förarnamn ska inte vara tomt, något fel kan ha skett vid hämtningen från APIet!");
                         _consoleService.ResetColor();
                         driverName = _consoleService.ReadLine();
                         continue;
@@ -188,7 +188,7 @@ namespace Library.Services
                 catch (Exception ex)
                 {
                     _consoleService.SetForegroundColor(ConsoleColor.Red);
-                    _consoleService.WriteLine($"An error occurred while displaying the introduction: {ex.Message}");
+                    _consoleService.WriteLine($"Fel inträffade vid visning av introduktionen: {ex.Message}");
                     _consoleService.ResetColor();
                 }
             }
@@ -203,7 +203,7 @@ namespace Library.Services
                     _consoleService.Write(c.ToString());
                     if (!skipTypingEffect)
                     {
-                        System.Threading.Thread.Sleep(delay);
+                        Thread.Sleep(delay);
                     }
                 }
                 _consoleService.WriteLine("");
@@ -211,7 +211,7 @@ namespace Library.Services
             catch (Exception ex)
             {
                 _consoleService.SetForegroundColor(ConsoleColor.Red);
-                _consoleService.WriteLine($"An error occurred while typing text: {ex.Message}");
+                _consoleService.WriteLine($"Fel inträffade vid skrivandet av texten: {ex.Message}");
                 _consoleService.ResetColor();
             }
         }
