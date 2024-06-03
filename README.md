@@ -32,9 +32,9 @@ The application uses MS Tests and NUnit for unit and integration testing differe
 
 #### Single Responsibility Principle (SRP):
 
-* Each service class (MainMenuService, RandomUserService, CarService, etc.) has a single responsibility.
+* Each service class (FuelService, RandomUserService, DirectionService, etc.) has a single responsibility.
 
-* The ActionMenu and MainMenu classes handle user interactions and delegate tasks to respective services.
+* The DriverInteractionMenu and MainMenu classes handle user interactions and delegate tasks to respective services.
 
 #### Open/Closed Principle (OCP):
 
@@ -48,11 +48,11 @@ The application uses MS Tests and NUnit for unit and integration testing differe
 
 #### Interface Segregation Principle (ISP):
 
-* Interfaces are specific to the functionality they provide (ICarService, IDriverService, IFoodService, etc.), ensuring clients only need to implement methods they use.
+* Interfaces are specific to the functionality they provide (IFatigueService, IDirectionService, IFuelService, etc.), ensuring clients only need to implement methods they use.
 
 #### Dependency Inversion Principle (DIP):
 
-* High-level modules depend on abstractions (IRandomUserService, IMainMenuService, etc.) rather than concrete implementations.
+* High-level modules depend on abstractions (IRandomUserService, ISimulationSetupService, etc.) rather than concrete implementations.
 
 ### DRY (Don't Repeat Yourself)
 
@@ -66,9 +66,9 @@ Clear separation between different concerns:
 
 * Data Retrieval: RandomUserService handles data fetching from the API.
 
-* User Interaction: MainMenu, ActionMenu manage user input and display.
+* User Interaction: MainMenu, DriverInteractionMenu manage user input and display.
 
-* Business Logic: Individual services (CarService, DriverService, etc.) handle specific business logic.
+* Business Logic: Individual services (FuelService, DirectionService, etc.) handle specific business logic.
 
 ## Dependencies
 
@@ -84,7 +84,7 @@ The application utilizes the following models, enums, and services:
 
 * Fuel
 
-* Hunger
+* Hunger (In test only, feature not yet implemented)
 
 ### Models
 
@@ -100,25 +100,23 @@ The application utilizes the following models, enums, and services:
 
 ## Services and Interfaces
 
-* ICarService: Manages car operations (drive, turn, get status).
+* IDirectionService: Manages car operations (drive, turn, get status).
 
-* IDriverService: Manages driver-related operations (rest, check fatigue).
+* IFatigueService: Manages driver-related operations (rest, check fatigue).
 
-* IFoodService: Manages food-related operations (eat, check hunger).
+* IHungerService: Manages food-related operations (eat, check hunger, only for tests).
 
 * IFuelService: Manages fuel-related operations (refuel).
 
 * IInputService: Manages user input.
 
-* IMainMenuService: Manages main menu operations (fetch driver details, enter car details).
-
 * IMenuDisplayService: Manages display operations for different menus.
 
 * IRandomUserService: Fetches random driver details from an API.
 
-* IActionService: Manages execution of menu actions.
+* IDriverInteractionService: Manages execution of menu actions.
 
-* IActionServiceFactory: Creates instances of IActionService.
+* IDriverInteractionFactory: Creates instances of IActionService.
 
 * IConsoleService: Manages console operations (write, read, clear, etc.).
 
@@ -140,7 +138,7 @@ The application utilizes the following models, enums, and services:
 
 * Transitions to ActionMenu.
 
-### ActionMenu: Handles the action menu interactions.
+### DriverInteractionMenu: Handles the menu interactions for driver.
 
 * Executes various actions such as driving, turning, refueling, and resting.
 
