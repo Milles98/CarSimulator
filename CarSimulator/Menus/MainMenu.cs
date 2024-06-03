@@ -19,7 +19,7 @@ namespace CarSimulator.Menus
             _menuDisplayService = menuDisplayService;
             _inputService = inputService;
             _actionServiceFactory = actionServiceFactory;
-            _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
+            _consoleService = consoleService;
         }
 
         /// <summary>

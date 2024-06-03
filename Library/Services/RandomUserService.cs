@@ -14,8 +14,8 @@ namespace Library.Services
 
         public RandomUserService(HttpClient httpClient, IConsoleService consoleService)
         {
-            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
-            _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
+            _httpClient = httpClient;
+            _consoleService = consoleService;
         }
 
         /// <summary>

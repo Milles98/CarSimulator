@@ -11,8 +11,8 @@ namespace Library.Services
 
         public SimulationSetupService(IRandomUserService randomUserService, IConsoleService consoleService)
         {
-            _randomUserService = randomUserService ?? throw new ArgumentNullException(nameof(randomUserService));
-            _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
+            _randomUserService = randomUserService;
+            _consoleService = consoleService;
         }
 
         public async Task<Driver> FetchDriverDetails()

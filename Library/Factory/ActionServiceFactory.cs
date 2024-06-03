@@ -13,9 +13,9 @@ namespace Library.Factory
 
         public ActionServiceFactory(IMenuDisplayService menuDisplayService, IInputService inputService, IConsoleService consoleService)
         {
-            _menuDisplayService = menuDisplayService ?? throw new ArgumentNullException(nameof(menuDisplayService));
-            _inputService = inputService ?? throw new ArgumentNullException(nameof(inputService));
-            _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
+            _menuDisplayService = menuDisplayService;
+            _inputService = inputService;
+            _consoleService = consoleService;
         }
 
         public IActionService CreateActionService(Driver driver, Car car)

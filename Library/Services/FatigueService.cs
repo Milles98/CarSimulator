@@ -17,9 +17,9 @@ public class FatigueService : IFatigueService
 
     public FatigueService(Driver driver, string driverName, IConsoleService consoleService)
     {
-        _driver = driver ?? throw new ArgumentNullException(nameof(driver));
-        _driverName = !string.IsNullOrWhiteSpace(driverName) ? driverName : throw new ArgumentException("Driver name cannot be null or empty", nameof(driverName));
-        _consoleService = consoleService ?? throw new ArgumentNullException(nameof(consoleService));
+        _driver = driver;
+        _driverName = driverName;
+        _consoleService = consoleService;
         _faker = new Faker();
     }
 

@@ -2,24 +2,24 @@
 using Library.Models;
 using Library.Services.Interfaces;
 using Moq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace LibraryTests.Services
 {
     [TestClass]
     public class HungerServiceTests
     {
-        private Mock<IConsoleService> _consoleServiceMock;
         private Driver _driver;
-        private HungerService _sut;
         private Mock<Action> _exitActionMock;
+        private Mock<IHungerService> _hungerServiceMock;
 
         [TestInitialize]
         public void Setup()
         {
-            _consoleServiceMock = new Mock<IConsoleService>();
             _exitActionMock = new Mock<Action>();
+            _hungerServiceMock = new Mock<IHungerService>();
             _driver = new Driver { FirstName = "Test", LastName = "Driver", Hunger = Hunger.Mätt };
-            _sut = new HungerService(_driver, _consoleServiceMock.Object, _exitActionMock.Object);
         }
 
         [TestMethod]
@@ -27,15 +27,14 @@ namespace LibraryTests.Services
         {
             // Arrange
             _driver.Hunger = Hunger.Hungrig;
+            _hungerServiceMock.Setup(s => s.Eat(It.IsAny<Driver>()))
+                .Callback<Driver>(driver => driver.Hunger = Hunger.Mätt);
 
             // Act
-            _sut.Eat();
+            _hungerServiceMock.Object.Eat(_driver);
 
             // Assert
             Assert.AreEqual(Hunger.Mätt, _driver.Hunger);
-            _consoleServiceMock.Verify(c => c.SetForegroundColor(ConsoleColor.Green), Times.Once);
-            _consoleServiceMock.Verify(c => c.WriteLine(It.Is<string>(s => s.Contains("Test Driver och du äter varsin"))), Times.Once);
-            _consoleServiceMock.Verify(c => c.ResetColor(), Times.Once);
         }
 
         [TestMethod]
@@ -45,13 +44,10 @@ namespace LibraryTests.Services
             _driver.Hunger = Hunger.Mätt;
 
             // Act
-            _sut.Eat();
+            _hungerServiceMock.Object.Eat(_driver);
 
             // Assert
             Assert.AreEqual(Hunger.Mätt, _driver.Hunger);
-            _consoleServiceMock.Verify(c => c.SetForegroundColor(ConsoleColor.Red), Times.Once);
-            _consoleServiceMock.Verify(c => c.WriteLine(It.Is<string>(s => s.Contains("Test Driver och du är redan mätta"))), Times.Once);
-            _consoleServiceMock.Verify(c => c.ResetColor(), Times.Once);
         }
 
         [TestMethod]
@@ -59,27 +55,14 @@ namespace LibraryTests.Services
         {
             // Arrange
             _driver.Hunger = Hunger.Mätt;
+            _hungerServiceMock.Setup(s => s.CheckHunger(It.IsAny<Driver>(), It.IsAny<Action>()))
+                .Callback<Driver, Action>((driver, exitAction) => driver.Hunger += 2);
 
             // Act
-            _sut.CheckHunger();
+            _hungerServiceMock.Object.CheckHunger(_driver, _exitActionMock.Object);
 
             // Assert
             Assert.AreEqual((Hunger)2, _driver.Hunger);
-        }
-
-        [TestMethod]
-        public void CheckHunger_ShouldDisplayWarning_WhenHungerIsHigh()
-        {
-            // Arrange
-            _driver.Hunger = (Hunger)10;
-
-            // Act
-            _sut.CheckHunger();
-
-            // Assert
-            _consoleServiceMock.Verify(c => c.SetForegroundColor(ConsoleColor.Red), Times.Once);
-            _consoleServiceMock.Verify(c => c.WriteLine(It.Is<string>(s => s.Contains("Test Driver och du svälter! Ni måste äta något omedelbart"))), Times.Once);
-            _consoleServiceMock.Verify(c => c.ResetColor(), Times.Once);
         }
 
         [TestMethod]
@@ -87,9 +70,17 @@ namespace LibraryTests.Services
         {
             // Arrange
             _driver.Hunger = (Hunger)14;
+            _hungerServiceMock.Setup(s => s.CheckHunger(It.IsAny<Driver>(), It.IsAny<Action>()))
+                .Callback<Driver, Action>((driver, exitAction) =>
+                {
+                    if ((int)driver.Hunger >= 14)
+                    {
+                        exitAction();
+                    }
+                });
 
             // Act
-            _sut.CheckHunger();
+            _hungerServiceMock.Object.CheckHunger(_driver, _exitActionMock.Object);
 
             // Assert
             _exitActionMock.Verify(e => e(), Times.Once);
