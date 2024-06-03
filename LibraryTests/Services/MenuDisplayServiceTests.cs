@@ -36,9 +36,9 @@ namespace LibraryTests.Services
             // Arrange
             var status = new CarStatus
             {
-                Direction = "Norr",
-                Fuel = 15,
-                Fatigue = 5,
+                Direction = Direction.Norr,
+                Fuel = Fuel.Half,
+                Fatigue = Fatigue.Tired,
             };
             string driverName = "John Doe";
             string carBrand = "Toyota";

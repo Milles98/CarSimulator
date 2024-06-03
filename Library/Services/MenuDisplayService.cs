@@ -85,11 +85,11 @@ namespace Library.Services
                     _consoleService.ResetColor();
 
                     SetConsoleColorForFuel(status.Fuel);
-                    _consoleService.WriteLine($"{"\nBensin:",-10} {GenerateBar(status.Fuel, 20)} {status.Fuel,2}/20");
+                    _consoleService.WriteLine($"{"\nBensin:",-10} {GenerateBar((int)status.Fuel, 20)} {(int)status.Fuel,2}/20");
                     _consoleService.ResetColor();
 
                     SetConsoleColorForFatigue(status.Fatigue);
-                    _consoleService.WriteLine($"{"\nTrötthet:",-10} {GenerateBar(status.Fatigue, 10)} {status.Fatigue,2}/10\n");
+                    _consoleService.WriteLine($"{"\nTrötthet:",-10} {GenerateBar((int)status.Fatigue, 10)} {(int)status.Fatigue,2}/10\n");
                     _consoleService.ResetColor();
 
                     break;
@@ -216,43 +216,55 @@ namespace Library.Services
             }
         }
 
-        private void SetConsoleColorForFuel(int fuel)
+        private void SetConsoleColorForFuel(Fuel fuel)
         {
-            if (fuel >= 11 && fuel <= 20)
+            int fuelValue = (int)fuel;
+
+            if (fuelValue >= 15 && fuelValue <= 20)
             {
                 _consoleService.SetForegroundColor(ConsoleColor.Green);
             }
-            else if (fuel >= 5 && fuel <= 10)
+            else if (fuelValue >= 10 && fuelValue < 15)
             {
                 _consoleService.SetForegroundColor(ConsoleColor.Yellow);
             }
-            else if (fuel >= 1 && fuel <= 4)
+            else if (fuelValue >= 5 && fuelValue < 10)
             {
                 _consoleService.SetForegroundColor(ConsoleColor.DarkYellow);
             }
-            else if (fuel == 0)
+            else if (fuelValue >= 1 && fuelValue < 5)
+            {
+                _consoleService.SetForegroundColor(ConsoleColor.DarkRed);
+            }
+            else if (fuelValue == 0)
             {
                 _consoleService.SetForegroundColor(ConsoleColor.Red);
+            }
+            else
+            {
+                _consoleService.SetForegroundColor(ConsoleColor.Gray);
             }
         }
 
-        private void SetConsoleColorForFatigue(int fatigue)
+        private void SetConsoleColorForFatigue(Fatigue fatigue)
         {
-            if (fatigue >= 0 && fatigue <= 3)
+            int fatigueValue = (int)fatigue;
+
+            if (fatigueValue >= 0 && fatigueValue <= 3)
             {
                 _consoleService.SetForegroundColor(ConsoleColor.Cyan);
             }
-            else if (fatigue >= 4 && fatigue <= 6)
+            else if (fatigueValue >= 4 && fatigueValue <= 6)
             {
                 _consoleService.SetForegroundColor(ConsoleColor.Magenta);
             }
-            else if (fatigue >= 7 && fatigue <= 9)
-            {
-                _consoleService.SetForegroundColor(ConsoleColor.DarkMagenta);
-            }
-            else if (fatigue == 10)
+            else if (fatigueValue >= 7 && fatigueValue <= 10)
             {
                 _consoleService.SetForegroundColor(ConsoleColor.Red);
+            }
+            else
+            {
+                _consoleService.SetForegroundColor(ConsoleColor.Gray);
             }
         }
     }

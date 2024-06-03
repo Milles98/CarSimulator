@@ -38,9 +38,9 @@ namespace LibraryTests.Services
 
             // Assert
             Assert.IsNotNull(status);
-            Assert.AreEqual((int)_car.Fuel, status.Fuel);
-            Assert.AreEqual((int)_driver.Fatigue, status.Fatigue);
-            Assert.AreEqual(_car.Direction.ToString(), status.Direction);
+            Assert.AreEqual(_car.Fuel, status.Fuel);
+            Assert.AreEqual(_driver.Fatigue, status.Fatigue);
+            Assert.AreEqual(_car.Direction, status.Direction);
         }
 
         [TestMethod]
@@ -56,9 +56,9 @@ namespace LibraryTests.Services
 
             // Assert
             Assert.IsNotNull(status);
-            Assert.AreEqual((int)_car.Fuel, status.Fuel);
-            Assert.AreEqual((int)_driver.Fatigue, status.Fatigue);
-            Assert.AreEqual(_car.Direction.ToString(), status.Direction);
+            Assert.AreEqual(_car.Fuel, status.Fuel);
+            Assert.AreEqual(_driver.Fatigue, status.Fatigue);
+            Assert.AreEqual(_car.Direction, status.Direction);
         }
     }
 }

@@ -17,9 +17,9 @@ public class StatusService : IStatusService
     {
         return new CarStatus
         {
-            Fuel = (int)_car.Fuel,
-            Fatigue = (int)_driver.Fatigue,
-            Direction = _car.Direction.ToString()
+            Fuel = _car.Fuel,
+            Fatigue = _driver.Fatigue,
+            Direction = _car.Direction
         };
     }
 }
