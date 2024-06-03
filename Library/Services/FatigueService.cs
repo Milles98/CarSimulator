@@ -46,7 +46,7 @@ public class FatigueService : IFatigueService
         catch (Exception ex)
         {
             _consoleService.SetForegroundColor(ConsoleColor.Red);
-            _consoleService.WriteLine($"An error occurred while resting: {ex.Message}");
+            _consoleService.WriteLine($"Fel inträffade vid rastandet: {ex.Message}");
             _consoleService.ResetColor();
         }
     }
@@ -88,7 +88,7 @@ public class FatigueService : IFatigueService
         catch (Exception ex)
         {
             _consoleService.SetForegroundColor(ConsoleColor.Red);
-            _consoleService.WriteLine($"An error occurred while checking fatigue: {ex.Message}");
+            _consoleService.WriteLine($"Fel inträffade när du kollade trötthet: {ex.Message}");
             _consoleService.ResetColor();
         }
     }
