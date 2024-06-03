@@ -31,7 +31,7 @@ public class FuelService : IFuelService
             if (_car.Fuel == Fuel.Full)
             {
                 _consoleService.SetForegroundColor(ConsoleColor.Red);
-                _consoleService.WriteLine($"Det går inte att tanka {_carBrand}, bilen är redan fulltankad!");
+                _consoleService.WriteLine($"Det går inte att tanka bilen, den är redan fulltankad!");
                 _consoleService.ResetColor();
             }
             else
@@ -39,7 +39,7 @@ public class FuelService : IFuelService
                 _car.Fuel = Fuel.Full;
                 string refuelLocation = _faker.Address.City();
                 _consoleService.SetForegroundColor(ConsoleColor.Green);
-                _consoleService.WriteLine($"{_carBrand} tankade på {refuelLocation} och nu är bilen fulltankad.");
+                _consoleService.WriteLine($"Föraren tankade på {refuelLocation} och nu är bilen fulltankad.");
                 _consoleService.ResetColor();
 
                 _fatigueService.IncreaseDriverFatigue();
@@ -74,7 +74,7 @@ public class FuelService : IFuelService
 | |_) |  __/ | | \__ \ | | | |  ___) | | |_| | |_|_|
 |____/ \___|_| |_|___/_|_| |_| |____/|_|\__,_|\__(_)
                 ");
-        _consoleService.WriteLine($"{_carBrand} är utan bränsle. Du måste tanka.");
+        _consoleService.WriteLine($"Bilen är utan bränsle. Föraren måste tanka!");
         _consoleService.ResetColor();
     }
 

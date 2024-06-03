@@ -35,7 +35,7 @@ namespace Library.Services
                     _consoleService.WriteLine("5. Rasta");
                     _consoleService.WriteLine("6. Tanka bilen");
                     _consoleService.WriteLine("0. Avsluta");
-                    _consoleService.Write($"\n{driverName} frågar, vad ska vi göra härnäst?: ");
+                    _consoleService.Write($"\nVart ska {driverName} åka härnäst?: ");
                     _consoleService.ResetColor();
                     break;
                 }
@@ -149,13 +149,13 @@ namespace Library.Services
                     _consoleService.Clear();
 
                     _consoleService.SetForegroundColor(ConsoleColor.Cyan);
-                    TypeText($"Du sätter dig i en sprillans ny {carBrand} och kollar ut från fönstret i framsätet.");
+                    TypeText($"{driverName} sätter sig i en sprillans ny {carBrand} och kollar ut genom fönstret i framsätet.");
 
                     _consoleService.SetForegroundColor(ConsoleColor.Cyan);
-                    TypeText($"Allt ser bra ut. Du tar en tugga av din macka som du köpt på Circle K.");
+                    TypeText($"Allt ser bra ut. {driverName} tar en tugga av sin macka som är köpt på Circle K.");
 
                     _consoleService.SetForegroundColor(ConsoleColor.Cyan);
-                    TypeText($"{driverName} ser ut att vara {randomExpression.ToString().ToLower()} efter att du valde {carBrand} som bil.");
+                    TypeText($"{driverName} ser ut att vara {randomExpression.ToString().ToLower()} efter att det blev en {carBrand} som bilval.");
 
                     if (skipTypingEffect)
                     {

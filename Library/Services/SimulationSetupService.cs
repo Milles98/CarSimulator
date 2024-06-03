@@ -39,7 +39,7 @@ namespace Library.Services
                     return null;
                 }
                 _consoleService.SetForegroundColor(ConsoleColor.Green);
-                _consoleService.WriteLine($"Din förare är: {driver.Title}. {driver.FirstName} {driver.LastName}");
+                _consoleService.WriteLine($"Föraren är: {driver.Title}. {driver.FirstName} {driver.LastName}");
                 _consoleService.ResetColor();
                 await Task.Delay(2000);
                 return new Driver { Title = driver.Title, FirstName = driver.FirstName, LastName = driver.LastName, Fatigue = Fatigue.Rested };
@@ -63,7 +63,7 @@ namespace Library.Services
                 {
                     _consoleService.Clear();
                     _consoleService.SetForegroundColor(ConsoleColor.Yellow);
-                    _consoleService.WriteLine($"{driverName} undrar vilken bil du vill ta en åktur med?\n");
+                    _consoleService.WriteLine($"{driverName} funderar, vilken bil vill jag köra med?\n");
                     var brands = Enum.GetValues(typeof(CarBrand)).Cast<CarBrand>().ToList();
                     for (int i = 0; i < brands.Count; i++)
                     {
@@ -117,8 +117,8 @@ namespace Library.Services
                     var expressions = Enum.GetValues(typeof(Expression)).Cast<Expression>().ToList();
                     var randomExpression = expressions[random.Next(expressions.Count)];
                     _consoleService.SetForegroundColor(ConsoleColor.Cyan);
-                    _consoleService.WriteLine($"Du har valt att åka i en {selectedBrand}, {driverName} känner sig {randomExpression.ToString().ToLower()}!");
-                    _consoleService.WriteLine("\nVart vill du börja åka mot?\n \n1: Norr \n2: Öst \n3: Söder \n4: Väst \n5: Jag bryr mig inte, välj något bara!\n0: Avbryt");
+                    _consoleService.WriteLine($"{driverName} har valt att åka i en {selectedBrand}, nu är föraren {randomExpression.ToString().ToLower()}!");
+                    _consoleService.WriteLine($"\nVart ska man åka mot? Funderar {driverName} över.\n \n1: Norr \n2: Öst \n3: Söder \n4: Väst \n5: Välj något bara!\n0: Avbryt");
                     _consoleService.ResetColor();
                     _consoleService.Write("\nVälj ett alternativ: ");
                     string input = _consoleService.ReadLine();
