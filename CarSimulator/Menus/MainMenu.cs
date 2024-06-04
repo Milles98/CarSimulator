@@ -71,36 +71,6 @@ namespace CarSimulator.Menus
         }
 
         /// <summary>
-        /// Visar felmeddelande vid ogiltigt val.
-        /// </summary>
-        private void DisplayErrorMessage()
-        {
-            _consoleService.SetForegroundColor(ConsoleColor.Red);
-            _consoleService.WriteLine("Ogiltigt val, försök igen.");
-            _consoleService.ResetColor();
-            Task.Delay(2000).Wait();
-        }
-
-        /// <summary>
-        /// Visar avslutsmeddelande.
-        /// </summary>
-        private void DisplayExitMessage()
-        {
-            _consoleService.Clear();
-            _consoleService.SetForegroundColor(ConsoleColor.Yellow);
-            _consoleService.WriteLine(@"
- _____          _                 _       _           _ _ 
-|_   _|_ _  ___| | __   ___   ___| |__   | |__   ___ (_) |
-  | |/ _` |/ __| |/ /  / _ \ / __| '_ \  | '_ \ / _ \| | |
-  | | (_| | (__|   <  | (_) | (__| | | | | | | |  __/| |_|
-  |_|\__,_|\___|_|\_\  \___/ \___|_| |_| |_| |_|\___|/ (_)
-                                                   |__/   
-            ");
-            _consoleService.ResetColor();
-            Task.Delay(3000).Wait();
-        }
-
-        /// <summary>
         /// Startar simuleringen genom att hämta förar- och bildetaljer.
         /// </summary>
         private async Task StartSimulation()
@@ -160,6 +130,36 @@ namespace CarSimulator.Menus
             _consoleService.WriteLine("");
             _consoleService.Clear();
             _consoleService.ResetColor();
+        }
+
+        /// <summary>
+        /// Visar felmeddelande vid ogiltigt val.
+        /// </summary>
+        private void DisplayErrorMessage()
+        {
+            _consoleService.SetForegroundColor(ConsoleColor.Red);
+            _consoleService.WriteLine("Ogiltigt val, försök igen.");
+            _consoleService.ResetColor();
+            Task.Delay(2000).Wait();
+        }
+
+        /// <summary>
+        /// Visar avslutsmeddelande.
+        /// </summary>
+        private void DisplayExitMessage()
+        {
+            _consoleService.Clear();
+            _consoleService.SetForegroundColor(ConsoleColor.Yellow);
+            _consoleService.WriteLine(@"
+ _____          _                 _       _           _ _ 
+|_   _|_ _  ___| | __   ___   ___| |__   | |__   ___ (_) |
+  | |/ _` |/ __| |/ /  / _ \ / __| '_ \  | '_ \ / _ \| | |
+  | | (_| | (__|   <  | (_) | (__| | | | | | | |  __/| |_|
+  |_|\__,_|\___|_|\_\  \___/ \___|_| |_| |_| |_|\___|/ (_)
+                                                   |__/   
+            ");
+            _consoleService.ResetColor();
+            Task.Delay(3000).Wait();
         }
     }
 }
