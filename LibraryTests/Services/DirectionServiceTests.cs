@@ -29,7 +29,7 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public void Drive_ShouldDisplayLowFuelWarning_WhenNotEnoughFuel()
+        public void Drive_ShouldDisplayLowFuelWarning_WithNotEnoughFuel()
         {
             // Arrange
             _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(false);
@@ -42,7 +42,7 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public void Drive_ShouldDriveForward_WhenEnoughFuel()
+        public void Drive_ShouldDriveForward_WithEnoughFuel()
         {
             // Arrange
             _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
@@ -57,7 +57,7 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public void Drive_ShouldDriveBackwardAndChangeDirection_WhenEnoughFuel()
+        public void Drive_ShouldDriveBackwardAndChangeDirection_WithEnoughFuel()
         {
             // Arrange
             _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
@@ -89,7 +89,7 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public void Drive_ShouldDriveForwardAndResetDirection_WhenEnoughFuelAndPreviouslyReversed()
+        public void Drive_ShouldDriveForwardAndResetDirection_WithEnoughFuelAndPreviouslyReversed()
         {
             // Arrange
             _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
@@ -106,7 +106,7 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public void Turn_ShouldTurnLeft_WhenEnoughFuel()
+        public void Turn_ShouldTurnLeft_WithEnoughFuel()
         {
             // Arrange
             _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
@@ -121,7 +121,7 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public void Turn_ShouldTurnRight_WhenEnoughFuel()
+        public void Turn_ShouldTurnRight_WithEnoughFuel()
         {
             // Arrange
             _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
