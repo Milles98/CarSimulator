@@ -2,8 +2,6 @@
 using Library.Enums;
 using Library.Models;
 using Library.Services.Interfaces;
-using System;
-
 public class FuelService : IFuelService
 {
     private readonly Car _car;
