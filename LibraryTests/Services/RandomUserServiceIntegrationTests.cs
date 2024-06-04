@@ -19,7 +19,7 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public async Task GetRandomDriverAsync_ShouldReturnDriver_WhenApiReturnsValidData()
+        public async Task GetRandomDriverAsync_ShouldReturnDriver_WhenApiReturnIsCorrect()
         {
             // Act
             var result = await _sut.GetRandomDriverAsync();
