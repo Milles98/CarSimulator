@@ -60,7 +60,7 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public void CheckHunger_ShouldIncreaseHungerByTwo()
+        public void CheckHunger_ShouldIncreaseHungerByTwo_WhenDriverDoesSomething()
         {
             // Arrange
             _driver.Hunger = Hunger.Full;

@@ -24,7 +24,7 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public void Refuel_ShouldNotChangeFuelLevel_WhenCarIsAlreadyFull()
+        public void Refuel_ShouldNotChangeFuelLevel_WhenCarIsAlreadyFull_AndNotIncreaseFatigue()
         {
             // Arrange
             _car.Fuel = Fuel.Full;
@@ -34,10 +34,11 @@ namespace LibraryTests.Services
 
             // Assert
             Assert.AreEqual(Fuel.Full, _car.Fuel);
+            _fatigueServiceMock.Verify(f => f.IncreaseDriverFatigue(), Times.Never);
         }
 
         [TestMethod]
-        public void Refuel_ShouldRefuelCar_WhenCarIsNotFull()
+        public void Refuel_ShouldRefuelCar_WhenCarIsNotFull_AndIncreaseFatigue()
         {
             // Arrange
             _car.Fuel = Fuel.Half;
