@@ -20,7 +20,7 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public void DisplayOptions_ShouldInvokeWriteMethods()
+        public void DisplayOptions_ShouldDisplayWriteMethods()
         {
             // Arrange
             string driverName = "Mille Elfver";
@@ -31,7 +31,7 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public void DisplayStatusMenu_ShouldInvokeWriteMethods()
+        public void DisplayStatusMenu_ShouldDisplayWriteMethods()
         {
             // Arrange
             var status = new CarStatus
@@ -49,7 +49,7 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public void DisplayIntroduction_ShouldInvokeReadAndWriteMethods()
+        public void DisplayIntroduction_ShouldDisplayReadAndWriteMethods()
         {
             // Arrange
             string driverName = "Mille Elfver";
