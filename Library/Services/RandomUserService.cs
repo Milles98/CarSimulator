@@ -1,9 +1,6 @@
 ﻿using Library.Models;
 using Library.Services.Interfaces;
 using Newtonsoft.Json;
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace Library.Services
 {
