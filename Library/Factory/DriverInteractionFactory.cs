@@ -22,12 +22,12 @@ namespace Library.Factory
         {
             if (driver == null)
             {
-                throw new ArgumentNullException(nameof(driver), "Driver cannot be null");
+                throw new ArgumentNullException(nameof(driver), "Förare kan inte vara tomt");
             }
 
             if (car == null)
             {
-                throw new ArgumentNullException(nameof(car), "Car cannot be null");
+                throw new ArgumentNullException(nameof(car), "Bil kan inte vara tomt");
             }
 
             IFatigueService fatigueService = new FatigueService(driver, driver.Name, _consoleService);
