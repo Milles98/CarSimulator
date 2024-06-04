@@ -111,9 +111,11 @@ public class DirectionService : IDirectionService
             string location = _faker.Address.City();
 
             _car.Direction = GetNewDirection(_car.Direction, direction);
+
             _consoleService.SetForegroundColor(ConsoleColor.Blue);
             _consoleService.WriteLine($"{_driver.Name} i sin {_carBrand} svänger {direction} mot {location}.");
             _consoleService.ResetColor();
+
             _fatigueService.CheckFatigue();
         }
         catch (Exception ex)
@@ -126,37 +128,56 @@ public class DirectionService : IDirectionService
 
     private Direction GetOppositeDirection(Direction currentDirection)
     {
-        return currentDirection switch
+        switch (currentDirection)
         {
-            Direction.Norr => Direction.Söder,
-            Direction.Söder => Direction.Norr,
-            Direction.Öst => Direction.Väst,
-            Direction.Väst => Direction.Öst,
-            _ => throw new ArgumentOutOfRangeException(nameof(currentDirection), $"Ogiltig riktning: {currentDirection}")
-        };
+            case Direction.Norr:
+                return Direction.Söder;
+            case Direction.Söder:
+                return Direction.Norr;
+            case Direction.Öst:
+                return Direction.Väst;
+            case Direction.Väst:
+                return Direction.Öst;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(currentDirection), $"Ogiltig riktning: {currentDirection}");
+        }
     }
 
     private Direction GetNewDirection(Direction currentDirection, string turnDirection)
     {
-        return turnDirection switch
+        switch (turnDirection)
         {
-            "vänster" => currentDirection switch
-            {
-                Direction.Norr => Direction.Väst,
-                Direction.Väst => Direction.Söder,
-                Direction.Söder => Direction.Öst,
-                Direction.Öst => Direction.Norr,
-                _ => throw new ArgumentOutOfRangeException(nameof(currentDirection), $"Ogiltig riktning: {currentDirection}")
-            },
-            "höger" => currentDirection switch
-            {
-                Direction.Norr => Direction.Öst,
-                Direction.Öst => Direction.Söder,
-                Direction.Söder => Direction.Väst,
-                Direction.Väst => Direction.Norr,
-                _ => throw new ArgumentOutOfRangeException(nameof(currentDirection), $"Ogiltig riktning: {currentDirection}")
-            },
-            _ => throw new ArgumentException("Ogiltig riktning", nameof(turnDirection))
-        };
+            case "vänster":
+                switch (currentDirection)
+                {
+                    case Direction.Norr:
+                        return Direction.Väst;
+                    case Direction.Väst:
+                        return Direction.Söder;
+                    case Direction.Söder:
+                        return Direction.Öst;
+                    case Direction.Öst:
+                        return Direction.Norr;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(currentDirection), $"Ogiltig riktning: {currentDirection}");
+                }
+            case "höger":
+                switch (currentDirection)
+                {
+                    case Direction.Norr:
+                        return Direction.Öst;
+                    case Direction.Öst:
+                        return Direction.Söder;
+                    case Direction.Söder:
+                        return Direction.Väst;
+                    case Direction.Väst:
+                        return Direction.Norr;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(currentDirection), $"Ogiltig riktning: {currentDirection}");
+                }
+            default:
+                throw new ArgumentException("Ogiltig riktning", nameof(turnDirection));
+        }
     }
+
 }
