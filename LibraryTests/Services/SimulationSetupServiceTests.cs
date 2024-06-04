@@ -88,7 +88,6 @@ namespace LibraryTests.Services
             // Arrange
             string driverName = "Mille Elfver";
             _consoleServiceMock.SetupSequence(cs => cs.ReadLine())
-                .Returns("0")
                 .Returns("0");
 
             // Act
