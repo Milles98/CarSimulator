@@ -78,6 +78,7 @@ public class DirectionService : IDirectionService
                 return;
             }
 
+            _fuelService.CheckFuelLevel();
             _fatigueService.CheckFatigue();
         }
         catch (Exception ex)
@@ -114,6 +115,7 @@ public class DirectionService : IDirectionService
             _consoleService.WriteLine($"{_driver.Name} i sin {_carBrand} svänger {direction} mot {location}.");
             _consoleService.ResetColor();
 
+            _fuelService.CheckFuelLevel();
             _fatigueService.CheckFatigue();
         }
         catch (Exception ex)
