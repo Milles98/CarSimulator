@@ -20,7 +20,7 @@ namespace Library.Services
         /// <summary>
         /// Fetches a random driver from an API.
         /// </summary>
-        public async Task<Driver?> GetRandomDriverAsync()
+        public async Task<Driver> GetRandomDriverAsync()
         {
             try
             {
