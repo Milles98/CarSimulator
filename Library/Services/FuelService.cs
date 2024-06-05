@@ -76,6 +76,23 @@ public class FuelService : IFuelService
         _consoleService.ResetColor();
     }
 
+    public void CheckFuelLevel()
+    {
+        try
+        {
+            if (_car.Fuel == Fuel.Empty)
+            {
+                DisplayLowFuelWarning();
+            }
+        }
+        catch (Exception ex)
+        {
+            _consoleService.SetForegroundColor(ConsoleColor.Red);
+            _consoleService.WriteLine($"Fel inträffade när bränslenivån försökte hämtas: {ex.Message}");
+            _consoleService.ResetColor();
+        }
+    }
+
     /// <summary>
     /// Förbrukar en viss mängd bränsle.
     /// </summary>
