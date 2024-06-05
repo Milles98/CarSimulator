@@ -32,6 +32,21 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
+        public async Task GetRandomDriverAsync_ShouldNotReturnDriver_WhenApiReturnIsInCorrect()
+        {
+            // Arrange
+            var inCorrectHttpClient = new HttpClient(new FailingHttpClientHandler());
+            var sutWithInCorrectHttpClient = new RandomUserService(inCorrectHttpClient, _consoleService);
+
+            //Act
+            var result = await sutWithInCorrectHttpClient.GetRandomDriverAsync();
+
+            // Assert
+            Assert.IsNull(result);
+
+        }
+
+        [TestMethod]
         public async Task GetRandomDriverAsync_ShouldReturnNull_WhenNoResultsFound()
         {
             // Act
