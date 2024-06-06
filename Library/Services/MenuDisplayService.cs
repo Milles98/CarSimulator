@@ -6,6 +6,7 @@ namespace Library.Services
     public class MenuDisplayService : IMenuDisplayService
     {
         private readonly IConsoleService _consoleService;
+        private bool skipTypingEffect = false;
 
         public MenuDisplayService(IConsoleService consoleService)
         {
@@ -18,14 +19,7 @@ namespace Library.Services
             {
                 try
                 {
-                    if (string.IsNullOrWhiteSpace(driverName))
-                    {
-                        _consoleService.SetForegroundColor(ConsoleColor.Red);
-                        _consoleService.WriteLine("Förarnamn ska inte vara tomt, något fel kan ha skett vid hämtningen från APIet!");
-                        _consoleService.ResetColor();
-                        driverName = _consoleService.ReadLine();
-                        continue;
-                    }
+                    driverName = GetDriverName(driverName);
 
                     _consoleService.SetForegroundColor(ConsoleColor.Cyan);
                     _consoleService.WriteLine("1. Sväng vänster");
@@ -41,9 +35,7 @@ namespace Library.Services
                 }
                 catch (Exception ex)
                 {
-                    _consoleService.SetForegroundColor(ConsoleColor.Red);
-                    _consoleService.WriteLine($"Fel uppstod vid visandet av huvudmenyn: {ex.Message}");
-                    _consoleService.ResetColor();
+                    DisplayError($"Fel uppstod vid visandet av huvudmenyn: {ex.Message}");
                 }
             }
         }
@@ -52,9 +44,7 @@ namespace Library.Services
         {
             if (status == null)
             {
-                _consoleService.SetForegroundColor(ConsoleColor.Red);
-                _consoleService.WriteLine("Status ska ej vara tomt.");
-                _consoleService.ResetColor();
+                DisplayError("Status ska ej vara tomt.");
                 return;
             }
 
@@ -62,23 +52,8 @@ namespace Library.Services
             {
                 try
                 {
-                    if (string.IsNullOrWhiteSpace(driverName))
-                    {
-                        _consoleService.SetForegroundColor(ConsoleColor.Red);
-                        _consoleService.WriteLine("Förarnamn ska inte vara tomt, något fel kan ha skett vid hämtningen från APIet!");
-                        _consoleService.ResetColor();
-                        driverName = _consoleService.ReadLine();
-                        continue;
-                    }
-
-                    if (string.IsNullOrWhiteSpace(carBrand))
-                    {
-                        _consoleService.SetForegroundColor(ConsoleColor.Red);
-                        _consoleService.WriteLine("Bilmärke kan ej vara tomt, något fel har skett vid val av bilmärke.");
-                        _consoleService.ResetColor();
-                        carBrand = _consoleService.ReadLine();
-                        continue;
-                    }
+                    driverName = GetDriverName(driverName);
+                    carBrand = GetCarBrand(carBrand);
 
                     _consoleService.SetForegroundColor(ConsoleColor.Yellow);
                     _consoleService.WriteLine($"\n\nBilens riktning: {status.Direction}");
@@ -96,22 +71,10 @@ namespace Library.Services
                 }
                 catch (Exception ex)
                 {
-                    _consoleService.SetForegroundColor(ConsoleColor.Red);
-                    _consoleService.WriteLine($"Problem uppstod vid hämtningen av status menyn: {ex.Message}");
-                    _consoleService.ResetColor();
+                    DisplayError($"Problem uppstod vid hämtningen av status menyn: {ex.Message}");
                 }
             }
         }
-
-        private string GenerateBar(int currentValue, int maxValue, int barLength = 20)
-        {
-            int filledLength = Math.Max(0, Math.Min(barLength, (int)((double)currentValue / maxValue * barLength)));
-            string filled = new string('█', filledLength);
-            string unfilled = new string('░', barLength - filledLength);
-            return filled + unfilled;
-        }
-
-        private bool skipTypingEffect = false;
 
         public void DisplayIntroduction(string driverName, CarBrand carBrand)
         {
@@ -119,84 +82,109 @@ namespace Library.Services
             {
                 try
                 {
-                    if (string.IsNullOrWhiteSpace(driverName))
-                    {
-                        _consoleService.SetForegroundColor(ConsoleColor.Red);
-                        _consoleService.WriteLine("Förarnamn ska inte vara tomt, något fel kan ha skett vid hämtningen från APIet!");
-                        _consoleService.ResetColor();
-                        driverName = _consoleService.ReadLine();
-                        continue;
-                    }
+                    driverName = GetDriverName(driverName);
+                    skipTypingEffect = GetUserTypingPreference();
 
-                    _consoleService.WriteLine("Vill du ha skrivande effekt? (ja/nej)");
-                    _consoleService.Write("\nVälj ett alternativ: ");
-                    string userInput = _consoleService.ReadLine()?.ToLower();
-
-                    while (userInput != "ja" && userInput != "nej")
-                    {
-                        _consoleService.SetForegroundColor(ConsoleColor.Red);
-                        _consoleService.WriteLine("Ogiltigt val, försök igen. Vill du ha skrivande effekt? (ja/nej)");
-                        _consoleService.ResetColor();
-                        userInput = _consoleService.ReadLine()?.ToLower();
-                    }
-
-                    skipTypingEffect = userInput == "nej";
-
-                    Random random = new Random();
-                    var expressions = Enum.GetValues(typeof(Expression)).Cast<Expression>().ToList();
-                    var randomExpression = expressions[random.Next(expressions.Count)];
-
+                    var randomExpression = GetRandomExpression();
                     _consoleService.Clear();
 
                     _consoleService.SetForegroundColor(ConsoleColor.Cyan);
-                    TypeText($"{driverName} sätter sig i en sprillans ny {carBrand} och kollar ut genom fönstret i framsätet.");
-
-                    _consoleService.SetForegroundColor(ConsoleColor.Cyan);
-                    TypeText($"Allt ser bra ut. {driverName} tar en tugga av sin macka som är köpt på Circle K.");
-
-                    _consoleService.SetForegroundColor(ConsoleColor.Cyan);
-                    TypeText($"{driverName} ser ut att vara {randomExpression.ToString().ToLower()} efter att det blev en {carBrand} som bilval.");
-
-                    if (skipTypingEffect)
-                    {
-                        _consoleService.SetForegroundColor(ConsoleColor.Cyan);
-                        _consoleService.WriteLine(@"
- _   _         _     _   _      _                                        _ 
-| \ | |_   _  | |__ (_)_(_)_ __(_) __ _ _ __   _ __ ___  ___  __ _ _ __ | |
-|  \| | | | | | '_ \ / _ \| '__| |/ _` | '__| | '__/ _ \/ __|/ _` | '_ \| |
-| |\  | |_| | | |_) | (_) | |  | | (_| | |    | | |  __/\__ \ (_| | | | |_|
-|_| \_|\__,_| |_.__/ \___/|_| _/ |\__,_|_|    |_|  \___||___/\__,_|_| |_(_)
-                             |__/                                          
-                        ");
-                    }
-                    else
-                    {
-                        _consoleService.SetForegroundColor(ConsoleColor.Cyan);
-                        TypeText(@"
- _   _         _     _   _      _                                        _ 
-| \ | |_   _  | |__ (_)_(_)_ __(_) __ _ _ __   _ __ ___  ___  __ _ _ __ | |
-|  \| | | | | | '_ \ / _ \| '__| |/ _` | '__| | '__/ _ \/ __|/ _` | '_ \| |
-| |\  | |_| | | |_) | (_) | |  | | (_| | |    | | |  __/\__ \ (_| | | | |_|
-|_| \_|\__,_| |_.__/ \___/|_| _/ |\__,_|_|    |_|  \___||___/\__,_|_| |_(_)
-                             |__/                                          
-                        ", 0);
-                    }
+                    DisplayDriverIntroduction(driverName, carBrand, randomExpression);
+                    DisplayArt(skipTypingEffect);
 
                     _consoleService.ResetColor();
                     break;
                 }
                 catch (Exception ex)
                 {
-                    _consoleService.SetForegroundColor(ConsoleColor.Red);
-                    _consoleService.WriteLine($"Fel inträffade vid visning av introduktionen: {ex.Message}");
-                    _consoleService.ResetColor();
+                    DisplayError($"Fel inträffade vid visning av introduktionen: {ex.Message}");
                 }
             }
         }
 
-        private void TypeText(string text, int delay = 50)
+        private string GetDriverName(string driverName)
         {
-            try
+            while (string.IsNullOrWhiteSpace(driverName))
+            {
+                _consoleService.SetForegroundColor(ConsoleColor.Red);
+                _consoleService.WriteLine("Förarnamn ska inte vara tomt, något fel kan ha skett vid hämtningen från APIet!");
+                _consoleService.ResetColor();
+                driverName = _consoleService.ReadLine();
+            }
+            return driverName;
+        }
+
+        private string GetCarBrand(string carBrand)
+        {
+            while (string.IsNullOrWhiteSpace(carBrand))
+            {
+                _consoleService.SetForegroundColor(ConsoleColor.Red);
+                _consoleService.WriteLine("Bilmärke kan ej vara tomt, något fel har skett vid val av bilmärke.");
+                _consoleService.ResetColor();
+                carBrand = _consoleService.ReadLine();
+            }
+            return carBrand;
+        }
+
+        private bool GetUserTypingPreference()
+        {
+            _consoleService.WriteLine("Vill du ha skrivande effekt? (ja/nej)");
+            _consoleService.Write("\nVälj ett alternativ: ");
+            string userInput = _consoleService.ReadLine()?.ToLower();
+
+            while (userInput != "ja" && userInput != "nej")
+            {
+                _consoleService.SetForegroundColor(ConsoleColor.Red);
+                _consoleService.WriteLine("Ogiltigt val, försök igen. Vill du ha skrivande effekt? (ja/nej)");
+                _consoleService.ResetColor();
+                userInput = _consoleService.ReadLine()?.ToLower();
+            }
+
+            return userInput == "nej";
+        }
+
+        private Expression GetRandomExpression()
+        {
+            Random random = new Random();
+            var expressions = Enum.GetValues(typeof(Expression)).Cast<Expression>().ToList();
+            return expressions[random.Next(expressions.Count)];
+        }
+
+        private void DisplayDriverIntroduction(string driverName, CarBrand carBrand, Expression randomExpression)
+        {
+            TypeText($"{driverName} sätter sig i en sprillans ny {carBrand} och kollar ut genom fönstret i framsätet.", skipTypingEffect);
+            TypeText($"Allt ser bra ut. {driverName} tar en tugga av sin macka som är köpt på Circle K.", skipTypingEffect);
+            TypeText($"{driverName} ser ut att vara {randomExpression.ToString().ToLower()} efter att det blev en {carBrand} som bilval.", skipTypingEffect);
+        }
+
+        private void DisplayArt(bool skipTypingEffect)
+        {
+            string art = @"
+ _   _         _     _   _      _                                        _ 
+| \ | |_   _  | |__ (_)_(_)_ __(_) __ _ _ __   _ __ ___  ___  __ _ _ __ | |
+|  \| | | | | | '_ \ / _ \| '__| |/ _` | '__| | '__/ _ \/ __|/ _` | '_ \| |
+| |\  | |_| | | |_) | (_) | |  | | (_| | |    | | |  __/\__ \ (_| | | | |_|
+|_| \_|\__,_| |_.__/ \___/|_| _/ |\__,_|_|    |_|  \___||___/\__,_|_| |_(_)
+                             |__/                                          
+    ";
+
+            TypeText(art, skipTypingEffect);
+        }
+
+        private void DisplayError(string message)
+        {
+            _consoleService.SetForegroundColor(ConsoleColor.Red);
+            _consoleService.WriteLine(message);
+            _consoleService.ResetColor();
+        }
+
+        private void TypeText(string text, bool skipTypingEffect, int delay = 50)
+        {
+            if (skipTypingEffect)
+            {
+                _consoleService.WriteLine(text);
+            }
+            else
             {
                 foreach (char c in text)
                 {
@@ -207,12 +195,6 @@ namespace Library.Services
                     }
                 }
                 _consoleService.WriteLine("");
-            }
-            catch (Exception ex)
-            {
-                _consoleService.SetForegroundColor(ConsoleColor.Red);
-                _consoleService.WriteLine($"Fel inträffade vid skrivandet av texten: {ex.Message}");
-                _consoleService.ResetColor();
             }
         }
 
@@ -268,6 +250,12 @@ namespace Library.Services
             }
         }
 
-
+        private string GenerateBar(int currentValue, int maxValue, int barLength = 20)
+        {
+            int filledLength = Math.Max(0, Math.Min(barLength, (int)((double)currentValue / maxValue * barLength)));
+            string filled = new string('█', filledLength);
+            string unfilled = new string('░', barLength - filledLength);
+            return filled + unfilled;
+        }
     }
 }

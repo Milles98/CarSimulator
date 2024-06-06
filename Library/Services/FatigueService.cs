@@ -58,16 +58,7 @@ public class FatigueService : IFatigueService
         {
             if (_driver.Fatigue == Fatigue.Exhausted)
             {
-                _consoleService.SetForegroundColor(ConsoleColor.Red);
-                _consoleService.WriteLine(@"
- _   _ _                   _   _            _ _ 
-| | | | |_ _ __ ___   __ _| |_| |_ __ _  __| | |
-| | | | __| '_ ` _ \ / _` | __| __/ _` |/ _` | |
-| |_| | |_| | | | | | (_| | |_| || (_| | (_| |_|
- \___/ \__|_| |_| |_|\__,_|\__|\__\__,_|\__,_(_)
-                ");
-                _consoleService.WriteLine($"{_driverName} är utmattad! Ta en rast omedelbart.");
-                _consoleService.ResetColor();
+                ASCIIFatigue();
             }
             else if (_driver.Fatigue < Fatigue.Exhausted)
             {
@@ -95,5 +86,19 @@ public class FatigueService : IFatigueService
     {
         _driver.Fatigue -= 1;
         _consoleService.WriteLine($"{_driverName} blir tröttare efter att ha tankat.");
+    }
+
+    private void ASCIIFatigue()
+    {
+        _consoleService.SetForegroundColor(ConsoleColor.Red);
+        _consoleService.WriteLine(@"
+ _   _ _                   _   _            _ _ 
+| | | | |_ _ __ ___   __ _| |_| |_ __ _  __| | |
+| | | | __| '_ ` _ \ / _` | __| __/ _` |/ _` | |
+| |_| | |_| | | | | | (_| | |_| || (_| | (_| |_|
+ \___/ \__|_| |_| |_|\__,_|\__|\__\__,_|\__,_(_)
+                ");
+        _consoleService.WriteLine($"{_driverName} är utmattad! Ta en rast omedelbart.");
+        _consoleService.ResetColor();
     }
 }
