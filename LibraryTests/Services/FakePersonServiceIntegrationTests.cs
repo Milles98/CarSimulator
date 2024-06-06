@@ -4,18 +4,18 @@ using Library.Services.Interfaces;
 namespace LibraryTests.Services
 {
     [TestClass]
-    public class RandomUserServiceIntegrationTests
+    public class FakePersonServiceIntegrationTests
     {
         private IConsoleService _consoleService;
         private HttpClient _httpClient;
-        private RandomUserService _sut;
+        private FakePersonService _sut;
 
         [TestInitialize]
         public void Setup()
         {
             _consoleService = new ConsoleService();
             _httpClient = new HttpClient();
-            _sut = new RandomUserService(_httpClient, _consoleService);
+            _sut = new FakePersonService(_httpClient, _consoleService);
         }
 
         [TestMethod]
@@ -36,7 +36,7 @@ namespace LibraryTests.Services
         {
             // Arrange
             var inCorrectHttpClient = new HttpClient(new FailingHttpClientHandler());
-            var sutWithInCorrectHttpClient = new RandomUserService(inCorrectHttpClient, _consoleService);
+            var sutWithInCorrectHttpClient = new FakePersonService(inCorrectHttpClient, _consoleService);
 
             //Act
             var result = await sutWithInCorrectHttpClient.GetRandomDriverAsync();
@@ -64,7 +64,7 @@ namespace LibraryTests.Services
         {
             // Arrange
             var httpClient = new HttpClient(new FailingHttpClientHandler());
-            _sut = new RandomUserService(httpClient, _consoleService);
+            _sut = new FakePersonService(httpClient, _consoleService);
 
             // Act
             var result = await _sut.GetRandomDriverAsync();
@@ -78,7 +78,7 @@ namespace LibraryTests.Services
         {
             // Arrange
             var httpClient = new HttpClient(new InvalidJsonHttpClientHandler());
-            _sut = new RandomUserService(httpClient, _consoleService);
+            _sut = new FakePersonService(httpClient, _consoleService);
 
             // Act
             var result = await _sut.GetRandomDriverAsync();

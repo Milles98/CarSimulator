@@ -1,4 +1,5 @@
 ﻿using Library.Models;
+using Library.Models.APIResponse;
 using Library.Services.Interfaces;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
@@ -6,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Library.Services
 {
-    public class RandomUserService : IRandomUserService
+    public class FakePersonService : IFakePersonService
     {
         private readonly HttpClient _httpClient;
         private readonly IConsoleService _consoleService;
 
-        public RandomUserService(HttpClient httpClient, IConsoleService consoleService)
+        public FakePersonService(HttpClient httpClient, IConsoleService consoleService)
         {
             _httpClient = httpClient;
             _consoleService = consoleService;
@@ -32,11 +33,11 @@ namespace Library.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var responseBody = await response.Content.ReadAsStringAsync();
-                    var randomUserResponse = JsonConvert.DeserializeObject<RandomUserResponse>(responseBody);
+                    var fakePersonResponse = JsonConvert.DeserializeObject<FakePersonResponseDTO>(responseBody);
 
-                    if (randomUserResponse?.Results != null && randomUserResponse.Results.Count > 0)
+                    if (fakePersonResponse?.Results != null && fakePersonResponse.Results.Count > 0)
                     {
-                        var user = randomUserResponse.Results[0];
+                        var user = fakePersonResponse.Results[0];
                         return new Driver
                         {
                             Title = user.Name.Title,

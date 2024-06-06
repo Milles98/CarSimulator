@@ -6,7 +6,7 @@ namespace CarSimulator
     public class AppStart
     {
         private readonly IConsoleService _consoleService;
-        private readonly IRandomUserService _randomUserService;
+        private readonly IFakePersonService _fakePersonService;
         private readonly IMenuDisplayService _menuDisplayService;
         private readonly ISimulationSetupService _simulationSetupService;
         private readonly IInputService _inputService;
@@ -15,7 +15,7 @@ namespace CarSimulator
 
         public AppStart(
             IConsoleService consoleService,
-            IRandomUserService randomUserService,
+            IFakePersonService fakePersonService,
             IMenuDisplayService menuDisplayService,
             ISimulationSetupService simulationSetupService,
             IInputService inputService,
@@ -23,7 +23,7 @@ namespace CarSimulator
             IMainMenu mainMenu)
         {
             _consoleService = consoleService;
-            _randomUserService = randomUserService;
+            _fakePersonService = fakePersonService;
             _menuDisplayService = menuDisplayService;
             _simulationSetupService = simulationSetupService;
             _inputService = inputService;

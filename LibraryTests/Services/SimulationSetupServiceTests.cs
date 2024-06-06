@@ -9,16 +9,16 @@ namespace LibraryTests.Services
     [TestClass]
     public class SimulationSetupServiceTests
     {
-        private Mock<IRandomUserService> _randomUserServiceMock;
+        private Mock<IFakePersonService> _fakePersonServiceMock;
         private Mock<IConsoleService> _consoleServiceMock;
         private SimulationSetupService _sut;
 
         [TestInitialize]
         public void Setup()
         {
-            _randomUserServiceMock = new Mock<IRandomUserService>();
+            _fakePersonServiceMock = new Mock<IFakePersonService>();
             _consoleServiceMock = new Mock<IConsoleService>();
-            _sut = new SimulationSetupService(_randomUserServiceMock.Object, _consoleServiceMock.Object);
+            _sut = new SimulationSetupService(_fakePersonServiceMock.Object, _consoleServiceMock.Object);
         }
 
         [TestMethod]
@@ -26,7 +26,7 @@ namespace LibraryTests.Services
         {
             // Arrange
             var driver = new Driver { Title = "Mr", FirstName = "Mille", LastName = "Elfver" };
-            _randomUserServiceMock.Setup(s => s.GetRandomDriverAsync()).ReturnsAsync(driver);
+            _fakePersonServiceMock.Setup(s => s.GetRandomDriverAsync()).ReturnsAsync(driver);
 
             // Act
             var result = await _sut.FetchDriverDetails();
@@ -42,7 +42,7 @@ namespace LibraryTests.Services
         public async Task FetchDriverDetails_ShouldReturnNull_WhenDriverIsNotFetched()
         {
             // Arrange
-            _randomUserServiceMock.Setup(s => s.GetRandomDriverAsync()).ReturnsAsync((Driver)null);
+            _fakePersonServiceMock.Setup(s => s.GetRandomDriverAsync()).ReturnsAsync((Driver)null);
 
             // Act
             var result = await _sut.FetchDriverDetails();
@@ -55,7 +55,7 @@ namespace LibraryTests.Services
         public async Task FetchDriverDetails_ShouldReturnNull_WhenExceptionIsThrown()
         {
             // Arrange
-            _randomUserServiceMock.Setup(s => s.GetRandomDriverAsync()).ThrowsAsync(new Exception("Test exception"));
+            _fakePersonServiceMock.Setup(s => s.GetRandomDriverAsync()).ThrowsAsync(new Exception("Test exception"));
 
             // Act
             var result = await _sut.FetchDriverDetails();

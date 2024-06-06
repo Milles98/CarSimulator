@@ -12,7 +12,7 @@ using (var container = RegisterAutofac.RegisteredContainers())
 
 1.	Applikationen startar med klassen AppInitializer, specifikt metoden Initialize. 
 Denna metod ställer in alla nödvändiga tjänster och objekt som applikationen kommer att använda, 
-såsom ConsoleService, RandomUserService, MenuDisplayService, SimulationSetupService, InputService, DriverInteractionFactory och MainMenu.
+såsom ConsoleService, FakePersonService, MenuDisplayService, SimulationSetupService, InputService, DriverInteractionFactory och MainMenu.
 
 2.	Klassen AppStart instansieras sedan med alla dessa tjänster och objekt. 
 Metoden AppRun i AppStart anropas för att starta applikationen.

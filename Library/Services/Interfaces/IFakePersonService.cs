@@ -2,7 +2,7 @@
 
 namespace Library.Services.Interfaces
 {
-    public interface IRandomUserService
+    public interface IFakePersonService
     {
         Task<Driver> GetRandomDriverAsync();
     }

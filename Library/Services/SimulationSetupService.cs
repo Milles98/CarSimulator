@@ -6,12 +6,12 @@ namespace Library.Services
 {
     public class SimulationSetupService : ISimulationSetupService
     {
-        private readonly IRandomUserService _randomUserService;
+        private readonly IFakePersonService _fakePersonService;
         private readonly IConsoleService _consoleService;
 
-        public SimulationSetupService(IRandomUserService randomUserService, IConsoleService consoleService)
+        public SimulationSetupService(IFakePersonService fakePersonService, IConsoleService consoleService)
         {
-            _randomUserService = randomUserService;
+            _fakePersonService = fakePersonService;
             _consoleService = consoleService;
         }
 
@@ -30,7 +30,7 @@ namespace Library.Services
                 _consoleService.WriteLine("");
                 _consoleService.ResetColor();
 
-                var driver = await _randomUserService.GetRandomDriverAsync();
+                var driver = await _fakePersonService.GetRandomDriverAsync();
                 if (driver == null)
                 {
                     _consoleService.SetForegroundColor(ConsoleColor.Red);
