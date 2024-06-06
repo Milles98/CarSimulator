@@ -19,44 +19,62 @@ namespace Library.Services
         {
             try
             {
-                _consoleService.Clear();
-                _consoleService.SetForegroundColor(ConsoleColor.Cyan);
-                _consoleService.Write("Hämtar förare");
-                for (int i = 0; i < 3; i++)
-                {
-                    await Task.Delay(1000);
-                    _consoleService.Write(".");
-                }
-                _consoleService.WriteLine("");
-                _consoleService.ResetColor();
+                DisplayFetchingDriverMessage();
 
                 var driver = await _fakePersonService.GetRandomDriverAsync();
                 if (driver == null)
                 {
-                    _consoleService.SetForegroundColor(ConsoleColor.Red);
-                    _consoleService.WriteLine("Kunde inte hämta ett namn. Försök igen.");
-                    _consoleService.ResetColor();
+                    DisplayErrorMessage("Kunde inte hämta ett namn. Försök igen.");
                     return null;
                 }
-                _consoleService.SetForegroundColor(ConsoleColor.Green);
-                _consoleService.WriteLine($"Föraren är: {driver.Title}. {driver.FirstName} {driver.LastName}");
-                _consoleService.ResetColor();
-                await Task.Delay(2000);
+
+                DisplayDriverDetails(driver);
                 return new Driver { Title = driver.Title, FirstName = driver.FirstName, LastName = driver.LastName, Fatigue = Fatigue.Rested };
             }
             catch (Exception ex)
             {
-                _consoleService.SetForegroundColor(ConsoleColor.Red);
-                _consoleService.WriteLine($"Fel uppstod vid hämtandet av förare från APIet: {ex.Message}");
-                _consoleService.ResetColor();
+                DisplayErrorMessage($"Fel uppstod vid hämtandet av förare från APIet: {ex.Message}");
                 return null;
             }
         }
 
         public Car EnterCarDetails(string driverName)
         {
-            CarBrand selectedBrand;
+            var selectedBrand = GetCarBrandSelection(driverName);
+            if (selectedBrand == null)
+                return null;
 
+            var direction = GetDirectionSelection(driverName, selectedBrand.Value);
+            if (direction == null)
+                return null;
+
+            return new Car { Brand = selectedBrand.Value, Fuel = (Fuel)20, Direction = direction.Value };
+        }
+
+        private void DisplayFetchingDriverMessage()
+        {
+            _consoleService.Clear();
+            _consoleService.SetForegroundColor(ConsoleColor.Cyan);
+            _consoleService.Write("Hämtar förare");
+            for (int i = 0; i < 3; i++)
+            {
+                Task.Delay(1000).Wait();
+                _consoleService.Write(".");
+            }
+            _consoleService.WriteLine("");
+            _consoleService.ResetColor();
+        }
+
+        private void DisplayDriverDetails(Driver driver)
+        {
+            _consoleService.SetForegroundColor(ConsoleColor.Green);
+            _consoleService.WriteLine($"Föraren är: {driver.Title}. {driver.FirstName} {driver.LastName}");
+            _consoleService.ResetColor();
+            Task.Delay(2000).Wait();
+        }
+
+        private CarBrand? GetCarBrandSelection(string driverName)
+        {
             while (true)
             {
                 try
@@ -65,10 +83,7 @@ namespace Library.Services
                     _consoleService.SetForegroundColor(ConsoleColor.Yellow);
                     _consoleService.WriteLine($"{driverName} funderar, vilken bil vill jag köra med?\n");
                     var brands = Enum.GetValues(typeof(CarBrand)).Cast<CarBrand>().ToList();
-                    for (int i = 0; i < brands.Count; i++)
-                    {
-                        _consoleService.WriteLine($"{i + 1}: {brands[i]}");
-                    }
+                    DisplayOptions(brands);
                     _consoleService.WriteLine("0: Avbryt");
                     _consoleService.ResetColor();
 
@@ -79,21 +94,14 @@ namespace Library.Services
                     {
                         if (brandChoice == 0)
                         {
-                            _consoleService.SetForegroundColor(ConsoleColor.Yellow);
-                            _consoleService.WriteLine("Avslutar bilval.");
-                            _consoleService.ResetColor();
+                            DisplayCancellationMessage("Avslutar bilval.");
                             return null;
                         }
 
-                        if (brandChoice >= 1 && brandChoice <= brands.Count)
-                        {
-                            selectedBrand = brands[brandChoice - 1];
-                            break;
-                        }
-                        else
-                        {
-                            DisplayErrorMessage("Ogiltigt val. Försök igen.");
-                        }
+                        if (IsValidChoice(brandChoice, brands.Count))
+                            return brands[brandChoice - 1];
+
+                        DisplayErrorMessage("Ogiltigt val. Försök igen.");
                     }
                     else
                     {
@@ -105,19 +113,18 @@ namespace Library.Services
                     DisplayErrorMessage($"Fel uppstod vid val av bil: {ex.Message}");
                 }
             }
+        }
 
-            Direction direction;
-
+        private Direction? GetDirectionSelection(string driverName, CarBrand selectedBrand)
+        {
             while (true)
             {
                 try
                 {
                     _consoleService.Clear();
-                    var random = new Random();
-                    var expressions = Enum.GetValues(typeof(Expression)).Cast<Expression>().ToList();
-                    var randomExpression = expressions[random.Next(expressions.Count)];
+                    var randomExpression = GetRandomEnumValue<Expression>().ToString().ToLower();
                     _consoleService.SetForegroundColor(ConsoleColor.Cyan);
-                    _consoleService.WriteLine($"{driverName} har valt att åka i en {selectedBrand}, nu är föraren {randomExpression.ToString().ToLower()}!");
+                    _consoleService.WriteLine($"{driverName} har valt att åka i en {selectedBrand}, nu är föraren {randomExpression}!");
                     _consoleService.WriteLine($"\nVart ska man åka mot? Funderar {driverName} över.\n \n1: Norr \n2: Öst \n3: Söder \n4: Väst \n5: Välj något bara!\n0: Avbryt");
                     _consoleService.ResetColor();
                     _consoleService.Write("\nVälj ett alternativ: ");
@@ -127,32 +134,24 @@ namespace Library.Services
                     {
                         if (directionChoice == 0)
                         {
-                            _consoleService.SetForegroundColor(ConsoleColor.Yellow);
-                            _consoleService.WriteLine("Avslutar riktning val.");
-                            _consoleService.ResetColor();
+                            DisplayCancellationMessage("Avslutar riktning val.");
                             return null;
                         }
 
-                        if (directionChoice >= 1 && directionChoice <= 5)
+                        if (IsValidChoice(directionChoice, 5))
                         {
                             if (directionChoice == 5)
                             {
-                                directionChoice = random.Next(1, 5);
-                                direction = (Direction)(directionChoice - 1);
+                                directionChoice = new Random().Next(1, 5);
                                 _consoleService.SetForegroundColor(ConsoleColor.Cyan);
-                                _consoleService.WriteLine($"\nSlumpmässigt vald riktning: {direction}");
+                                _consoleService.WriteLine($"\nSlumpmässigt vald riktning: {(Direction)(directionChoice - 1)}");
                                 _consoleService.ResetColor();
                             }
-                            else
-                            {
-                                direction = (Direction)(directionChoice - 1);
-                            }
-                            break;
+
+                            return (Direction)(directionChoice - 1);
                         }
-                        else
-                        {
-                            DisplayErrorMessage("Ogiltigt val. Försök igen.");
-                        }
+
+                        DisplayErrorMessage("Ogiltigt val. Försök igen.");
                     }
                     else
                     {
@@ -164,8 +163,14 @@ namespace Library.Services
                     DisplayErrorMessage($"Fel uppstod vid val av riktning: {ex.Message}");
                 }
             }
+        }
 
-            return new Car { Brand = selectedBrand, Fuel = (Fuel)20, Direction = direction };
+        private void DisplayOptions<T>(List<T> options)
+        {
+            for (int i = 0; i < options.Count; i++)
+            {
+                _consoleService.WriteLine($"{i + 1}: {options[i]}");
+            }
         }
 
         private void DisplayErrorMessage(string message)
@@ -174,6 +179,24 @@ namespace Library.Services
             _consoleService.WriteLine(message);
             _consoleService.ResetColor();
             Task.Delay(2000).Wait();
+        }
+
+        private void DisplayCancellationMessage(string message)
+        {
+            _consoleService.SetForegroundColor(ConsoleColor.Yellow);
+            _consoleService.WriteLine(message);
+            _consoleService.ResetColor();
+        }
+
+        private bool IsValidChoice(int choice, int maxChoice)
+        {
+            return choice >= 1 && choice <= maxChoice;
+        }
+
+        private T GetRandomEnumValue<T>() where T : Enum
+        {
+            var values = Enum.GetValues(typeof(T)).Cast<T>().ToList();
+            return values[new Random().Next(values.Count)];
         }
     }
 }
