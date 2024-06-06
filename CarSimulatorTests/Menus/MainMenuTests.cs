@@ -3,8 +3,6 @@ using Library.Enums;
 using Library.Models;
 using Library.Services.Interfaces;
 using Moq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Threading.Tasks;
 
 namespace CarSimulatorTests.Menus
 {
