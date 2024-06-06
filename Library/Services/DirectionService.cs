@@ -2,6 +2,7 @@
 using Library.Enums;
 using Library.Models;
 using Library.Services.Interfaces;
+using System;
 
 public class DirectionService : IDirectionService
 {
@@ -29,155 +30,144 @@ public class DirectionService : IDirectionService
 
     public void Drive(string direction)
     {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(direction))
-            {
-                throw new ArgumentException("Riktningen får inte vara tom!", nameof(direction));
-            }
-
-            if (!_fuelService.HasEnoughFuel(4))
-            {
-                _fuelService.DisplayLowFuelWarning();
-                return;
-            }
-
-            _fuelService.UseFuel(4);
-            _driver.Fatigue -= 1;
-
-            string location = _faker.Address.City();
-
-            if (direction == "framåt")
-            {
-                if (_isReversing)
-                {
-                    _car.Direction = _lastForwardDirection;
-                }
-                _isReversing = false;
-                _consoleService.SetForegroundColor(ConsoleColor.Green);
-                _consoleService.WriteLine($"{_driver.Name} i sin {_carBrand} kör framåt mot {location}.");
-                _consoleService.ResetColor();
-            }
-            else if (direction == "bakåt")
-            {
-                if (!_isReversing)
-                {
-                    _lastForwardDirection = _car.Direction;
-                    _car.Direction = GetOppositeDirection(_car.Direction);
-                    _isReversing = true;
-                }
-                _consoleService.SetForegroundColor(ConsoleColor.Green);
-                _consoleService.WriteLine($"{_driver.Name} i sin {_carBrand} backar mot {location}.");
-                _consoleService.ResetColor();
-            }
-            else
-            {
-                _consoleService.SetForegroundColor(ConsoleColor.Red);
-                _consoleService.WriteLine("Ogiltig riktning.");
-                _consoleService.ResetColor();
-                return;
-            }
-
-            _fuelService.CheckFuelLevel();
-            _fatigueService.CheckFatigue();
-        }
-        catch (Exception ex)
-        {
-            _consoleService.SetForegroundColor(ConsoleColor.Red);
-            _consoleService.WriteLine($"Fel inträffade vid bilkörningen: {ex.Message}");
-            _consoleService.ResetColor();
-        }
+        PerformAction(direction, 4, () => HandleDrive(direction));
     }
 
     public void Turn(string direction)
     {
+        PerformAction(direction, 2, () => HandleTurn(direction));
+    }
+
+    private void PerformAction(string direction, int fuelConsumption, Action action)
+    {
         try
         {
-            if (string.IsNullOrWhiteSpace(direction))
-            {
-                throw new ArgumentException("Förare kan ej vara tom", nameof(direction));
-            }
+            ValidateDirection(direction);
 
-            if (!_fuelService.HasEnoughFuel(2))
+            if (!_fuelService.HasEnoughFuel(fuelConsumption))
             {
                 _fuelService.DisplayLowFuelWarning();
                 return;
             }
 
-            _fuelService.UseFuel(2);
+            _fuelService.UseFuel(fuelConsumption);
             _driver.Fatigue -= 1;
 
-            string location = _faker.Address.City();
-
-            _car.Direction = GetNewDirection(_car.Direction, direction);
-
-            _consoleService.SetForegroundColor(ConsoleColor.Blue);
-            _consoleService.WriteLine($"{_driver.Name} i sin {_carBrand} svänger {direction} mot {location}.");
-            _consoleService.ResetColor();
+            action.Invoke();
 
             _fuelService.CheckFuelLevel();
             _fatigueService.CheckFatigue();
         }
         catch (Exception ex)
         {
-            _consoleService.SetForegroundColor(ConsoleColor.Red);
-            _consoleService.WriteLine($"Fel inträffade vid svängning: {ex.Message}");
-            _consoleService.ResetColor();
+            DisplayError(ex.Message);
         }
+    }
+
+    private void HandleDrive(string direction)
+    {
+        string location = _faker.Address.City();
+
+        if (direction == "framåt")
+        {
+            HandleForwardDrive(location);
+        }
+        else if (direction == "bakåt")
+        {
+            HandleReverseDrive(location);
+        }
+        else
+        {
+            DisplayInvalidDirectionMessage();
+        }
+    }
+
+    private void HandleForwardDrive(string location)
+    {
+        if (_isReversing)
+        {
+            _car.Direction = _lastForwardDirection;
+        }
+        _isReversing = false;
+        DisplayMessage(ConsoleColor.Green, $"{_driver.Name} i sin {_carBrand} kör framåt mot {location}.");
+    }
+
+    private void HandleReverseDrive(string location)
+    {
+        if (!_isReversing)
+        {
+            _lastForwardDirection = _car.Direction;
+            _car.Direction = GetOppositeDirection(_car.Direction);
+            _isReversing = true;
+        }
+        DisplayMessage(ConsoleColor.Green, $"{_driver.Name} i sin {_carBrand} backar mot {location}.");
+    }
+
+    private void HandleTurn(string direction)
+    {
+        string location = _faker.Address.City();
+        _car.Direction = GetNewDirection(_car.Direction, direction);
+        DisplayMessage(ConsoleColor.Blue, $"{_driver.Name} i sin {_carBrand} svänger {direction} mot {location}.");
+    }
+
+    private void ValidateDirection(string direction)
+    {
+        if (string.IsNullOrWhiteSpace(direction))
+        {
+            throw new ArgumentException("Riktningen får inte vara tom!", nameof(direction));
+        }
+    }
+
+    private void DisplayMessage(ConsoleColor color, string message)
+    {
+        _consoleService.SetForegroundColor(color);
+        _consoleService.WriteLine(message);
+        _consoleService.ResetColor();
+    }
+
+    private void DisplayError(string message)
+    {
+        DisplayMessage(ConsoleColor.Red, $"Fel inträffade vid bilkörningen: {message}");
+    }
+
+    private void DisplayInvalidDirectionMessage()
+    {
+        DisplayMessage(ConsoleColor.Red, "Ogiltig riktning.");
     }
 
     private Direction GetOppositeDirection(Direction currentDirection)
     {
-        switch (currentDirection)
+        return currentDirection switch
         {
-            case Direction.Norr:
-                return Direction.Söder;
-            case Direction.Söder:
-                return Direction.Norr;
-            case Direction.Öst:
-                return Direction.Väst;
-            case Direction.Väst:
-                return Direction.Öst;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(currentDirection), $"Ogiltig riktning: {currentDirection}");
-        }
+            Direction.Norr => Direction.Söder,
+            Direction.Söder => Direction.Norr,
+            Direction.Öst => Direction.Väst,
+            Direction.Väst => Direction.Öst,
+            _ => throw new ArgumentOutOfRangeException(nameof(currentDirection), $"Ogiltig riktning: {currentDirection}")
+        };
     }
 
     private Direction GetNewDirection(Direction currentDirection, string turnDirection)
     {
-        switch (turnDirection)
+        return turnDirection switch
         {
-            case "vänster":
-                switch (currentDirection)
-                {
-                    case Direction.Norr:
-                        return Direction.Väst;
-                    case Direction.Väst:
-                        return Direction.Söder;
-                    case Direction.Söder:
-                        return Direction.Öst;
-                    case Direction.Öst:
-                        return Direction.Norr;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(currentDirection), $"Ogiltig riktning: {currentDirection}");
-                }
-            case "höger":
-                switch (currentDirection)
-                {
-                    case Direction.Norr:
-                        return Direction.Öst;
-                    case Direction.Öst:
-                        return Direction.Söder;
-                    case Direction.Söder:
-                        return Direction.Väst;
-                    case Direction.Väst:
-                        return Direction.Norr;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(currentDirection), $"Ogiltig riktning: {currentDirection}");
-                }
-            default:
-                throw new ArgumentException("Ogiltig riktning", nameof(turnDirection));
-        }
+            "vänster" => currentDirection switch
+            {
+                Direction.Norr => Direction.Väst,
+                Direction.Väst => Direction.Söder,
+                Direction.Söder => Direction.Öst,
+                Direction.Öst => Direction.Norr,
+                _ => throw new ArgumentOutOfRangeException(nameof(currentDirection), $"Ogiltig riktning: {currentDirection}")
+            },
+            "höger" => currentDirection switch
+            {
+                Direction.Norr => Direction.Öst,
+                Direction.Öst => Direction.Söder,
+                Direction.Söder => Direction.Väst,
+                Direction.Väst => Direction.Norr,
+                _ => throw new ArgumentOutOfRangeException(nameof(currentDirection), $"Ogiltig riktning: {currentDirection}")
+            },
+            _ => throw new ArgumentException("Ogiltig riktning", nameof(turnDirection))
+        };
     }
-
 }
