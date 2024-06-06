@@ -13,6 +13,7 @@ namespace LibraryTests.Services
         [TestInitialize]
         public void Setup()
         {
+            //Arrange
             _consoleService = new ConsoleService();
             _httpClient = new HttpClient();
             _sut = new FakePersonService(_httpClient, _consoleService);
