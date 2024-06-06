@@ -15,7 +15,7 @@ namespace CarSimulator.Autofac
 
             builder.RegisterType<ConsoleService>().As<IConsoleService>().SingleInstance();
             builder.RegisterType<HttpClient>().SingleInstance();
-            builder.RegisterType<RandomUserService>().As<IRandomUserService>().SingleInstance();
+            builder.RegisterType<FakePersonService>().As<IFakePersonService>().SingleInstance();
             builder.RegisterType<MenuDisplayService>().As<IMenuDisplayService>().SingleInstance();
             builder.RegisterType<SimulationSetupService>().As<ISimulationSetupService>().SingleInstance();
             builder.RegisterType<InputService>().As<IInputService>().SingleInstance();

@@ -1,6 +1,6 @@
-﻿namespace Library.Models
+﻿namespace Library.Models.APIResponse
 {
-    public class Name
+    public class NameDTO
     {
         public string Title { get; set; }
         public string First { get; set; }

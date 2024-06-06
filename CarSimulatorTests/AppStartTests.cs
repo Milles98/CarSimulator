@@ -13,7 +13,7 @@ namespace CarSimulatorTests
         {
             // Arrange
             var consoleServiceMock = new Mock<IConsoleService>();
-            var randomUserServiceMock = new Mock<IRandomUserService>();
+            var fakePersonServiceMock = new Mock<IFakePersonService>();
             var menuDisplayServiceMock = new Mock<IMenuDisplayService>();
             var simulationSetupServiceMock = new Mock<ISimulationSetupService>();
             var inputServiceMock = new Mock<IInputService>();
@@ -24,7 +24,7 @@ namespace CarSimulatorTests
 
             var appStart = new AppStart(
                 consoleServiceMock.Object,
-                randomUserServiceMock.Object,
+                fakePersonServiceMock.Object,
                 menuDisplayServiceMock.Object,
                 simulationSetupServiceMock.Object,
                 inputServiceMock.Object,
