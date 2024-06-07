@@ -2,9 +2,10 @@
 using CarSimulator;
 using CarSimulator.Autofac;
 
-using (var container = RegisterAutofac.RegisteredContainers())
+var container = RegisterAutofac.RegisteredContainers();
+using (var scope = container.BeginLifetimeScope())
 {
-    var app = container.Resolve<AppStart>();
+    var app = scope.Resolve<AppStart>();
     await app.AppRun();
 }
 
