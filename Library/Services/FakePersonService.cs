@@ -59,17 +59,17 @@ namespace Library.Services
             }
             catch (HttpRequestException httpRequestException)
             {
-                _consoleService.WriteLine($"Fel inträffade vid hämtning från APIet: {httpRequestException.Message}");
+                _consoleService.DisplayError($"Fel inträffade vid hämtning från APIet: {httpRequestException.Message}");
                 return null;
             }
             catch (JsonReaderException jsonReaderException)
             {
-                _consoleService.WriteLine($"Fel inträffade vid deserializing av responsen från APIet: {jsonReaderException.Message}");
+                _consoleService.DisplayError($"Fel inträffade vid deserializing av responsen från APIet: {jsonReaderException.Message}");
                 return null;
             }
             catch (JsonSerializationException jsonSerializationException)
             {
-                _consoleService.WriteLine($"Fel inträffade vid deserializing av responsen från APIet: {jsonSerializationException.Message}");
+                _consoleService.DisplayError($"Fel inträffade vid deserializing av responsen från APIet: {jsonSerializationException.Message}");
                 return null;
             }
             catch (Exception ex)
