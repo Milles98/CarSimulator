@@ -60,6 +60,15 @@ namespace Library.Services
 
                     if (choice == -1)
                     {
+                        ExecuteChoice(choice, ref running);
+                        try
+                        {
+                            _menuDisplayService.DisplayStatusMenu(_statusService.GetStatus(), _driverName, _carBrand.ToString());
+                        }
+                        catch (Exception ex)
+                        {
+                            _consoleService.DisplayError($"Ett fel inträffade vid visning av statusmenyn: {ex.Message}");
+                        }
                         continue;
                     }
 
