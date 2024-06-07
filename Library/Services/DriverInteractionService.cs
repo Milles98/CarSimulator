@@ -111,9 +111,7 @@ namespace Library.Services
                         ExitAction(0);
                         break;
                     default:
-                        _consoleService.SetForegroundColor(ConsoleColor.Red);
-                        _consoleService.WriteLine("Ogiltigt val, försök igen.");
-                        _consoleService.ResetColor();
+                        _consoleService.DisplayError("Ogiltigt val, försök igen.");
                         break;
                 }
             }
