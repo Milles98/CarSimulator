@@ -4,8 +4,6 @@ using Library.Models;
 using Library.Services.Interfaces;
 public class FatigueService : IFatigueService
 {
-    private const int MaxFatigue = 10;
-
     private readonly Driver _driver;
     private readonly string _driverName;
     private readonly Faker _faker;
