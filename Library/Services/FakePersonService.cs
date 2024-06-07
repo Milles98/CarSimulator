@@ -47,13 +47,13 @@ namespace Library.Services
                     }
                     else
                     {
-                        _consoleService.WriteLine("Inget resultat i response!.");
+                        _consoleService.DisplayError("Inget resultat i response!.");
                         return null;
                     }
                 }
                 else
                 {
-                    _consoleService.WriteLine($"API hämtning misslyckades med statuskod: {response.StatusCode}");
+                    _consoleService.DisplayError($"API hämtning misslyckades med statuskod: {response.StatusCode}");
                     return null;
                 }
             }
@@ -74,7 +74,7 @@ namespace Library.Services
             }
             catch (Exception ex)
             {
-                _consoleService.WriteLine($"Oväntat fel uppstod: {ex.Message}");
+                _consoleService.DisplayError($"Oväntat fel: {ex.Message}");
                 return null;
             }
         }

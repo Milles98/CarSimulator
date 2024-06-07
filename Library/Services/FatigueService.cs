@@ -28,24 +28,18 @@ public class FatigueService : IFatigueService
         {
             if (_driver.Fatigue == Fatigue.Rested)
             {
-                _consoleService.SetForegroundColor(ConsoleColor.Blue);
-                _consoleService.WriteLine($"{_driverName} rastade MEN blev inte mycket piggare av det.. {_driverName} är ju redan utvilad!");
-                _consoleService.ResetColor();
+                _consoleService.DisplayStatusMessage($"{_driverName} rastade MEN blev inte mycket piggare av det.. {_driverName} är ju redan utvilad!");
             }
             else
             {
                 _driver.Fatigue = (Fatigue)Math.Min((int)_driver.Fatigue + 5, (int)Fatigue.Rested);
                 string restLocation = _faker.Address.City();
-                _consoleService.SetForegroundColor(ConsoleColor.Green);
-                _consoleService.WriteLine($"{_driverName} tar en rast på {restLocation} och känner sig piggare.");
-                _consoleService.ResetColor();
+                _consoleService.DisplaySuccessMessage($"{_driverName} tar en rast på {restLocation} och känner sig piggare.");
             }
         }
         catch (Exception ex)
         {
-            _consoleService.SetForegroundColor(ConsoleColor.Red);
-            _consoleService.WriteLine($"Fel inträffade vid rastandet: {ex.Message}");
-            _consoleService.ResetColor();
+            _consoleService.DisplayError($"Fel inträffade vid rastandet: {ex.Message}");
         }
     }
 
@@ -62,23 +56,16 @@ public class FatigueService : IFatigueService
             }
             else if (_driver.Fatigue < Fatigue.Exhausted)
             {
-                _consoleService.SetForegroundColor(ConsoleColor.Red);
-                _consoleService.WriteLine($"{_driverName} är helt slut! Ta en rast omedelbart, annars kanske ni krockar!");
-                _consoleService.ResetColor();
+                _consoleService.DisplayError($"{_driverName} är helt slut! Ta en rast omedelbart, annars kanske ni krockar!");
             }
             else if ((int)_driver.Fatigue > 0 && (int)_driver.Fatigue <= 5)
             {
-                _consoleService.SetForegroundColor(ConsoleColor.Yellow);
-                _consoleService.WriteLine($"{_driverName} gäspar och börjar känna sig trött. Kanske är det dags för en rast snart?");
-                _consoleService.ResetColor();
+                _consoleService.DisplayStatusMessage($"{_driverName} gäspar och börjar känna sig trött. Kanske är det dags för en rast snart?");
             }
-
         }
         catch (Exception ex)
         {
-            _consoleService.SetForegroundColor(ConsoleColor.Red);
-            _consoleService.WriteLine($"Fel inträffade när du kollade trötthet: {ex.Message}");
-            _consoleService.ResetColor();
+            _consoleService.DisplayError($"Fel inträffade när du kollade trötthet: {ex.Message}");
         }
     }
 

@@ -54,7 +54,7 @@ namespace Library.Services
                     }
                     catch (Exception ex)
                     {
-                        _consoleService.WriteLine($"Ett fel inträffade vid hämtning av användarens val: {ex.Message}");
+                        _consoleService.DisplayError($"Ett fel inträffade vid hämtning av användarens val: {ex.Message}");
                         continue;
                     }
 
@@ -70,13 +70,13 @@ namespace Library.Services
                     }
                     catch (Exception ex)
                     {
-                        _consoleService.WriteLine($"Ett fel inträffade vid visning av statusmenyn: {ex.Message}");
+                        _consoleService.DisplayError($"Ett fel inträffade vid visning av statusmenyn: {ex.Message}");
                     }
                 }
             }
             catch (Exception ex)
             {
-                _consoleService.WriteLine($"Ett oväntat fel inträffade: {ex.Message}");
+                _consoleService.DisplayError($"Ett oväntat fel inträffade: {ex.Message}");
             }
         }
 
@@ -123,12 +123,10 @@ namespace Library.Services
             }
         }
 
-        public void DisplayExitMessage()
+        private void DisplayExitMessage()
         {
             _consoleService.Clear();
-            _consoleService.SetForegroundColor(ConsoleColor.Yellow);
-            _consoleService.WriteLine("Tack för att du spelade Car Simulator 2.0! Ha en bra dag!");
-            _consoleService.ResetColor();
+            _consoleService.DisplayStatusMessage("Tack för att du spelade Car Simulator 2.0! Ha en bra dag!");
             Task.Delay(3000).Wait();
         }
     }

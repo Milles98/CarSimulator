@@ -124,10 +124,5 @@ namespace LibraryTests.Services
             _sut.ExecuteChoice(choice, ref running);
         }
 
-        [TestMethod]
-        public void DisplayExitMessage_ShouldShowExitMessage()
-        {
-            _sut.DisplayExitMessage();
-        }
     }
 }

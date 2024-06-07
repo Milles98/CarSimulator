@@ -60,7 +60,7 @@ public class DirectionService : IDirectionService
         }
         catch (Exception ex)
         {
-            DisplayError(ex.Message);
+            _consoleService.DisplayError(ex.Message);
         }
     }
 
@@ -120,19 +120,17 @@ public class DirectionService : IDirectionService
 
     private void DisplayMessage(ConsoleColor color, string message)
     {
-        _consoleService.SetForegroundColor(color);
-        _consoleService.WriteLine(message);
-        _consoleService.ResetColor();
+        _consoleService.DisplayMessage(color, message);
     }
 
     private void DisplayError(string message)
     {
-        DisplayMessage(ConsoleColor.Red, $"Fel inträffade vid bilkörningen: {message}");
+        _consoleService.DisplayError(message);
     }
 
     private void DisplayInvalidDirectionMessage()
     {
-        DisplayMessage(ConsoleColor.Red, "Ogiltig riktning.");
+        _consoleService.DisplayMessage(ConsoleColor.Red, "Ogiltig riktning.");
     }
 
     private Direction GetOppositeDirection(Direction currentDirection)

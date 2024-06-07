@@ -28,26 +28,19 @@ public class FuelService : IFuelService
         {
             if (_car.Fuel == Fuel.Full)
             {
-                _consoleService.SetForegroundColor(ConsoleColor.Red);
-                _consoleService.WriteLine($"Det går inte att tanka bilen, den är redan fulltankad!");
-                _consoleService.ResetColor();
+                _consoleService.DisplayError("Det går inte att tanka bilen, den är redan fulltankad!");
             }
             else
             {
                 _car.Fuel = Fuel.Full;
                 string refuelLocation = _faker.Address.City();
-                _consoleService.SetForegroundColor(ConsoleColor.Green);
-                _consoleService.WriteLine($"Föraren tankade på {refuelLocation} och nu är bilen fulltankad.");
-                _consoleService.ResetColor();
-
+                _consoleService.DisplaySuccessMessage($"Föraren tankade på {refuelLocation} och nu är bilen fulltankad.");
                 _fatigueService.IncreaseDriverFatigue();
             }
         }
         catch (Exception ex)
         {
-            _consoleService.SetForegroundColor(ConsoleColor.Red);
-            _consoleService.WriteLine($"Fel inträffade vid tankning: {ex.Message}");
-            _consoleService.ResetColor();
+            _consoleService.DisplayError($"Fel inträffade vid tankning: {ex.Message}");
         }
     }
 
@@ -72,7 +65,7 @@ public class FuelService : IFuelService
 |  _| | (_) | |    | |___| | ||  __/ | |_) | | | (_| | | | \__ \ |  __/_|
 |_|    \___/|_|    |_____|_|\__\___| |____/|_|  \__,_|_| |_|___/_|\___(_)
                 ");
-        _consoleService.WriteLine($"Bilen har inte tillräckligt med bränsle. Föraren måste tanka!");
+        _consoleService.WriteLine("Bilen har inte tillräckligt med bränsle. Föraren måste tanka!");
         _consoleService.ResetColor();
     }
 
@@ -87,9 +80,7 @@ public class FuelService : IFuelService
         }
         catch (Exception ex)
         {
-            _consoleService.SetForegroundColor(ConsoleColor.Red);
-            _consoleService.WriteLine($"Fel inträffade när bränslenivån försökte hämtas: {ex.Message}");
-            _consoleService.ResetColor();
+            _consoleService.DisplayError($"Fel inträffade när bränslenivån försökte hämtas: {ex.Message}");
         }
     }
 
