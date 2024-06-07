@@ -32,7 +32,7 @@ The application uses MS Tests and NUnit for unit and integration testing differe
 
 #### Single Responsibility Principle (SRP):
 
-* Each service class (FuelService, RandomUserService, DirectionService, etc.) has a single responsibility.
+* Each service class (FuelService, FakePersonService, DirectionService, etc.) has a single responsibility.
 
 * The DriverInteractionMenu and MainMenu classes handle user interactions and delegate tasks to respective services.
 
@@ -52,7 +52,7 @@ The application uses MS Tests and NUnit for unit and integration testing differe
 
 #### Dependency Inversion Principle (DIP):
 
-* High-level modules depend on abstractions (IRandomUserService, ISimulationSetupService, etc.) rather than concrete implementations.
+* High-level modules depend on abstractions (IFakePersonService, ISimulationSetupService, etc.) rather than concrete implementations.
 
 ### DRY (Don't Repeat Yourself)
 
@@ -64,7 +64,7 @@ The application uses MS Tests and NUnit for unit and integration testing differe
 
 Clear separation between different concerns:
 
-* Data Retrieval: RandomUserService handles data fetching from the API.
+* Data Retrieval: FakePersonService handles data fetching from the API.
 
 * User Interaction: MainMenu, DriverInteractionMenu manage user input and display.
 
@@ -86,17 +86,17 @@ The application utilizes the following models, enums, and services:
 
 * Hunger (In test only, feature not yet implemented)
 
-### Models
+### Models and DTO
 
 * Car
 
 * Driver
 
-* Name
+* NameDTO
 
-* RandomUserResponse
+* RandomUserResponseDTO
 
-* Result
+* ResultDTO
 
 ## Services and Interfaces
 
@@ -112,7 +112,7 @@ The application utilizes the following models, enums, and services:
 
 * IMenuDisplayService: Manages display operations for different menus.
 
-* IRandomUserService: Fetches random driver details from an API.
+* IFakePersonService: Fetches random driver details from an API.
 
 * IDriverInteractionService: Manages execution of menu actions.
 
