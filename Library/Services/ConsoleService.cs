@@ -21,7 +21,7 @@ namespace Library.Services
 
         public void DisplayError(string message)
         {
-            DisplayMessage(ConsoleColor.Red, $"Error: {message}");
+            DisplayMessage(ConsoleColor.Red, $"Fel: {message}");
         }
 
         public void DisplayStatusMessage(string message)

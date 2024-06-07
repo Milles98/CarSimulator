@@ -13,7 +13,7 @@ namespace CarSimulator.Menus
         }
 
         /// <summary>
-        /// Visar actionsmenyn och startar huvudloopen.
+        /// Visar interaction menyn och startar huvudloopen.
         /// </summary>
         public void Menu()
         {
