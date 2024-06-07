@@ -70,8 +70,8 @@ namespace LibraryTests.Services
             // Arrange
             string driverName = "Mille Elfver";
             _consoleServiceMock.SetupSequence(cs => cs.ReadLine())
-                .Returns("1")
-                .Returns("1");
+                .Returns("1") //Valet för carbrand i meny grej
+                .Returns("1"); //Valet för direction i meny grej
 
             // Act
             var result = _sut.EnterCarDetails(driverName);

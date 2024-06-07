@@ -2,7 +2,6 @@
 using Library.Models;
 using Library.Services.Interfaces;
 using Moq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace LibraryTests.Services
 {

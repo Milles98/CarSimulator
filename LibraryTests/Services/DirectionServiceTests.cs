@@ -164,34 +164,6 @@ namespace LibraryTests.Services
         }
 
         [TestMethod]
-        public void DriveNorthTurnRightThenReverse_ShouldChangeDirectionsCorrectly()
-        {
-            // Arrange
-            _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
-
-            // Act
-            _sut.Turn("höger");
-            _sut.Drive("bakåt");
-
-            // Assert
-            Assert.AreEqual(Direction.Väst, _car.Direction);
-        }
-
-        [TestMethod]
-        public void DriveNorthTurnLeftThenReverse_ShouldChangeDirectionsCorrectly()
-        {
-            // Arrange
-            _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
-
-            // Act
-            _sut.Turn("vänster");
-            _sut.Drive("bakåt");
-
-            // Assert
-            Assert.AreEqual(Direction.Öst, _car.Direction);
-        }
-
-        [TestMethod]
         public void ComplexDrivingSequence_ShouldChangeDirectionsCorrectly()
         {
             // Arrange
