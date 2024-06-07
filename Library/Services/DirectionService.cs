@@ -78,7 +78,7 @@ public class DirectionService : IDirectionService
         }
         else
         {
-            DisplayInvalidDirectionMessage();
+            _consoleService.DisplayError("Ogiltig riktning.");
         }
     }
 
@@ -89,7 +89,7 @@ public class DirectionService : IDirectionService
             _car.Direction = _lastForwardDirection;
         }
         _isReversing = false;
-        DisplayMessage(ConsoleColor.Green, $"{_driver.Name} i sin {_carBrand} kör framåt mot {location}.");
+        _consoleService.DisplayMessage(ConsoleColor.Green, $"{_driver.Name} i sin {_carBrand} kör framåt mot {location}.");
     }
 
     private void HandleReverseDrive(string location)
@@ -100,14 +100,14 @@ public class DirectionService : IDirectionService
             _car.Direction = GetOppositeDirection(_car.Direction);
             _isReversing = true;
         }
-        DisplayMessage(ConsoleColor.Green, $"{_driver.Name} i sin {_carBrand} backar mot {location}.");
+        _consoleService.DisplayMessage(ConsoleColor.Green, $"{_driver.Name} i sin {_carBrand} backar mot {location}.");
     }
 
     private void HandleTurn(string direction)
     {
         string location = _faker.Address.City();
         _car.Direction = GetNewDirection(_car.Direction, direction);
-        DisplayMessage(ConsoleColor.Blue, $"{_driver.Name} i sin {_carBrand} svänger {direction} mot {location}.");
+        _consoleService.DisplayMessage(ConsoleColor.Blue, $"{_driver.Name} i sin {_carBrand} svänger {direction} mot {location}.");
     }
 
     private void ValidateDirection(string direction)
@@ -116,21 +116,6 @@ public class DirectionService : IDirectionService
         {
             throw new ArgumentException("Riktningen får inte vara tom!", nameof(direction));
         }
-    }
-
-    private void DisplayMessage(ConsoleColor color, string message)
-    {
-        _consoleService.DisplayMessage(color, message);
-    }
-
-    private void DisplayError(string message)
-    {
-        _consoleService.DisplayError(message);
-    }
-
-    private void DisplayInvalidDirectionMessage()
-    {
-        _consoleService.DisplayMessage(ConsoleColor.Red, "Ogiltig riktning.");
     }
 
     private Direction GetOppositeDirection(Direction currentDirection)
