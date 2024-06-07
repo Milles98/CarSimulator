@@ -99,11 +99,11 @@ namespace Library.Services
                         if (IsValidChoice(brandChoice, brands.Count))
                             return brands[brandChoice - 1];
 
-                        _consoleService.DisplayError("Ogiltigt val. Försök igen.");
+                        DisplayErrorMessage();
                     }
                     else
                     {
-                        _consoleService.DisplayError("Ogiltigt val. Försök igen.");
+                        DisplayErrorMessage();
                     }
                 }
                 catch (Exception ex)
@@ -148,11 +148,11 @@ namespace Library.Services
                             return (Direction)(directionChoice - 1);
                         }
 
-                        _consoleService.DisplayError("Ogiltigt val. Försök igen.");
+                        DisplayErrorMessage();
                     }
                     else
                     {
-                        _consoleService.DisplayError("Ogiltigt val. Försök igen.");
+                        DisplayErrorMessage();
                     }
                 }
                 catch (Exception ex)
@@ -179,6 +179,19 @@ namespace Library.Services
         {
             var values = Enum.GetValues(typeof(T)).Cast<T>().ToList();
             return values[new Random().Next(values.Count)];
+        }
+
+        private void DisplayErrorMessage()
+        {
+            DisplayMessage(ConsoleColor.Red, "Ogiltigt val, försök igen.", 2000);
+        }
+
+        private void DisplayMessage(ConsoleColor color, string message, int delay)
+        {
+            _consoleService.SetForegroundColor(color);
+            _consoleService.WriteLine(message);
+            _consoleService.ResetColor();
+            if (delay > 0) Task.Delay(delay).Wait();
         }
     }
 }

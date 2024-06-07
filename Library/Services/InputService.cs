@@ -24,8 +24,9 @@ namespace Library.Services
                     return choice;
                 }
 
-                _consoleService.Clear();
-                _consoleService.DisplayError("Ogiltigt val, försök igen.");
+                //_consoleService.Clear();
+                //_consoleService.DisplayError("Ogiltigt val, valfri knapp försök igen.");
+                //Console.ReadKey();
                 return -1;
             }
             catch (Exception ex)
