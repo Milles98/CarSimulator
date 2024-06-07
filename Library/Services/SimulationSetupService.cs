@@ -24,7 +24,7 @@ namespace Library.Services
                 var driver = await _fakePersonService.GetRandomDriverAsync();
                 if (driver == null)
                 {
-                    DisplayErrorMessage("Kunde inte hämta ett namn. Försök igen.");
+                    _consoleService.DisplayError("Kunde inte hämta ett namn. Försök igen.");
                     return null;
                 }
 
@@ -33,7 +33,7 @@ namespace Library.Services
             }
             catch (Exception ex)
             {
-                DisplayErrorMessage($"Fel uppstod vid hämtandet av förare från APIet: {ex.Message}");
+                _consoleService.DisplayError($"Fel uppstod vid hämtandet av förare från APIet: {ex.Message}");
                 return null;
             }
         }
@@ -67,9 +67,7 @@ namespace Library.Services
 
         private void DisplayDriverDetails(Driver driver)
         {
-            _consoleService.SetForegroundColor(ConsoleColor.Green);
-            _consoleService.WriteLine($"Föraren är: {driver.Title}. {driver.FirstName} {driver.LastName}");
-            _consoleService.ResetColor();
+            _consoleService.DisplaySuccessMessage($"Föraren är: {driver.Title}. {driver.FirstName} {driver.LastName}");
             Task.Delay(2000).Wait();
         }
 
@@ -94,27 +92,26 @@ namespace Library.Services
                     {
                         if (brandChoice == 0)
                         {
-                            DisplayCancellationMessage("Avslutar bilval.");
+                            _consoleService.DisplayStatusMessage("Avslutar bilval.");
                             return null;
                         }
 
                         if (IsValidChoice(brandChoice, brands.Count))
                             return brands[brandChoice - 1];
 
-                        DisplayErrorMessage("Ogiltigt val. Försök igen.");
+                        _consoleService.DisplayError("Ogiltigt val. Försök igen.");
                     }
                     else
                     {
-                        DisplayErrorMessage("Ogiltigt val. Försök igen.");
+                        _consoleService.DisplayError("Ogiltigt val. Försök igen.");
                     }
                 }
                 catch (Exception ex)
                 {
-                    DisplayErrorMessage($"Fel uppstod vid val av bil: {ex.Message}");
+                    _consoleService.DisplayError($"Fel uppstod vid val av bil: {ex.Message}");
                 }
             }
         }
-
         private Direction? GetDirectionSelection(string driverName, CarBrand selectedBrand)
         {
             while (true)
@@ -134,7 +131,7 @@ namespace Library.Services
                     {
                         if (directionChoice == 0)
                         {
-                            DisplayCancellationMessage("Avslutar riktning val.");
+                            _consoleService.DisplayStatusMessage("Avslutar riktning val.");
                             return null;
                         }
 
@@ -151,16 +148,16 @@ namespace Library.Services
                             return (Direction)(directionChoice - 1);
                         }
 
-                        DisplayErrorMessage("Ogiltigt val. Försök igen.");
+                        _consoleService.DisplayError("Ogiltigt val. Försök igen.");
                     }
                     else
                     {
-                        DisplayErrorMessage("Ogiltigt val. Försök igen.");
+                        _consoleService.DisplayError("Ogiltigt val. Försök igen.");
                     }
                 }
                 catch (Exception ex)
                 {
-                    DisplayErrorMessage($"Fel uppstod vid val av riktning: {ex.Message}");
+                    _consoleService.DisplayError($"Fel uppstod vid val av riktning: {ex.Message}");
                 }
             }
         }
@@ -171,21 +168,6 @@ namespace Library.Services
             {
                 _consoleService.WriteLine($"{i + 1}: {options[i]}");
             }
-        }
-
-        private void DisplayErrorMessage(string message)
-        {
-            _consoleService.SetForegroundColor(ConsoleColor.Red);
-            _consoleService.WriteLine(message);
-            _consoleService.ResetColor();
-            Task.Delay(2000).Wait();
-        }
-
-        private void DisplayCancellationMessage(string message)
-        {
-            _consoleService.SetForegroundColor(ConsoleColor.Yellow);
-            _consoleService.WriteLine(message);
-            _consoleService.ResetColor();
         }
 
         private bool IsValidChoice(int choice, int maxChoice)

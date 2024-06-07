@@ -35,7 +35,7 @@ namespace Library.Services
                 }
                 catch (Exception ex)
                 {
-                    DisplayError($"Fel uppstod vid visandet av huvudmenyn: {ex.Message}");
+                    _consoleService.DisplayError($"Fel uppstod vid visandet av huvudmenyn: {ex.Message}");
                 }
             }
         }
@@ -44,7 +44,7 @@ namespace Library.Services
         {
             if (status == null)
             {
-                DisplayError("Status ska ej vara tomt.");
+                _consoleService.DisplayError("Status ska ej vara tomt.");
                 return;
             }
 
@@ -71,7 +71,7 @@ namespace Library.Services
                 }
                 catch (Exception ex)
                 {
-                    DisplayError($"Problem uppstod vid hämtningen av status menyn: {ex.Message}");
+                    _consoleService.DisplayError($"Problem uppstod vid hämtningen av status menyn: {ex.Message}");
                 }
             }
         }
@@ -97,7 +97,7 @@ namespace Library.Services
                 }
                 catch (Exception ex)
                 {
-                    DisplayError($"Fel inträffade vid visning av introduktionen: {ex.Message}");
+                    _consoleService.DisplayError($"Fel inträffade vid visning av introduktionen: {ex.Message}");
                 }
             }
         }
@@ -106,9 +106,7 @@ namespace Library.Services
         {
             while (string.IsNullOrWhiteSpace(driverName))
             {
-                _consoleService.SetForegroundColor(ConsoleColor.Red);
-                _consoleService.WriteLine("Förarnamn ska inte vara tomt, något fel kan ha skett vid hämtningen från APIet!");
-                _consoleService.ResetColor();
+                _consoleService.DisplayError("Förarnamn ska inte vara tomt, något fel kan ha skett vid hämtningen från APIet!");
                 driverName = _consoleService.ReadLine();
             }
             return driverName;
@@ -118,9 +116,7 @@ namespace Library.Services
         {
             while (string.IsNullOrWhiteSpace(carBrand))
             {
-                _consoleService.SetForegroundColor(ConsoleColor.Red);
-                _consoleService.WriteLine("Bilmärke kan ej vara tomt, något fel har skett vid val av bilmärke.");
-                _consoleService.ResetColor();
+                _consoleService.DisplayError("Bilmärke kan ej vara tomt, något fel har skett vid val av bilmärke.");
                 carBrand = _consoleService.ReadLine();
             }
             return carBrand;
@@ -134,9 +130,7 @@ namespace Library.Services
 
             while (userInput != "ja" && userInput != "nej")
             {
-                _consoleService.SetForegroundColor(ConsoleColor.Red);
-                _consoleService.WriteLine("Ogiltigt val, försök igen. Vill du ha skrivande effekt? (ja/nej)");
-                _consoleService.ResetColor();
+                _consoleService.DisplayError("Ogiltigt val, försök igen. Vill du ha skrivande effekt? (ja/nej)");
                 userInput = _consoleService.ReadLine()?.ToLower();
             }
 
@@ -169,13 +163,6 @@ namespace Library.Services
     ";
 
             TypeText(art, skipTypingEffect);
-        }
-
-        private void DisplayError(string message)
-        {
-            _consoleService.SetForegroundColor(ConsoleColor.Red);
-            _consoleService.WriteLine(message);
-            _consoleService.ResetColor();
         }
 
         private void TypeText(string text, bool skipTypingEffect, int delay = 50)

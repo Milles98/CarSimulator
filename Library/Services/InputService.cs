@@ -25,14 +25,12 @@ namespace Library.Services
                 }
 
                 _consoleService.Clear();
-                _consoleService.SetForegroundColor(ConsoleColor.Red);
-                _consoleService.WriteLine("Ogiltigt val, försök igen.");
-                _consoleService.ResetColor();
+                _consoleService.DisplayError("Ogiltigt val, försök igen.");
                 return -1;
             }
             catch (Exception ex)
             {
-                _consoleService.WriteLine($"Fel inträffade vid hämtning av val: {ex.Message}");
+                _consoleService.DisplayError($"Fel inträffade vid hämtning av val: {ex.Message}");
                 return -1;
             }
         }

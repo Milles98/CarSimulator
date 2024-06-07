@@ -11,5 +11,27 @@ namespace Library.Services
         public void SetForegroundColor(ConsoleColor color) => Console.ForegroundColor = color;
         public void ResetColor() => Console.ResetColor();
         public void WaitKey() => Console.ReadKey();
+
+        public void DisplayMessage(ConsoleColor color, string message)
+        {
+            SetForegroundColor(color);
+            WriteLine(message);
+            ResetColor();
+        }
+
+        public void DisplayError(string message)
+        {
+            DisplayMessage(ConsoleColor.Red, $"Error: {message}");
+        }
+
+        public void DisplayStatusMessage(string message)
+        {
+            DisplayMessage(ConsoleColor.Yellow, message);
+        }
+
+        public void DisplaySuccessMessage(string message)
+        {
+            DisplayMessage(ConsoleColor.Green, message);
+        }
     }
 }
