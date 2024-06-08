@@ -1,9 +1,9 @@
 ﻿using Library.Models;
-using Library.Models.APIResponse;
 using Library.Services.Interfaces;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Library.Models.DTO;
 
 namespace Library.Services
 {
