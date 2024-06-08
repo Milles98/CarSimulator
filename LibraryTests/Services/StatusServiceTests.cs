@@ -1,5 +1,6 @@
 ﻿using Library.Enums;
 using Library.Models;
+using Library.Services;
 
 namespace LibraryTests.Services
 {
