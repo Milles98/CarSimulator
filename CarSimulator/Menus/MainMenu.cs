@@ -5,21 +5,14 @@ using System.Threading.Tasks;
 
 namespace CarSimulator.Menus
 {
-    public class MainMenu : IMainMenu
+    public class MainMenu(
+        ISimulationSetupService simulationSetupService,
+        IInputService inputService,
+        IDriverInteractionFactory driverInteractionFactory,
+        IConsoleService consoleService)
+        : IMainMenu
     {
-        private readonly ISimulationSetupService _simulationSetupService;
-        private readonly IInputService _inputService;
-        private readonly IDriverInteractionFactory _driverInteractionFactory;
-        private readonly IConsoleService _consoleService;
         private readonly bool _isTesting = false;
-
-        public MainMenu(ISimulationSetupService simulationSetupService, IInputService inputService, IDriverInteractionFactory driverInteractionFactory, IConsoleService consoleService)
-        {
-            _simulationSetupService = simulationSetupService;
-            _inputService = inputService;
-            _driverInteractionFactory = driverInteractionFactory;
-            _consoleService = consoleService;
-        }
 
         /// <summary>
         /// Visar huvudmenyn och hanterar användarens val.
@@ -31,7 +24,7 @@ namespace CarSimulator.Menus
             {
                 DisplayMainMenu();
 
-                int choice = _inputService.GetUserChoice();
+                int choice = inputService.GetUserChoice();
                 if (choice == -1)
                 {
                     DisplayErrorMessage();
@@ -45,22 +38,22 @@ namespace CarSimulator.Menus
 
         private void DisplayMainMenu()
         {
-            _consoleService.Clear();
-            _consoleService.SetForegroundColor(ConsoleColor.DarkYellow);
-            _consoleService.WriteLine(@"
+            consoleService.Clear();
+            consoleService.SetForegroundColor(ConsoleColor.DarkYellow);
+            consoleService.WriteLine(@"
  ____             ____  _                 _       _             
 / ___|__ _ _ __  / ___|(_)_ __ ___  _   _| | __ _| |_ ___  _ __ 
 | |   / _` | '__| \___ \| | '_ ` _ \| | | | |/ _` | __/ _ \| '__|
 | |__| (_| | |     ___) | | | | | | | |_| | | (_| | || (_) | |   
  \____\__,_|_|    |____/|_|_| |_| |_|\__,_|_|\__,_|\__\___/|_|   
                 ");
-            _consoleService.ResetColor();
-            _consoleService.SetForegroundColor(ConsoleColor.Cyan);
-            _consoleService.WriteLine("Välkommen till bilkörningssimulatorn!");
-            _consoleService.WriteLine("1. Starta simulationen");
-            _consoleService.WriteLine("0. Avsluta");
-            _consoleService.Write("\nVälj ett alternativ: ");
-            _consoleService.ResetColor();
+            consoleService.ResetColor();
+            consoleService.SetForegroundColor(ConsoleColor.Cyan);
+            consoleService.WriteLine("Välkommen till bilkörningssimulatorn!");
+            consoleService.WriteLine("1. Starta simulationen");
+            consoleService.WriteLine("0. Avsluta");
+            consoleService.Write("\nVälj ett alternativ: ");
+            consoleService.ResetColor();
         }
 
         private async Task<bool> HandleMenuChoice(int choice)
@@ -84,9 +77,9 @@ namespace CarSimulator.Menus
         /// </summary>
         private async Task StartSimulation()
         {
-            var driver = await _simulationSetupService.FetchDriverDetails();
+            var driver = await simulationSetupService.FetchDriverDetails();
 
-            var car = _simulationSetupService.EnterCarDetails(driver.Name);
+            var car = simulationSetupService.EnterCarDetails(driver.Name);
 
             await WarmUpEngine();
             await StartDriverInteraction(driver, car);
@@ -96,7 +89,7 @@ namespace CarSimulator.Menus
         {
             try
             {
-                var driverInteractionService = _driverInteractionFactory.CreateDriverInteractionService(driver, car);
+                var driverInteractionService = driverInteractionFactory.CreateDriverInteractionService(driver, car);
                 if (driverInteractionService == null)
                 {
                     throw new InvalidOperationException("Kunde ej skapa Driver Interaction Service.");
@@ -119,16 +112,16 @@ namespace CarSimulator.Menus
         /// </summary>
         private async Task WarmUpEngine()
         {
-            _consoleService.SetForegroundColor(ConsoleColor.Green);
-            _consoleService.Write("\nVärmer upp motorn");
+            consoleService.SetForegroundColor(ConsoleColor.Green);
+            consoleService.Write("\nVärmer upp motorn");
             for (int i = 0; i < 3; i++)
             {
                 await Task.Delay(1000);
-                _consoleService.Write(".");
+                consoleService.Write(".");
             }
-            _consoleService.WriteLine("");
-            _consoleService.Clear();
-            _consoleService.ResetColor();
+            consoleService.WriteLine("");
+            consoleService.Clear();
+            consoleService.ResetColor();
         }
 
         private void DisplayErrorMessage()
@@ -138,7 +131,7 @@ namespace CarSimulator.Menus
 
         private void DisplayExitMessage()
         {
-            _consoleService.Clear();
+            consoleService.Clear();
             DisplayMessage(ConsoleColor.Yellow, @"
  _____          _                 _       _           _ _ 
 |_   _|_ _  ___| | __   ___   ___| |__   | |__   ___ (_) |
@@ -161,9 +154,9 @@ namespace CarSimulator.Menus
 
         private void DisplayMessage(ConsoleColor color, string message, int delay)
         {
-            _consoleService.SetForegroundColor(color);
-            _consoleService.WriteLine(message);
-            _consoleService.ResetColor();
+            consoleService.SetForegroundColor(color);
+            consoleService.WriteLine(message);
+            consoleService.ResetColor();
             if (delay > 0) Task.Delay(delay).Wait();
         }
     }

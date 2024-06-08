@@ -3,21 +3,14 @@ using Library.Services.Interfaces;
 
 namespace CarSimulator.Menus
 {
-    public class DriverInteractionMenu : IDriverInteractionMenu
+    public class DriverInteractionMenu(IDriverInteractionService driverInteractionService) : IDriverInteractionMenu
     {
-        private readonly IDriverInteractionService _driverInteractionService;
-
-        public DriverInteractionMenu(IDriverInteractionService driverInteractionService)
-        {
-            _driverInteractionService = driverInteractionService;
-        }
-
         /// <summary>
         /// Visar interaction menyn och startar huvudloopen.
         /// </summary>
         public void Menu()
         {
-            _driverInteractionService.ExecuteMenu();
+            driverInteractionService.ExecuteMenu();
         }
     }
 }

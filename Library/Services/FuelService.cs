@@ -5,22 +5,10 @@ using Library.Services.Interfaces;
 
 namespace Library.Services;
 
-public class FuelService : IFuelService
+public class FuelService(Car car, string carBrand, IConsoleService consoleService, IFatigueService fatigueService)
+    : IFuelService
 {
-    private readonly Car _car;
-    private readonly string _carBrand;
-    private readonly Faker _faker;
-    private readonly IConsoleService _consoleService;
-    private readonly IFatigueService _fatigueService;
-
-    public FuelService(Car car, string carBrand, IConsoleService consoleService, IFatigueService fatigueService)
-    {
-        _car = car;
-        _carBrand = carBrand;
-        _consoleService = consoleService;
-        _faker = new Faker();
-        _fatigueService = fatigueService;
-    }
+    private readonly Faker _faker = new();
 
     /// <summary>
     /// Utför tankning av bilen.
@@ -29,21 +17,21 @@ public class FuelService : IFuelService
     {
         try
         {
-            if (_car.Fuel == Fuel.Full)
+            if (car.Fuel == Fuel.Full)
             {
-                _consoleService.DisplayError("Det går inte att tanka bilen, den är redan fulltankad!");
+                consoleService.DisplayError("Det går inte att tanka bilen, den är redan fulltankad!");
             }
             else
             {
-                _car.Fuel = Fuel.Full;
+                car.Fuel = Fuel.Full;
                 string refuelLocation = _faker.Address.City();
-                _consoleService.DisplaySuccessMessage($"Föraren tankade på {refuelLocation} och nu är bilen fulltankad.");
-                _fatigueService.IncreaseDriverFatigue();
+                consoleService.DisplaySuccessMessage($"Föraren tankade på {refuelLocation} och nu är bilen fulltankad.");
+                fatigueService.IncreaseDriverFatigue();
             }
         }
         catch (Exception ex)
         {
-            _consoleService.DisplayError($"Fel inträffade vid tankning: {ex.Message}");
+            consoleService.DisplayError($"Fel inträffade vid tankning: {ex.Message}");
         }
     }
 
@@ -52,7 +40,7 @@ public class FuelService : IFuelService
     /// </summary>
     public bool HasEnoughFuel(int requiredFuel)
     {
-        return (int)_car.Fuel >= requiredFuel;
+        return (int)car.Fuel >= requiredFuel;
     }
 
     /// <summary>
@@ -60,30 +48,30 @@ public class FuelService : IFuelService
     /// </summary>
     public void DisplayLowFuelWarning()
     {
-        _consoleService.SetForegroundColor(ConsoleColor.Red);
-        _consoleService.WriteLine(@"
+        consoleService.SetForegroundColor(ConsoleColor.Red);
+        consoleService.WriteLine(@"
  _____ _   _        _     _ _         ____      _   _           _      _ 
 |  ___(_)_(_)_ __  | |   (_) |_ ___  | __ ) _ _(_)_(_)_ __  ___| | ___| |
 | |_   / _ \| '__| | |   | | __/ _ \ |  _ \| '__/ _` | '_ \/ __| |/ _ \ |
 |  _| | (_) | |    | |___| | ||  __/ | |_) | | | (_| | | | \__ \ |  __/_|
 |_|    \___/|_|    |_____|_|\__\___| |____/|_|  \__,_|_| |_|___/_|\___(_)
                 ");
-        _consoleService.WriteLine("Bilen har inte tillräckligt med bränsle. Föraren måste tanka!");
-        _consoleService.ResetColor();
+        consoleService.WriteLine("Bilen har inte tillräckligt med bränsle. Föraren måste tanka!");
+        consoleService.ResetColor();
     }
 
     public void CheckFuelLevel()
     {
         try
         {
-            if (_car.Fuel == Fuel.Empty)
+            if (car.Fuel == Fuel.Empty)
             {
                 DisplayLowFuelWarning();
             }
         }
         catch (Exception ex)
         {
-            _consoleService.DisplayError($"Fel inträffade när bränslenivån försökte hämtas: {ex.Message}");
+            consoleService.DisplayError($"Fel inträffade när bränslenivån försökte hämtas: {ex.Message}");
         }
     }
 
@@ -92,9 +80,9 @@ public class FuelService : IFuelService
     /// </summary>
     public void UseFuel(int amount)
     {
-        int currentFuel = (int)_car.Fuel;
+        int currentFuel = (int)car.Fuel;
         currentFuel -= amount;
         if (currentFuel < (int)Fuel.Empty) currentFuel = (int)Fuel.Empty;
-        _car.Fuel = (Fuel)currentFuel;
+        car.Fuel = (Fuel)currentFuel;
     }
 }

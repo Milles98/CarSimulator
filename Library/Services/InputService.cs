@@ -2,15 +2,8 @@
 
 namespace Library.Services
 {
-    public class InputService : IInputService
+    public class InputService(IConsoleService consoleService) : IInputService
     {
-        private readonly IConsoleService _consoleService;
-
-        public InputService(IConsoleService consoleService)
-        {
-            _consoleService = consoleService;
-        }
-
         /// <summary>
         /// Hämtar användarens val.
         /// </summary>
@@ -18,7 +11,7 @@ namespace Library.Services
         {
             try
             {
-                var input = _consoleService.ReadLine();
+                var input = consoleService.ReadLine();
                 if (int.TryParse(input, out int choice))
                 {
                     return choice;
@@ -31,7 +24,7 @@ namespace Library.Services
             }
             catch (Exception ex)
             {
-                _consoleService.DisplayError($"Fel inträffade vid hämtning av val: {ex.Message}");
+                consoleService.DisplayError($"Fel inträffade vid hämtning av val: {ex.Message}");
                 return -1;
             }
         }
