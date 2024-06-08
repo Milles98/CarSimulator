@@ -7,7 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="32657de6-ac81-4f8f-9bb8-3365d449205b" name="Changes" comment="Updated interface map name to Interfaces" />
+    <list default="true" id="32657de6-ac81-4f8f-9bb8-3365d449205b" name="Changes" comment="Major refactor, updated variables to use &quot;var&quot; in multiple classes, adjusted multiple classes to follow best practices, added init; to multiple models instead of set;" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,6 +48,7 @@
 }</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="mock://C:/Projects/Testing/TestAssignment/CarSimulator/CarSimulator/AppStart.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Projects/Testing/TestAssignment/CarSimulator/Library/Models/Car.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Projects/Testing/TestAssignment/CarSimulator/Library/Services/ConsoleService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Projects/Testing/TestAssignment/CarSimulator/Library/Services/FakePersonService.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -69,7 +70,7 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "#145 on dev",
+    "git-widget-placeholder": "#146 on dev",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -118,7 +119,7 @@
       <workItem from="1717825051065" duration="420000" />
       <workItem from="1717825496585" duration="3779000" />
       <workItem from="1717830053414" duration="8000" />
-      <workItem from="1717830122494" duration="1669000" />
+      <workItem from="1717830122494" duration="2168000" />
     </task>
     <task id="LOCAL−00001" summary="Made AppInitializer static as it doesnt need to be instanciated, updated relevant test">
       <option name="closed" value="true" />
@@ -211,7 +212,14 @@
       <option name="presentableId" value="LOCAL−00013" />
       <updated>1717839390736</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL−00014" summary="Major refactor, updated variables to use &quot;var&quot; in multiple classes, adjusted multiple classes to follow best practices, added init; to multiple models instead of set;">
+      <option name="closed" value="true" />
+      <created>1717840008975</created>
+      <option name="number" value="LOCAL−00014" />
+      <option name="presentableId" value="LOCAL−00014" />
+      <updated>1717840008975</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -234,6 +242,7 @@
     <MESSAGE value="Removed unnessecary method from ConsoleService.cs not used" />
     <MESSAGE value="Removed unused using statements across solution" />
     <MESSAGE value="Updated interface map name to Interfaces" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated interface map name to Interfaces" />
+    <MESSAGE value="Major refactor, updated variables to use &quot;var&quot; in multiple classes, adjusted multiple classes to follow best practices, added init; to multiple models instead of set;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Major refactor, updated variables to use &quot;var&quot; in multiple classes, adjusted multiple classes to follow best practices, added init; to multiple models instead of set;" />
   </component>
 </project>

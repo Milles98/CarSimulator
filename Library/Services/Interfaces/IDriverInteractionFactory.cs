@@ -1,9 +1,8 @@
 ﻿using Library.Models;
 
-namespace Library.Services.Interfaces
+namespace Library.Services.Interfaces;
+
+public interface IDriverInteractionFactory
 {
-    public interface IDriverInteractionFactory
-    {
-        IDriverInteractionService CreateDriverInteractionService(Driver? driver, Car? car);
-    }
+    IDriverInteractionService CreateDriverInteractionService(Driver? driver, Car? car);
 }

@@ -14,7 +14,7 @@ public class DirectionService : IDirectionService
     private readonly string _carBrand;
     private readonly Faker _faker;
     private readonly IConsoleService _consoleService;
-    private bool _isReversing = false;
+    private bool _isReversing;
     private Direction _lastForwardDirection;
 
     public DirectionService(Car? car, Driver? driver, IFuelService fuelService, IFatigueService fatigueService, string carBrand, IConsoleService consoleService)
@@ -26,7 +26,7 @@ public class DirectionService : IDirectionService
         _carBrand = carBrand;
         _consoleService = consoleService;
         _faker = new Faker();
-        _lastForwardDirection = _car.Direction;
+        if (_car != null) _lastForwardDirection = _car.Direction;
     }
 
     public void Drive(string direction)
@@ -52,7 +52,7 @@ public class DirectionService : IDirectionService
             }
 
             _fuelService.UseFuel(fuelConsumption);
-            _driver.Fatigue -= 1;
+            if (_driver != null) _driver.Fatigue -= 1;
 
             action.Invoke();
 
@@ -87,28 +87,32 @@ public class DirectionService : IDirectionService
     {
         if (_isReversing)
         {
-            _car.Direction = _lastForwardDirection;
+            if (_car != null) _car.Direction = _lastForwardDirection;
         }
         _isReversing = false;
-        _consoleService.DisplayMessage(ConsoleColor.Green, $"{_driver.Name} i sin {_carBrand} kör framåt mot {location}.");
+        _consoleService.DisplayMessage(ConsoleColor.Green, $"{_driver?.Name} i sin {_carBrand} kör framåt mot {location}.");
     }
 
     private void HandleReverseDrive(string location)
     {
         if (!_isReversing)
         {
-            _lastForwardDirection = _car.Direction;
-            _car.Direction = GetOppositeDirection(_car.Direction);
+            if (_car != null)
+            {
+                _lastForwardDirection = _car.Direction;
+                _car.Direction = GetOppositeDirection(_car.Direction);
+            }
+
             _isReversing = true;
         }
-        _consoleService.DisplayMessage(ConsoleColor.Green, $"{_driver.Name} i sin {_carBrand} backar mot {location}.");
+        _consoleService.DisplayMessage(ConsoleColor.Green, $"{_driver?.Name} i sin {_carBrand} backar mot {location}.");
     }
 
     private void HandleTurn(string direction)
     {
         var location = _faker.Address.City();
-        _car.Direction = GetNewDirection(_car.Direction, direction);
-        _consoleService.DisplayMessage(ConsoleColor.Blue, $"{_driver.Name} i sin {_carBrand} svänger {direction} mot {location}.");
+        if (_car != null) _car.Direction = GetNewDirection(_car.Direction, direction);
+        _consoleService.DisplayMessage(ConsoleColor.Blue, $"{_driver?.Name} i sin {_carBrand} svänger {direction} mot {location}.");
     }
 
     private static void ValidateDirection(string direction)

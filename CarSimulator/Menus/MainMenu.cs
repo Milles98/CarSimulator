@@ -3,139 +3,139 @@ using Library.Services.Interfaces;
 using System.Threading.Tasks;
 using CarSimulator.Menus.Interfaces;
 
-namespace CarSimulator.Menus
+namespace CarSimulator.Menus;
+
+public class MainMenu(
+    ISimulationSetupService simulationSetupService,
+    IInputService inputService,
+    IDriverInteractionFactory driverInteractionFactory,
+    IConsoleService consoleService)
+    : IMainMenu
 {
-    public class MainMenu(
-        ISimulationSetupService simulationSetupService,
-        IInputService inputService,
-        IDriverInteractionFactory driverInteractionFactory,
-        IConsoleService consoleService)
-        : IMainMenu
+    private readonly bool _isTesting = false;
+
+    /// <summary>
+    /// Visar huvudmenyn och hanterar användarens val.
+    /// </summary>
+    public async Task Menu()
     {
-        private readonly bool _isTesting = false;
-
-        /// <summary>
-        /// Visar huvudmenyn och hanterar användarens val.
-        /// </summary>
-        public async Task Menu()
+        var running = true;
+        while (running)
         {
-            var running = true;
-            while (running)
+            DisplayMainMenu();
+
+            var choice = inputService.GetUserChoice();
+            if (choice == -1)
             {
-                DisplayMainMenu();
-
-                var choice = inputService.GetUserChoice();
-                if (choice == -1)
-                {
-                    DisplayErrorMessage();
-                    if (_isTesting) break;
-                    continue;
-                }
-
-                running = await HandleMenuChoice(choice);
+                DisplayErrorMessage();
+                if (_isTesting) break;
+                continue;
             }
-        }
 
-        private void DisplayMainMenu()
-        {
-            consoleService.Clear();
-            consoleService.SetForegroundColor(ConsoleColor.DarkYellow);
-            consoleService.WriteLine(@"
+            running = await HandleMenuChoice(choice);
+        }
+    }
+
+    private void DisplayMainMenu()
+    {
+        consoleService.Clear();
+        consoleService.SetForegroundColor(ConsoleColor.DarkYellow);
+        consoleService.WriteLine(@"
  ____             ____  _                 _       _             
 / ___|__ _ _ __  / ___|(_)_ __ ___  _   _| | __ _| |_ ___  _ __ 
 | |   / _` | '__| \___ \| | '_ ` _ \| | | | |/ _` | __/ _ \| '__|
 | |__| (_| | |     ___) | | | | | | | |_| | | (_| | || (_) | |   
  \____\__,_|_|    |____/|_|_| |_| |_|\__,_|_|\__,_|\__\___/|_|   
                 ");
-            consoleService.ResetColor();
-            consoleService.SetForegroundColor(ConsoleColor.Cyan);
-            consoleService.WriteLine("Välkommen till bilkörningssimulatorn!");
-            consoleService.WriteLine("1. Starta simulationen");
-            consoleService.WriteLine("0. Avsluta");
-            consoleService.Write("\nVälj ett alternativ: ");
-            consoleService.ResetColor();
-        }
+        consoleService.ResetColor();
+        consoleService.SetForegroundColor(ConsoleColor.Cyan);
+        consoleService.WriteLine("Välkommen till bilkörningssimulatorn!");
+        consoleService.WriteLine("1. Starta simulationen");
+        consoleService.WriteLine("0. Avsluta");
+        consoleService.Write("\nVälj ett alternativ: ");
+        consoleService.ResetColor();
+    }
 
-        private async Task<bool> HandleMenuChoice(int choice)
+    private async Task<bool> HandleMenuChoice(int choice)
+    {
+        switch (choice)
         {
-            switch (choice)
-            {
-                case 1:
-                    await StartSimulation();
-                    return true;
-                case 0:
-                    DisplayExitMessage();
-                    return false;
-                default:
-                    DisplayErrorMessage();
-                    return true;
-            }
+            case 1:
+                await StartSimulation();
+                return true;
+            case 0:
+                DisplayExitMessage();
+                return false;
+            default:
+                DisplayErrorMessage();
+                return true;
         }
+    }
 
-        /// <summary>
-        /// Startar simuleringen genom att hämta förar- och bildetaljer.
-        /// </summary>
-        private async Task StartSimulation()
+    /// <summary>
+    /// Startar simuleringen genom att hämta förar- och bildetaljer.
+    /// </summary>
+    private async Task StartSimulation()
+    {
+        var driver = await simulationSetupService.FetchDriverDetails();
+
+        if (driver != null)
         {
-            var driver = await simulationSetupService.FetchDriverDetails();
+            var car = simulationSetupService.EnterCarDetails(driver.Name);
 
-            if (driver != null)
-            {
-                var car = simulationSetupService.EnterCarDetails(driver.Name);
-
-                await WarmUpEngine();
-                await StartDriverInteraction(driver, car);
-            }
+            await WarmUpEngine();
+            await StartDriverInteraction(driver, car);
         }
+    }
 
-        private Task StartDriverInteraction(Driver? driver, Car? car)
+    private Task StartDriverInteraction(Driver? driver, Car? car)
+    {
+        try
         {
-            try
+            var driverInteractionService = driverInteractionFactory.CreateDriverInteractionService(driver, car);
+            if (driverInteractionService == null)
             {
-                var driverInteractionService = driverInteractionFactory.CreateDriverInteractionService(driver, car);
-                if (driverInteractionService == null)
-                {
-                    throw new InvalidOperationException("Kunde ej skapa Driver Interaction Service.");
-                }
-
-                var driverInteractionMenu = new DriverInteractionMenu(driverInteractionService);
-                driverInteractionMenu.Menu();
-            }
-            catch (Exception ex)
-            {
-                DisplayDriverInteractionError(ex.Message);
-                throw;
+                throw new InvalidOperationException("Kunde ej skapa Driver Interaction Service.");
             }
 
-            return Task.CompletedTask;
+            var driverInteractionMenu = new DriverInteractionMenu(driverInteractionService);
+            driverInteractionMenu.Menu();
+        }
+        catch (Exception ex)
+        {
+            DisplayDriverInteractionError(ex.Message);
+            throw;
         }
 
-        /// <summary>
-        /// Värmer upp bilens motor.
-        /// </summary>
-        private async Task WarmUpEngine()
-        {
-            consoleService.SetForegroundColor(ConsoleColor.Green);
-            consoleService.Write("\nVärmer upp motorn");
-            for (var i = 0; i < 3; i++)
-            {
-                await Task.Delay(1000);
-                consoleService.Write(".");
-            }
-            consoleService.WriteLine("");
-            consoleService.Clear();
-            consoleService.ResetColor();
-        }
+        return Task.CompletedTask;
+    }
 
-        private void DisplayErrorMessage()
+    /// <summary>
+    /// Värmer upp bilens motor.
+    /// </summary>
+    private async Task WarmUpEngine()
+    {
+        consoleService.SetForegroundColor(ConsoleColor.Green);
+        consoleService.Write("\nVärmer upp motorn");
+        for (var i = 0; i < 3; i++)
         {
-            DisplayMessage(ConsoleColor.Red, "Ogiltigt val, försök igen.", 2000);
+            await Task.Delay(1000);
+            consoleService.Write(".");
         }
+        consoleService.WriteLine("");
+        consoleService.Clear();
+        consoleService.ResetColor();
+    }
 
-        private void DisplayExitMessage()
-        {
-            consoleService.Clear();
-            DisplayMessage(ConsoleColor.Yellow, @"
+    private void DisplayErrorMessage()
+    {
+        DisplayMessage(ConsoleColor.Red, "Ogiltigt val, försök igen.", 2000);
+    }
+
+    private void DisplayExitMessage()
+    {
+        consoleService.Clear();
+        DisplayMessage(ConsoleColor.Yellow, @"
  _____          _                 _       _           _ _ 
 |_   _|_ _  ___| | __   ___   ___| |__   | |__   ___ (_) |
   | |/ _` |/ __| |/ /  / _ \ / __| '_ \  | '_ \ / _ \| | |
@@ -143,24 +143,23 @@ namespace CarSimulator.Menus
   |_|\__,_|\___|_|\_\  \___/ \___|_| |_| |_| |_|\___|/ (_)
                                                    |__/   
             ", 3000);
-        }
+    }
 
-        private void DisplayDriverError()
-        {
-            DisplayMessage(ConsoleColor.Red, "Något gick fel när du sparade förarinformationen. Försök igen.", 0);
-        }
+    private void DisplayDriverError()
+    {
+        DisplayMessage(ConsoleColor.Red, "Något gick fel när du sparade förarinformationen. Försök igen.", 0);
+    }
 
-        private void DisplayDriverInteractionError(string message)
-        {
-            DisplayMessage(ConsoleColor.Red, $"Error creating Driver Interaction Service: {message}", 0);
-        }
+    private void DisplayDriverInteractionError(string message)
+    {
+        DisplayMessage(ConsoleColor.Red, $"Error creating Driver Interaction Service: {message}", 0);
+    }
 
-        private void DisplayMessage(ConsoleColor color, string message, int delay)
-        {
-            consoleService.SetForegroundColor(color);
-            consoleService.WriteLine(message);
-            consoleService.ResetColor();
-            if (delay > 0) Task.Delay(delay).Wait();
-        }
+    private void DisplayMessage(ConsoleColor color, string message, int delay)
+    {
+        consoleService.SetForegroundColor(color);
+        consoleService.WriteLine(message);
+        consoleService.ResetColor();
+        if (delay > 0) Task.Delay(delay).Wait();
     }
 }

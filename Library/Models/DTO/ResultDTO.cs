@@ -1,7 +1,6 @@
-﻿namespace Library.Models.DTO
+﻿namespace Library.Models.DTO;
+
+public class ResultDTO
 {
-    public class ResultDTO
-    {
-        public NameDTO Name { get; set; }
-    }
+    public NameDTO Name { get; set; }
 }

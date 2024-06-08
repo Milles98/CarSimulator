@@ -1,7 +1,6 @@
-﻿namespace CarSimulator.Menus.Interfaces
+﻿namespace CarSimulator.Menus.Interfaces;
+
+public interface IMainMenu
 {
-    public interface IMainMenu
-    {
-        Task Menu();
-    }
+    Task Menu();
 }

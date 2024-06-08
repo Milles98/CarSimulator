@@ -1,10 +1,9 @@
-﻿namespace Library.Enums
+﻿namespace Library.Enums;
+
+public enum Direction
 {
-    public enum Direction
-    {
-        Norr,
-        Öst,
-        Söder,
-        Väst
-    }
+    Norr,
+    Öst,
+    Söder,
+    Väst
 }

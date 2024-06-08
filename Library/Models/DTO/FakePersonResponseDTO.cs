@@ -1,7 +1,6 @@
-﻿namespace Library.Models.DTO
+﻿namespace Library.Models.DTO;
+
+public class FakePersonResponseDTO
 {
-    public class FakePersonResponseDTO
-    {
-        public List<ResultDTO> Results { get; set; }
-    }
+    public List<ResultDTO> Results { get; set; }
 }

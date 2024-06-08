@@ -1,7 +1,6 @@
-﻿namespace Library.Services.Interfaces
+﻿namespace Library.Services.Interfaces;
+
+public interface IInputService
 {
-    public interface IInputService
-    {
-        int GetUserChoice();
-    }
+    int GetUserChoice();
 }
