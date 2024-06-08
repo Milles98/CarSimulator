@@ -7,17 +7,8 @@ using Library.Models.DTO;
 
 namespace Library.Services
 {
-    public class FakePersonService : IFakePersonService
+    public class FakePersonService(HttpClient httpClient, IConsoleService consoleService) : IFakePersonService
     {
-        private readonly HttpClient _httpClient;
-        private readonly IConsoleService _consoleService;
-
-        public FakePersonService(HttpClient httpClient, IConsoleService consoleService)
-        {
-            _httpClient = httpClient;
-            _consoleService = consoleService;
-        }
-
         /// <summary>
         /// Fetches a random driver from an API.
         /// </summary>
@@ -25,11 +16,11 @@ namespace Library.Services
         {
             try
             {
-                _httpClient.BaseAddress = new Uri("https://randomuser.me/api/");
-                _httpClient.DefaultRequestHeaders.Accept.Clear();
-                _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                httpClient.BaseAddress = new Uri("https://randomuser.me/api/");
+                httpClient.DefaultRequestHeaders.Accept.Clear();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var response = await _httpClient.GetAsync("");
+                var response = await httpClient.GetAsync("");
                 if (response.IsSuccessStatusCode)
                 {
                     var responseBody = await response.Content.ReadAsStringAsync();
@@ -47,34 +38,34 @@ namespace Library.Services
                     }
                     else
                     {
-                        _consoleService.DisplayError("Inget resultat i response!.");
+                        consoleService.DisplayError("Inget resultat i response!.");
                         return null;
                     }
                 }
                 else
                 {
-                    _consoleService.DisplayError($"API hämtning misslyckades med statuskod: {response.StatusCode}");
+                    consoleService.DisplayError($"API hämtning misslyckades med statuskod: {response.StatusCode}");
                     return null;
                 }
             }
             catch (HttpRequestException httpRequestException)
             {
-                _consoleService.DisplayError($"Fel inträffade vid hämtning från APIet: {httpRequestException.Message}");
+                consoleService.DisplayError($"Fel inträffade vid hämtning från APIet: {httpRequestException.Message}");
                 return null;
             }
             catch (JsonReaderException jsonReaderException)
             {
-                _consoleService.DisplayError($"Fel inträffade vid deserializing av responsen från APIet: {jsonReaderException.Message}");
+                consoleService.DisplayError($"Fel inträffade vid deserializing av responsen från APIet: {jsonReaderException.Message}");
                 return null;
             }
             catch (JsonSerializationException jsonSerializationException)
             {
-                _consoleService.DisplayError($"Fel inträffade vid deserializing av responsen från APIet: {jsonSerializationException.Message}");
+                consoleService.DisplayError($"Fel inträffade vid deserializing av responsen från APIet: {jsonSerializationException.Message}");
                 return null;
             }
             catch (Exception ex)
             {
-                _consoleService.DisplayError($"Oväntat fel: {ex.Message}");
+                consoleService.DisplayError($"Oväntat fel: {ex.Message}");
                 return null;
             }
         }

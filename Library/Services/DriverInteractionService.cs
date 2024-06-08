@@ -3,33 +3,21 @@ using Library.Services.Interfaces;
 
 namespace Library.Services
 {
-    public class DriverInteractionService : IDriverInteractionService
+    public class DriverInteractionService(
+        IDirectionService directionService,
+        IFuelService fuelService,
+        IFatigueService fatigueService,
+        IMenuDisplayService menuDisplayService,
+        IInputService inputService,
+        IConsoleService consoleService,
+        string driverName,
+        CarBrand carBrand,
+        IStatusService statusService)
+        : IDriverInteractionService
     {
-        private readonly IDirectionService _directionService;
-        private readonly IFuelService _fuelService;
-        private readonly IFatigueService _fatigueService;
-        private readonly IMenuDisplayService _menuDisplayService;
-        private readonly IInputService _inputService;
-        private readonly IConsoleService _consoleService;
-        private readonly IStatusService _statusService;
-        private readonly string _driverName;
-        private readonly CarBrand _carBrand;
         private bool _isFirstTime = true;
 
         public Action<int> ExitAction { get; set; } = (code) => Environment.Exit(code);
-
-        public DriverInteractionService(IDirectionService directionService, IFuelService fuelService, IFatigueService fatigueService, IMenuDisplayService menuDisplayService, IInputService inputService, IConsoleService consoleService, string driverName, CarBrand carBrand, IStatusService statusService)
-        {
-            _directionService = directionService;
-            _fuelService = fuelService;
-            _fatigueService = fatigueService;
-            _menuDisplayService = menuDisplayService;
-            _inputService = inputService;
-            _consoleService = consoleService;
-            _statusService = statusService;
-            _driverName = driverName;
-            _carBrand = carBrand;
-        }
 
         public void ExecuteMenu()
         {
@@ -37,7 +25,7 @@ namespace Library.Services
             {
                 if (_isFirstTime)
                 {
-                    _menuDisplayService.DisplayIntroduction(_driverName, _carBrand);
+                    menuDisplayService.DisplayIntroduction(driverName, carBrand);
                     _isFirstTime = false;
                 }
 
@@ -45,16 +33,16 @@ namespace Library.Services
 
                 while (running)
                 {
-                    _menuDisplayService.DisplayOptions(_driverName);
+                    menuDisplayService.DisplayOptions(driverName);
 
                     int choice;
                     try
                     {
-                        choice = _inputService.GetUserChoice();
+                        choice = inputService.GetUserChoice();
                     }
                     catch (Exception ex)
                     {
-                        _consoleService.DisplayError($"Ett fel inträffade vid hämtning av användarens val: {ex.Message}");
+                        consoleService.DisplayError($"Ett fel inträffade vid hämtning av användarens val: {ex.Message}");
                         continue;
                     }
 
@@ -63,11 +51,11 @@ namespace Library.Services
                         ExecuteChoice(choice, ref running);
                         try
                         {
-                            _menuDisplayService.DisplayStatusMenu(_statusService.GetStatus(), _driverName, _carBrand.ToString());
+                            menuDisplayService.DisplayStatusMenu(statusService.GetStatus(), driverName, carBrand.ToString());
                         }
                         catch (Exception ex)
                         {
-                            _consoleService.DisplayError($"Ett fel inträffade vid visning av statusmenyn: {ex.Message}");
+                            consoleService.DisplayError($"Ett fel inträffade vid visning av statusmenyn: {ex.Message}");
                         }
                         continue;
                     }
@@ -75,44 +63,44 @@ namespace Library.Services
                     ExecuteChoice(choice, ref running);
                     try
                     {
-                        _menuDisplayService.DisplayStatusMenu(_statusService.GetStatus(), _driverName, _carBrand.ToString());
+                        menuDisplayService.DisplayStatusMenu(statusService.GetStatus(), driverName, carBrand.ToString());
                     }
                     catch (Exception ex)
                     {
-                        _consoleService.DisplayError($"Ett fel inträffade vid visning av statusmenyn: {ex.Message}");
+                        consoleService.DisplayError($"Ett fel inträffade vid visning av statusmenyn: {ex.Message}");
                     }
                 }
             }
             catch (Exception ex)
             {
-                _consoleService.DisplayError($"Ett oväntat fel inträffade: {ex.Message}");
+                consoleService.DisplayError($"Ett oväntat fel inträffade: {ex.Message}");
             }
         }
 
         public void ExecuteChoice(int choice, ref bool running)
         {
-            _consoleService.Clear();
+            consoleService.Clear();
             try
             {
                 switch (choice)
                 {
                     case 1:
-                        _directionService.Turn("vänster");
+                        directionService.Turn("vänster");
                         break;
                     case 2:
-                        _directionService.Turn("höger");
+                        directionService.Turn("höger");
                         break;
                     case 3:
-                        _directionService.Drive("framåt");
+                        directionService.Drive("framåt");
                         break;
                     case 4:
-                        _directionService.Drive("bakåt");
+                        directionService.Drive("bakåt");
                         break;
                     case 5:
-                        _fatigueService.Rest();
+                        fatigueService.Rest();
                         break;
                     case 6:
-                        _fuelService.Refuel();
+                        fuelService.Refuel();
                         break;
                     case 0:
                         DisplayExitMessage();
@@ -120,20 +108,20 @@ namespace Library.Services
                         ExitAction(0);
                         break;
                     default:
-                        _consoleService.DisplayError("Ogiltigt val, försök igen.");
+                        consoleService.DisplayError("Ogiltigt val, försök igen.");
                         break;
                 }
             }
             catch (Exception ex)
             {
-                _consoleService.WriteLine($"Ett fel inträffade vid utförande av val {choice}: {ex.Message}");
+                consoleService.WriteLine($"Ett fel inträffade vid utförande av val {choice}: {ex.Message}");
             }
         }
 
         private void DisplayExitMessage()
         {
-            _consoleService.Clear();
-            _consoleService.DisplayStatusMessage("Tack för att du spelade Car Simulator! Ha en bra dag!");
+            consoleService.Clear();
+            consoleService.DisplayStatusMessage("Tack för att du spelade Car Simulator! Ha en bra dag!");
             Task.Delay(3000).Wait();
         }
     }

@@ -2,18 +2,11 @@
 
 namespace CarSimulator
 {
-    public class AppStart
+    public class AppStart(IMainMenu mainMenu)
     {
-        private readonly IMainMenu _mainMenu;
-
-        public AppStart(IMainMenu mainMenu)
-        {
-            _mainMenu = mainMenu;
-        }
-
         public async Task AppRun()
         {
-            await _mainMenu.Menu();
+            await mainMenu.Menu();
         }
     }
 }

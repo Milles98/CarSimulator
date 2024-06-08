@@ -3,15 +3,9 @@ using Library.Services.Interfaces;
 
 namespace Library.Services
 {
-    public class MenuDisplayService : IMenuDisplayService
+    public class MenuDisplayService(IConsoleService consoleService) : IMenuDisplayService
     {
-        private readonly IConsoleService _consoleService;
         private bool _skipTypingEffect = false;
-
-        public MenuDisplayService(IConsoleService consoleService)
-        {
-            _consoleService = consoleService;
-        }
 
         public void DisplayOptions(string driverName)
         {
@@ -21,21 +15,21 @@ namespace Library.Services
                 {
                     driverName = GetDriverName(driverName);
 
-                    _consoleService.SetForegroundColor(ConsoleColor.Cyan);
-                    _consoleService.WriteLine("1. Sväng vänster");
-                    _consoleService.WriteLine("2. Sväng höger");
-                    _consoleService.WriteLine("3. Köra framåt");
-                    _consoleService.WriteLine("4. Backa");
-                    _consoleService.WriteLine("5. Rasta");
-                    _consoleService.WriteLine("6. Tanka bilen");
-                    _consoleService.WriteLine("0. Avsluta");
-                    _consoleService.Write($"\nVart ska {driverName} åka härnäst?: ");
-                    _consoleService.ResetColor();
+                    consoleService.SetForegroundColor(ConsoleColor.Cyan);
+                    consoleService.WriteLine("1. Sväng vänster");
+                    consoleService.WriteLine("2. Sväng höger");
+                    consoleService.WriteLine("3. Köra framåt");
+                    consoleService.WriteLine("4. Backa");
+                    consoleService.WriteLine("5. Rasta");
+                    consoleService.WriteLine("6. Tanka bilen");
+                    consoleService.WriteLine("0. Avsluta");
+                    consoleService.Write($"\nVart ska {driverName} åka härnäst?: ");
+                    consoleService.ResetColor();
                     break;
                 }
                 catch (Exception ex)
                 {
-                    _consoleService.DisplayError($"Fel uppstod vid visandet av huvudmenyn: {ex.Message}");
+                    consoleService.DisplayError($"Fel uppstod vid visandet av huvudmenyn: {ex.Message}");
                 }
             }
         }
@@ -49,23 +43,23 @@ namespace Library.Services
                     driverName = GetDriverName(driverName);
                     carBrand = GetCarBrand(carBrand);
 
-                    _consoleService.SetForegroundColor(ConsoleColor.Yellow);
-                    _consoleService.WriteLine($"\n\nBilens riktning: {status.Direction}");
-                    _consoleService.ResetColor();
+                    consoleService.SetForegroundColor(ConsoleColor.Yellow);
+                    consoleService.WriteLine($"\n\nBilens riktning: {status.Direction}");
+                    consoleService.ResetColor();
 
                     SetConsoleColorForFuel(status.Fuel);
-                    _consoleService.WriteLine($"{"\nBensin:",-10} {GenerateBar((int)status.Fuel, 20)} {(int)status.Fuel,2}/20");
-                    _consoleService.ResetColor();
+                    consoleService.WriteLine($"{"\nBensin:",-10} {GenerateBar((int)status.Fuel, 20)} {(int)status.Fuel,2}/20");
+                    consoleService.ResetColor();
 
                     SetConsoleColorForFatigue(status.Fatigue);
-                    _consoleService.WriteLine($"{"\nTrötthet:",-10} {GenerateBar((int)status.Fatigue, 10)} {(int)status.Fatigue,2}/10\n");
-                    _consoleService.ResetColor();
+                    consoleService.WriteLine($"{"\nTrötthet:",-10} {GenerateBar((int)status.Fatigue, 10)} {(int)status.Fatigue,2}/10\n");
+                    consoleService.ResetColor();
 
                     break;
                 }
                 catch (Exception ex)
                 {
-                    _consoleService.DisplayError($"Problem uppstod vid hämtningen av status menyn: {ex.Message}");
+                    consoleService.DisplayError($"Problem uppstod vid hämtningen av status menyn: {ex.Message}");
                 }
             }
         }
@@ -80,18 +74,18 @@ namespace Library.Services
                     _skipTypingEffect = GetUserTypingPreference();
 
                     var randomExpression = GetRandomExpression();
-                    _consoleService.Clear();
+                    consoleService.Clear();
 
-                    _consoleService.SetForegroundColor(ConsoleColor.Cyan);
+                    consoleService.SetForegroundColor(ConsoleColor.Cyan);
                     DisplayDriverIntroduction(driverName, carBrand, randomExpression);
                     DisplayArt();
 
-                    _consoleService.ResetColor();
+                    consoleService.ResetColor();
                     break;
                 }
                 catch (Exception ex)
                 {
-                    _consoleService.DisplayError($"Fel inträffade vid visning av introduktionen: {ex.Message}");
+                    consoleService.DisplayError($"Fel inträffade vid visning av introduktionen: {ex.Message}");
                 }
             }
         }
@@ -100,8 +94,8 @@ namespace Library.Services
         {
             while (string.IsNullOrWhiteSpace(driverName))
             {
-                _consoleService.DisplayError("Förarnamn ska inte vara tomt, något fel kan ha skett vid hämtningen från APIet!");
-                driverName = _consoleService.ReadLine();
+                consoleService.DisplayError("Förarnamn ska inte vara tomt, något fel kan ha skett vid hämtningen från APIet!");
+                driverName = consoleService.ReadLine();
             }
             return driverName;
         }
@@ -110,22 +104,22 @@ namespace Library.Services
         {
             while (string.IsNullOrWhiteSpace(carBrand))
             {
-                _consoleService.DisplayError("Bilmärke kan ej vara tomt, något fel har skett vid val av bilmärke.");
-                carBrand = _consoleService.ReadLine();
+                consoleService.DisplayError("Bilmärke kan ej vara tomt, något fel har skett vid val av bilmärke.");
+                carBrand = consoleService.ReadLine();
             }
             return carBrand;
         }
 
         private bool GetUserTypingPreference()
         {
-            _consoleService.WriteLine("Vill du ha skrivande effekt? (ja/nej)");
-            _consoleService.Write("\nVälj ett alternativ: ");
-            string userInput = _consoleService.ReadLine()?.ToLower();
+            consoleService.WriteLine("Vill du ha skrivande effekt? (ja/nej)");
+            consoleService.Write("\nVälj ett alternativ: ");
+            string userInput = consoleService.ReadLine()?.ToLower();
 
             while (userInput != "ja" && userInput != "nej")
             {
-                _consoleService.DisplayError("Ogiltigt val, försök igen. Vill du ha skrivande effekt? (ja/nej)");
-                userInput = _consoleService.ReadLine()?.ToLower();
+                consoleService.DisplayError("Ogiltigt val, försök igen. Vill du ha skrivande effekt? (ja/nej)");
+                userInput = consoleService.ReadLine()?.ToLower();
             }
 
             return userInput == "nej";
@@ -164,19 +158,19 @@ namespace Library.Services
         {
             if (skipTypingEffect)
             {
-                _consoleService.WriteLine(text);
+                consoleService.WriteLine(text);
             }
             else
             {
                 foreach (var c in text)
                 {
-                    _consoleService.Write(c.ToString());
+                    consoleService.Write(c.ToString());
                     if (!skipTypingEffect)
                     {
                         Thread.Sleep(delay);
                     }
                 }
-                _consoleService.WriteLine("");
+                consoleService.WriteLine("");
             }
         }
 
@@ -187,22 +181,22 @@ namespace Library.Services
             switch (fuelValue)
             {
                 case >= 15 and <= 20:
-                    _consoleService.SetForegroundColor(ConsoleColor.Green);
+                    consoleService.SetForegroundColor(ConsoleColor.Green);
                     break;
                 case >= 10 and < 15:
-                    _consoleService.SetForegroundColor(ConsoleColor.Yellow);
+                    consoleService.SetForegroundColor(ConsoleColor.Yellow);
                     break;
                 case >= 5 and < 10:
-                    _consoleService.SetForegroundColor(ConsoleColor.DarkYellow);
+                    consoleService.SetForegroundColor(ConsoleColor.DarkYellow);
                     break;
                 case >= 1 and < 5:
-                    _consoleService.SetForegroundColor(ConsoleColor.DarkRed);
+                    consoleService.SetForegroundColor(ConsoleColor.DarkRed);
                     break;
                 case 0:
-                    _consoleService.SetForegroundColor(ConsoleColor.Red);
+                    consoleService.SetForegroundColor(ConsoleColor.Red);
                     break;
                 default:
-                    _consoleService.SetForegroundColor(ConsoleColor.Gray);
+                    consoleService.SetForegroundColor(ConsoleColor.Gray);
                     break;
             }
         }
@@ -214,16 +208,16 @@ namespace Library.Services
             switch (fatigueValue)
             {
                 case >= 7 and <= 10:
-                    _consoleService.SetForegroundColor(ConsoleColor.Cyan);
+                    consoleService.SetForegroundColor(ConsoleColor.Cyan);
                     break;
                 case >= 4 and < 7:
-                    _consoleService.SetForegroundColor(ConsoleColor.Magenta);
+                    consoleService.SetForegroundColor(ConsoleColor.Magenta);
                     break;
                 case >= 0 and < 4:
-                    _consoleService.SetForegroundColor(ConsoleColor.DarkRed);
+                    consoleService.SetForegroundColor(ConsoleColor.DarkRed);
                     break;
                 default:
-                    _consoleService.SetForegroundColor(ConsoleColor.Red);
+                    consoleService.SetForegroundColor(ConsoleColor.Red);
                     break;
             }
         }
