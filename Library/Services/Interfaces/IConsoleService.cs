@@ -14,7 +14,6 @@ namespace Library.Services.Interfaces
         void Clear();
         void SetForegroundColor(ConsoleColor color);
         void ResetColor();
-        void WaitKey();
         void DisplayMessage(ConsoleColor color, string message);
         void DisplayError(string message);
         void DisplayStatusMessage(string message);
