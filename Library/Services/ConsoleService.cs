@@ -10,7 +10,6 @@ namespace Library.Services
         public void Clear() => Console.Clear();
         public void SetForegroundColor(ConsoleColor color) => Console.ForegroundColor = color;
         public void ResetColor() => Console.ResetColor();
-        public void WaitKey() => Console.ReadKey();
 
         public void DisplayMessage(ConsoleColor color, string message)
         {

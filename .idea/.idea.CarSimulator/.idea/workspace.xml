@@ -7,12 +7,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="32657de6-ac81-4f8f-9bb8-3365d449205b" name="Changes" comment="Updated NUnit tests to use &quot;Assert That&quot; instead of &quot;Assert.AreEqual&quot; (best practice) in FatigueServiceTests.cs. Added comments to isTesting in MainMenuTests.cs for clarity of purpose.">
-      <change beforePath="$PROJECT_DIR$/CarSimulator/AppStart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CarSimulator/AppStart.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarSimulator/Menus/DriverInteractionMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CarSimulator/Menus/DriverInteractionMenu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarSimulator/Menus/MainMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CarSimulator/Menus/MainMenu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/Factory/DriverInteractionFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Factory/DriverInteractionFactory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/Models/Car.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Models/Car.cs" afterDir="false" />
+    <list default="true" id="32657de6-ac81-4f8f-9bb8-3365d449205b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CarSimulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CarSimulator/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +49,7 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock://C:/Projects/Testing/TestAssignment/CarSimulator/CarSimulator/AppStart.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Projects/Testing/TestAssignment/CarSimulator/CarSimulator/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Projects/Testing/TestAssignment/CarSimulator/CarSimulator/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Projects/Testing/TestAssignment/CarSimulator/Library/Services/DirectionService.cs" root0="SKIP_HIGHLIGHTING" />
@@ -63,7 +60,7 @@
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="SWEA" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -73,30 +70,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Project.CarSimulator.executor": "Run",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "#141 on dev",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Project.CarSimulator.executor&quot;: &quot;Run&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "rider.external.source.directories": [
-      "C:\\Users\\mille\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache",
-      "C:\\Users\\mille\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache",
-      "C:\\Users\\mille\\AppData\\Local\\Symbols\\src"
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\mille\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\mille\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\mille\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
-  <component name="RunManager" selected=".NET Project.CarSimulator">
+}</component>
+  <component name="RunManager">
     <configuration name="CarSimulator" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -126,7 +123,9 @@
       <updated>1716970203581</updated>
       <workItem from="1716970207537" duration="650000" />
       <workItem from="1717825051065" duration="420000" />
-      <workItem from="1717825496585" duration="3341000" />
+      <workItem from="1717825496585" duration="3779000" />
+      <workItem from="1717830053414" duration="8000" />
+      <workItem from="1717830122494" duration="376000" />
     </task>
     <task id="LOCAL−00001" summary="Made AppInitializer static as it doesnt need to be instanciated, updated relevant test">
       <option name="closed" value="true" />
@@ -191,7 +190,14 @@
       <option name="presentableId" value="LOCAL−00009" />
       <updated>1717828560981</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL−00010" summary="Converted all services and classes to use primary constructor">
+      <option name="closed" value="true" />
+      <created>1717829206147</created>
+      <option name="number" value="LOCAL−00010" />
+      <option name="presentableId" value="LOCAL−00010" />
+      <updated>1717829206147</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -210,6 +216,7 @@
     <MESSAGE value="updated FuelService.cs namespace, added var to method in InputService.cs, inverted if statement in SimulationSetupService.cs, updated StatusService.cs namespace" />
     <MESSAGE value="removed unnessecary async keyword from method in FakePersonServiceIntegrationTests.cs, made drivername readonly in DriverInteractionServiceTests.cs, removed bool running from all tests and added to the top" />
     <MESSAGE value="Updated NUnit tests to use &quot;Assert That&quot; instead of &quot;Assert.AreEqual&quot; (best practice) in FatigueServiceTests.cs. Added comments to isTesting in MainMenuTests.cs for clarity of purpose." />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated NUnit tests to use &quot;Assert That&quot; instead of &quot;Assert.AreEqual&quot; (best practice) in FatigueServiceTests.cs. Added comments to isTesting in MainMenuTests.cs for clarity of purpose." />
+    <MESSAGE value="Converted all services and classes to use primary constructor" />
+    <option name="LAST_COMMIT_MESSAGE" value="Converted all services and classes to use primary constructor" />
   </component>
 </project>
