@@ -6,7 +6,7 @@ namespace Library.Services
     public class MenuDisplayService : IMenuDisplayService
     {
         private readonly IConsoleService _consoleService;
-        private bool skipTypingEffect = false;
+        private bool _skipTypingEffect = false;
 
         public MenuDisplayService(IConsoleService consoleService)
         {
@@ -42,12 +42,6 @@ namespace Library.Services
 
         public void DisplayStatusMenu(CarStatus status, string driverName, string carBrand)
         {
-            if (status == null)
-            {
-                _consoleService.DisplayError("Status ska ej vara tomt.");
-                return;
-            }
-
             while (true)
             {
                 try
@@ -83,14 +77,14 @@ namespace Library.Services
                 try
                 {
                     driverName = GetDriverName(driverName);
-                    skipTypingEffect = GetUserTypingPreference();
+                    _skipTypingEffect = GetUserTypingPreference();
 
                     var randomExpression = GetRandomExpression();
                     _consoleService.Clear();
 
                     _consoleService.SetForegroundColor(ConsoleColor.Cyan);
                     DisplayDriverIntroduction(driverName, carBrand, randomExpression);
-                    DisplayArt(skipTypingEffect);
+                    DisplayArt();
 
                     _consoleService.ResetColor();
                     break;
@@ -139,21 +133,22 @@ namespace Library.Services
 
         private Expression GetRandomExpression()
         {
-            Random random = new Random();
+            var random = new Random();
             var expressions = Enum.GetValues(typeof(Expression)).Cast<Expression>().ToList();
             return expressions[random.Next(expressions.Count)];
         }
 
         private void DisplayDriverIntroduction(string driverName, CarBrand carBrand, Expression randomExpression)
         {
-            TypeText($"{driverName} sätter sig i en sprillans ny {carBrand} och kollar ut genom fönstret i framsätet.", skipTypingEffect);
-            TypeText($"Allt ser bra ut. {driverName} tar en tugga av sin macka som är köpt på Circle K.", skipTypingEffect);
-            TypeText($"{driverName} ser ut att vara {randomExpression.ToString().ToLower()} efter att det blev en {carBrand} som bilval.", skipTypingEffect);
+            TypeText($"{driverName} sätter sig i en sprillans ny {carBrand} och kollar ut genom fönstret i framsätet.", _skipTypingEffect);
+            TypeText($"Allt ser bra ut. {driverName} tar en tugga av sin macka som är köpt på Circle K.", _skipTypingEffect);
+            TypeText($"{driverName} ser ut att vara {randomExpression.ToString().ToLower()} efter att det blev en {carBrand} som bilval.", _skipTypingEffect);
         }
 
-        private void DisplayArt(bool skipTypingEffect)
+        private void DisplayArt()
         {
-            string art = @"
+            _skipTypingEffect = true;
+            var art = @"
  _   _         _     _   _      _                                        _ 
 | \ | |_   _  | |__ (_)_(_)_ __(_) __ _ _ __   _ __ ___  ___  __ _ _ __ | |
 |  \| | | | | | '_ \ / _ \| '__| |/ _` | '__| | '__/ _ \/ __|/ _` | '_ \| |
@@ -162,7 +157,7 @@ namespace Library.Services
                              |__/                                          
     ";
 
-            TypeText(art, skipTypingEffect);
+            TypeText(art, _skipTypingEffect);
         }
 
         private void TypeText(string text, bool skipTypingEffect, int delay = 50)
@@ -173,7 +168,7 @@ namespace Library.Services
             }
             else
             {
-                foreach (char c in text)
+                foreach (var c in text)
                 {
                     _consoleService.Write(c.ToString());
                     if (!skipTypingEffect)
@@ -187,61 +182,57 @@ namespace Library.Services
 
         private void SetConsoleColorForFuel(Fuel fuel)
         {
-            int fuelValue = (int)fuel;
+            var fuelValue = (int)fuel;
 
-            if (fuelValue >= 15 && fuelValue <= 20)
+            switch (fuelValue)
             {
-                _consoleService.SetForegroundColor(ConsoleColor.Green);
-            }
-            else if (fuelValue >= 10 && fuelValue < 15)
-            {
-                _consoleService.SetForegroundColor(ConsoleColor.Yellow);
-            }
-            else if (fuelValue >= 5 && fuelValue < 10)
-            {
-                _consoleService.SetForegroundColor(ConsoleColor.DarkYellow);
-            }
-            else if (fuelValue >= 1 && fuelValue < 5)
-            {
-                _consoleService.SetForegroundColor(ConsoleColor.DarkRed);
-            }
-            else if (fuelValue == 0)
-            {
-                _consoleService.SetForegroundColor(ConsoleColor.Red);
-            }
-            else
-            {
-                _consoleService.SetForegroundColor(ConsoleColor.Gray);
+                case >= 15 and <= 20:
+                    _consoleService.SetForegroundColor(ConsoleColor.Green);
+                    break;
+                case >= 10 and < 15:
+                    _consoleService.SetForegroundColor(ConsoleColor.Yellow);
+                    break;
+                case >= 5 and < 10:
+                    _consoleService.SetForegroundColor(ConsoleColor.DarkYellow);
+                    break;
+                case >= 1 and < 5:
+                    _consoleService.SetForegroundColor(ConsoleColor.DarkRed);
+                    break;
+                case 0:
+                    _consoleService.SetForegroundColor(ConsoleColor.Red);
+                    break;
+                default:
+                    _consoleService.SetForegroundColor(ConsoleColor.Gray);
+                    break;
             }
         }
 
         private void SetConsoleColorForFatigue(Fatigue fatigue)
         {
-            int fatigueValue = (int)fatigue;
+            var fatigueValue = (int)fatigue;
 
-            if (fatigueValue >= 7 && fatigueValue <= 10)
+            switch (fatigueValue)
             {
-                _consoleService.SetForegroundColor(ConsoleColor.Cyan);
-            }
-            else if (fatigueValue >= 4 && fatigueValue < 7)
-            {
-                _consoleService.SetForegroundColor(ConsoleColor.Magenta);
-            }
-            else if (fatigueValue >= 0 && fatigueValue < 4)
-            {
-                _consoleService.SetForegroundColor(ConsoleColor.DarkRed);
-            }
-            else
-            {
-                _consoleService.SetForegroundColor(ConsoleColor.Red);
+                case >= 7 and <= 10:
+                    _consoleService.SetForegroundColor(ConsoleColor.Cyan);
+                    break;
+                case >= 4 and < 7:
+                    _consoleService.SetForegroundColor(ConsoleColor.Magenta);
+                    break;
+                case >= 0 and < 4:
+                    _consoleService.SetForegroundColor(ConsoleColor.DarkRed);
+                    break;
+                default:
+                    _consoleService.SetForegroundColor(ConsoleColor.Red);
+                    break;
             }
         }
 
         private string GenerateBar(int currentValue, int maxValue, int barLength = 20)
         {
-            int filledLength = Math.Max(0, Math.Min(barLength, (int)((double)currentValue / maxValue * barLength)));
-            string filled = new string('█', filledLength);
-            string unfilled = new string('░', barLength - filledLength);
+            var filledLength = Math.Max(0, Math.Min(barLength, (int)((double)currentValue / maxValue * barLength)));
+            var filled = new string('█', filledLength);
+            var unfilled = new string('░', barLength - filledLength);
             return filled + unfilled;
         }
     }

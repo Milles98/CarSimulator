@@ -8,16 +8,14 @@ namespace CarSimulator.Menus
     public class MainMenu : IMainMenu
     {
         private readonly ISimulationSetupService _simulationSetupService;
-        private readonly IMenuDisplayService _menuDisplayService;
         private readonly IInputService _inputService;
         private readonly IDriverInteractionFactory _driverInteractionFactory;
         private readonly IConsoleService _consoleService;
-        private bool _isTesting = false;
+        private readonly bool _isTesting = false;
 
-        public MainMenu(ISimulationSetupService simulationSetupService, IMenuDisplayService menuDisplayService, IInputService inputService, IDriverInteractionFactory driverInteractionFactory, IConsoleService consoleService)
+        public MainMenu(ISimulationSetupService simulationSetupService, IInputService inputService, IDriverInteractionFactory driverInteractionFactory, IConsoleService consoleService)
         {
             _simulationSetupService = simulationSetupService;
-            _menuDisplayService = menuDisplayService;
             _inputService = inputService;
             _driverInteractionFactory = driverInteractionFactory;
             _consoleService = consoleService;
@@ -87,24 +85,14 @@ namespace CarSimulator.Menus
         private async Task StartSimulation()
         {
             var driver = await _simulationSetupService.FetchDriverDetails();
-            if (driver == null)
-            {
-                DisplayDriverError();
-                return;
-            }
 
             var car = _simulationSetupService.EnterCarDetails(driver.Name);
-            if (car == null)
-            {
-                DisplayExitMessage();
-                return;
-            }
 
             await WarmUpEngine();
             await StartDriverInteraction(driver, car);
         }
 
-        private async Task StartDriverInteraction(Driver driver, Car car)
+        private Task StartDriverInteraction(Driver driver, Car car)
         {
             try
             {
@@ -122,6 +110,8 @@ namespace CarSimulator.Menus
                 DisplayDriverInteractionError(ex.Message);
                 throw;
             }
+
+            return Task.CompletedTask;
         }
 
         /// <summary>
