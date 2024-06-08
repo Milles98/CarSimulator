@@ -5,7 +5,7 @@ using Library.Services.Interfaces;
 
 namespace Library.Services;
 
-public class FuelService(Car car, string carBrand, IConsoleService consoleService, IFatigueService fatigueService)
+public class FuelService(Car? car, string carBrand, IConsoleService consoleService, IFatigueService fatigueService)
     : IFuelService
 {
     private readonly Faker _faker = new();
@@ -24,7 +24,7 @@ public class FuelService(Car car, string carBrand, IConsoleService consoleServic
             else
             {
                 car.Fuel = Fuel.Full;
-                string refuelLocation = _faker.Address.City();
+                var refuelLocation = _faker.Address.City();
                 consoleService.DisplaySuccessMessage($"Föraren tankade på {refuelLocation} och nu är bilen fulltankad.");
                 fatigueService.IncreaseDriverFatigue();
             }
@@ -80,7 +80,7 @@ public class FuelService(Car car, string carBrand, IConsoleService consoleServic
     /// </summary>
     public void UseFuel(int amount)
     {
-        int currentFuel = (int)car.Fuel;
+        var currentFuel = (int)car.Fuel;
         currentFuel -= amount;
         if (currentFuel < (int)Fuel.Empty) currentFuel = (int)Fuel.Empty;
         car.Fuel = (Fuel)currentFuel;

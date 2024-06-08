@@ -4,8 +4,8 @@ namespace Library
 {
     public class CarStatus
     {
-        public Fuel Fuel { get; set; }
-        public Fatigue Fatigue { get; set; }
-        public Direction Direction { get; set; }
+        public Fuel Fuel { get; init; }
+        public Fatigue Fatigue { get; init; }
+        public Direction Direction { get; init; }
     }
 }

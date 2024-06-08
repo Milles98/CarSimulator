@@ -11,7 +11,7 @@ namespace LibraryNUnitTests.Services
     public class FatigueServiceTests
     {
         private Mock<IConsoleService> _consoleServiceMock;
-        private Driver _driver;
+        private Driver? _driver;
         private FatigueService _sut;
         private string _driverName;
 

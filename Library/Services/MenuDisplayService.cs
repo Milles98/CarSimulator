@@ -114,7 +114,7 @@ namespace Library.Services
         {
             consoleService.WriteLine("Vill du ha skrivande effekt? (ja/nej)");
             consoleService.Write("\nVälj ett alternativ: ");
-            string userInput = consoleService.ReadLine()?.ToLower();
+            var userInput = consoleService.ReadLine()?.ToLower();
 
             while (userInput != "ja" && userInput != "nej")
             {
@@ -222,7 +222,7 @@ namespace Library.Services
             }
         }
 
-        private string GenerateBar(int currentValue, int maxValue, int barLength = 20)
+        private static string GenerateBar(int currentValue, int maxValue, int barLength = 20)
         {
             var filledLength = Math.Max(0, Math.Min(barLength, (int)((double)currentValue / maxValue * barLength)));
             var filled = new string('█', filledLength);

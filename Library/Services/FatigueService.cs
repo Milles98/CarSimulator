@@ -5,7 +5,7 @@ using Library.Services.Interfaces;
 
 namespace Library.Services;
 
-public class FatigueService(Driver driver, string driverName, IConsoleService consoleService)
+public class FatigueService(Driver? driver, string driverName, IConsoleService consoleService)
     : IFatigueService
 {
     private readonly Faker _faker = new();

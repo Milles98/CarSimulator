@@ -7,8 +7,8 @@ namespace Library.Services;
 
 public class DirectionService : IDirectionService
 {
-    private readonly Car _car;
-    private readonly Driver _driver;
+    private readonly Car? _car;
+    private readonly Driver? _driver;
     private readonly IFuelService _fuelService;
     private readonly IFatigueService _fatigueService;
     private readonly string _carBrand;
@@ -17,7 +17,7 @@ public class DirectionService : IDirectionService
     private bool _isReversing = false;
     private Direction _lastForwardDirection;
 
-    public DirectionService(Car car, Driver driver, IFuelService fuelService, IFatigueService fatigueService, string carBrand, IConsoleService consoleService)
+    public DirectionService(Car? car, Driver? driver, IFuelService fuelService, IFatigueService fatigueService, string carBrand, IConsoleService consoleService)
     {
         _car = car;
         _driver = driver;
@@ -106,12 +106,12 @@ public class DirectionService : IDirectionService
 
     private void HandleTurn(string direction)
     {
-        string location = _faker.Address.City();
+        var location = _faker.Address.City();
         _car.Direction = GetNewDirection(_car.Direction, direction);
         _consoleService.DisplayMessage(ConsoleColor.Blue, $"{_driver.Name} i sin {_carBrand} svänger {direction} mot {location}.");
     }
 
-    private void ValidateDirection(string direction)
+    private static void ValidateDirection(string direction)
     {
         if (string.IsNullOrWhiteSpace(direction))
         {
@@ -119,7 +119,7 @@ public class DirectionService : IDirectionService
         }
     }
 
-    private Direction GetOppositeDirection(Direction currentDirection)
+    private static Direction GetOppositeDirection(Direction currentDirection)
     {
         return currentDirection switch
         {
@@ -131,7 +131,7 @@ public class DirectionService : IDirectionService
         };
     }
 
-    private Direction GetNewDirection(Direction currentDirection, string turnDirection)
+    private static Direction GetNewDirection(Direction currentDirection, string turnDirection)
     {
         return turnDirection switch
         {
