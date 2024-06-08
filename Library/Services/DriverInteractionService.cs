@@ -133,7 +133,7 @@ namespace Library.Services
         private void DisplayExitMessage()
         {
             _consoleService.Clear();
-            _consoleService.DisplayStatusMessage("Tack för att du spelade Car Simulator 2.0! Ha en bra dag!");
+            _consoleService.DisplayStatusMessage("Tack för att du spelade Car Simulator! Ha en bra dag!");
             Task.Delay(3000).Wait();
         }
     }

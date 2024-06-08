@@ -21,13 +21,11 @@ namespace CarSimulatorTests.Menus
         {
             _consoleServiceMock = new Mock<IConsoleService>();
             _simulationSetupServiceMock = new Mock<ISimulationSetupService>();
-            _menuDisplayServiceMock = new Mock<IMenuDisplayService>();
             _inputServiceMock = new Mock<IInputService>();
             _driverInteractionFactoryMock = new Mock<IDriverInteractionFactory>();
 
             _sut = new MainMenu(
                 _simulationSetupServiceMock.Object,
-                _menuDisplayServiceMock.Object,
                 _inputServiceMock.Object,
                 _driverInteractionFactoryMock.Object,
                 _consoleServiceMock.Object
