@@ -4,9 +4,9 @@ namespace Library.Models
 {
     public class Driver
     {
-        public string Title { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string? Title { get; init; }
+        public string? FirstName { get; init; }
+        public string? LastName { get; init; }
         public Fatigue Fatigue { get; set; }
 
         public string Name => $"{Title}. {FirstName} {LastName}";

@@ -12,14 +12,11 @@ namespace Library.Services
             try
             {
                 var input = consoleService.ReadLine();
-                if (int.TryParse(input, out int choice))
+                if (int.TryParse(input, out var choice))
                 {
                     return choice;
                 }
 
-                //_consoleService.Clear();
-                //_consoleService.DisplayError("Ogiltigt val, valfri knapp försök igen.");
-                //Console.ReadKey();
                 return -1;
             }
             catch (Exception ex)

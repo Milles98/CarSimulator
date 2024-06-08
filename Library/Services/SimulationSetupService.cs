@@ -7,7 +7,7 @@ namespace Library.Services
     public class SimulationSetupService(IFakePersonService fakePersonService, IConsoleService consoleService)
         : ISimulationSetupService
     {
-        public async Task<Driver> FetchDriverDetails()
+        public async Task<Driver?> FetchDriverDetails()
         {
             try
             {
@@ -30,7 +30,7 @@ namespace Library.Services
             }
         }
 
-        public Car EnterCarDetails(string driverName)
+        public Car? EnterCarDetails(string driverName)
         {
             var selectedBrand = GetCarBrandSelection(driverName);
             if (selectedBrand == null)
@@ -48,7 +48,7 @@ namespace Library.Services
             consoleService.Clear();
             consoleService.SetForegroundColor(ConsoleColor.Cyan);
             consoleService.Write("Hämtar förare");
-            for (int i = 0; i < 3; i++)
+            for (var i = 0; i < 3; i++)
             {
                 Task.Delay(1000).Wait();
                 consoleService.Write(".");
@@ -78,7 +78,7 @@ namespace Library.Services
                     consoleService.ResetColor();
 
                     consoleService.Write("\nVälj ett alternativ: ");
-                    string input = consoleService.ReadLine();
+                    var input = consoleService.ReadLine();
 
                     if (int.TryParse(input, out int brandChoice))
                     {
@@ -119,7 +119,7 @@ namespace Library.Services
                     consoleService.Write("\nVälj ett alternativ: ");
                     string input = consoleService.ReadLine();
 
-                    if (int.TryParse(input, out int directionChoice))
+                    if (int.TryParse(input, out var directionChoice))
                     {
                         if (directionChoice == 0)
                         {
@@ -157,18 +157,18 @@ namespace Library.Services
 
         private void DisplayOptions<T>(List<T> options)
         {
-            for (int i = 0; i < options.Count; i++)
+            for (var i = 0; i < options.Count; i++)
             {
                 consoleService.WriteLine($"{i + 1}: {options[i]}");
             }
         }
 
-        private bool IsValidChoice(int choice, int maxChoice)
+        private static bool IsValidChoice(int choice, int maxChoice)
         {
             return choice >= 1 && choice <= maxChoice;
         }
 
-        private T GetRandomEnumValue<T>() where T : Enum
+        private static T GetRandomEnumValue<T>() where T : Enum
         {
             var values = Enum.GetValues(typeof(T)).Cast<T>().ToList();
             return values[new Random().Next(values.Count)];

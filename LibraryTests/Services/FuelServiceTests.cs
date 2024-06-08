@@ -11,7 +11,7 @@ namespace LibraryTests.Services
     {
         private Mock<IConsoleService> _consoleServiceMock;
         private Mock<IFatigueService> _fatigueServiceMock;
-        private Car _car;
+        private Car? _car;
         private FuelService _sut;
 
         [TestInitialize]

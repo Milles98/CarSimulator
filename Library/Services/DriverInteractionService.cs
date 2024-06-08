@@ -29,7 +29,7 @@ namespace Library.Services
                     _isFirstTime = false;
                 }
 
-                bool running = true;
+                var running = true;
 
                 while (running)
                 {

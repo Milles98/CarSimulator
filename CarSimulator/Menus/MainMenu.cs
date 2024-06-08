@@ -19,12 +19,12 @@ namespace CarSimulator.Menus
         /// </summary>
         public async Task Menu()
         {
-            bool running = true;
+            var running = true;
             while (running)
             {
                 DisplayMainMenu();
 
-                int choice = inputService.GetUserChoice();
+                var choice = inputService.GetUserChoice();
                 if (choice == -1)
                 {
                     DisplayErrorMessage();
@@ -79,13 +79,16 @@ namespace CarSimulator.Menus
         {
             var driver = await simulationSetupService.FetchDriverDetails();
 
-            var car = simulationSetupService.EnterCarDetails(driver.Name);
+            if (driver != null)
+            {
+                var car = simulationSetupService.EnterCarDetails(driver.Name);
 
-            await WarmUpEngine();
-            await StartDriverInteraction(driver, car);
+                await WarmUpEngine();
+                await StartDriverInteraction(driver, car);
+            }
         }
 
-        private Task StartDriverInteraction(Driver driver, Car car)
+        private Task StartDriverInteraction(Driver? driver, Car? car)
         {
             try
             {
@@ -114,7 +117,7 @@ namespace CarSimulator.Menus
         {
             consoleService.SetForegroundColor(ConsoleColor.Green);
             consoleService.Write("\nVärmer upp motorn");
-            for (int i = 0; i < 3; i++)
+            for (var i = 0; i < 3; i++)
             {
                 await Task.Delay(1000);
                 consoleService.Write(".");
