@@ -18,7 +18,7 @@ namespace Library.Services
         {
             try
             {
-                string input = _consoleService.ReadLine();
+                var input = _consoleService.ReadLine();
                 if (int.TryParse(input, out int choice))
                 {
                     return choice;

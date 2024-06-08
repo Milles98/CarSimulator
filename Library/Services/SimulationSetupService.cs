@@ -137,13 +137,14 @@ namespace Library.Services
 
                         if (IsValidChoice(directionChoice, 5))
                         {
-                            if (directionChoice == 5)
+                            if (directionChoice != 5)
                             {
-                                directionChoice = new Random().Next(1, 5);
-                                _consoleService.SetForegroundColor(ConsoleColor.Cyan);
-                                _consoleService.WriteLine($"\nSlumpmässigt vald riktning: {(Direction)(directionChoice - 1)}");
-                                _consoleService.ResetColor();
+                                return (Direction)(directionChoice - 1);
                             }
+                            directionChoice = new Random().Next(1, 5);
+                            _consoleService.SetForegroundColor(ConsoleColor.Cyan);
+                            _consoleService.WriteLine($"\nSlumpmässigt vald riktning: {(Direction)(directionChoice - 1)}");
+                            _consoleService.ResetColor();
 
                             return (Direction)(directionChoice - 1);
                         }

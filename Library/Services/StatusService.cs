@@ -1,6 +1,7 @@
 ﻿using Library.Models;
 using Library.Services.Interfaces;
-using Library;
+
+namespace Library.Services;
 
 public class StatusService : IStatusService
 {
