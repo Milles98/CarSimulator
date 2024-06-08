@@ -31,7 +31,9 @@ namespace CarSimulatorTests.Menus
                 _consoleServiceMock.Object
             );
 
-            typeof(MainMenu).GetField("_isTesting", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(_sut, true);
+            //denna del letar efter _isTesting inuti MainMenu klassen
+            //om den hittas (vilket den gör) så sätter delen nedan isTesting till true och sedan kan testerna utföras
+            typeof(MainMenu).GetField("_isTesting", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.SetValue(_sut, true);
         }
 
         [TestMethod]

@@ -35,7 +35,7 @@ namespace LibraryNUnitTests.Services
             _sut.Rest();
 
             // Assert
-            Assert.AreEqual(Fatigue.Rested, _driver.Fatigue);
+            Assert.That(_driver.Fatigue, Is.EqualTo(Fatigue.Rested));
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace LibraryNUnitTests.Services
             _sut.Rest();
 
             // Assert
-            Assert.AreEqual(Fatigue.Rested, _driver.Fatigue);
+            Assert.That(_driver.Fatigue, Is.EqualTo(Fatigue.Rested));
         }
 
         [TestCase(Fatigue.Exhausted)]
@@ -63,7 +63,7 @@ namespace LibraryNUnitTests.Services
             _sut.CheckFatigue();
 
             // Assert
-            Assert.AreEqual(initialFatigue, _driver.Fatigue);
+            Assert.That(_driver.Fatigue, Is.EqualTo(initialFatigue));
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace LibraryNUnitTests.Services
             _sut.IncreaseDriverFatigue();
 
             // Assert
-            Assert.AreEqual(Fatigue.Tired - 1, _driver.Fatigue);
+            Assert.That(_driver.Fatigue, Is.EqualTo(Fatigue.Tired - 1));
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace LibraryNUnitTests.Services
             _sut.IncreaseDriverFatigue();
 
             // Assert
-            Assert.AreEqual(Fatigue.Exhausted - 1, _driver.Fatigue);
+            Assert.That(_driver.Fatigue, Is.EqualTo(Fatigue.Exhausted - 1));
         }
     }
 }
