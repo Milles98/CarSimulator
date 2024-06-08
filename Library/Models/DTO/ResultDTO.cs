@@ -1,4 +1,4 @@
-﻿namespace Library.Models.APIResponse
+﻿namespace Library.Models.DTO
 {
     public class ResultDTO
     {
