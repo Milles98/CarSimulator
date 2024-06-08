@@ -7,12 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="32657de6-ac81-4f8f-9bb8-3365d449205b" name="Changes" comment="made isTesting private in mainmenu, added switch statements in DriverInteractionService.cs, removed unnessecary null checks">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.CarSimulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CarSimulator/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/Services/DirectionService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Services/DirectionService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Library/Services/FakePersonService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Services/FakePersonService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LibraryTests/Services/DirectionServiceTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LibraryTests/Services/DirectionServiceTests.cs" afterDir="false" />
-    </list>
+    <list default="true" id="32657de6-ac81-4f8f-9bb8-3365d449205b" name="Changes" comment="updated FuelService.cs namespace, added var to method in InputService.cs, inverted if statement in SimulationSetupService.cs, updated StatusService.cs namespace" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -54,7 +49,9 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="mock://C:/Projects/Testing/TestAssignment/CarSimulator/CarSimulator/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Projects/Testing/TestAssignment/CarSimulator/CarSimulator/Program.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Projects/Testing/TestAssignment/CarSimulator/Library/Services/DirectionService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Projects/Testing/TestAssignment/CarSimulator/Library/Services/DriverInteractionService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Projects/Testing/TestAssignment/CarSimulator/Library/Services/FuelService.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
@@ -74,7 +71,7 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "#137 on dev",
+    "git-widget-placeholder": "#139 on dev",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -121,7 +118,7 @@
       <updated>1716970203581</updated>
       <workItem from="1716970207537" duration="650000" />
       <workItem from="1717825051065" duration="420000" />
-      <workItem from="1717825496585" duration="1772000" />
+      <workItem from="1717825496585" duration="2232000" />
     </task>
     <task id="LOCAL−00001" summary="Made AppInitializer static as it doesnt need to be instanciated, updated relevant test">
       <option name="closed" value="true" />
@@ -158,7 +155,21 @@
       <option name="presentableId" value="LOCAL−00005" />
       <updated>1717826958195</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL−00006" summary="Fixed DirectionService.cs namespace, added switch statement, added nullable to driver from API, updated FatigueService.cs namespace and method name">
+      <option name="closed" value="true" />
+      <created>1717827486240</created>
+      <option name="number" value="LOCAL−00006" />
+      <option name="presentableId" value="LOCAL−00006" />
+      <updated>1717827486240</updated>
+    </task>
+    <task id="LOCAL−00007" summary="updated FuelService.cs namespace, added var to method in InputService.cs, inverted if statement in SimulationSetupService.cs, updated StatusService.cs namespace">
+      <option name="closed" value="true" />
+      <created>1717827741478</created>
+      <option name="number" value="LOCAL−00007" />
+      <option name="presentableId" value="LOCAL−00007" />
+      <updated>1717827741478</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -173,6 +184,8 @@
     <MESSAGE value="Fixed namespaces" />
     <MESSAGE value="added await to program.cs using statement" />
     <MESSAGE value="made isTesting private in mainmenu, added switch statements in DriverInteractionService.cs, removed unnessecary null checks" />
-    <option name="LAST_COMMIT_MESSAGE" value="made isTesting private in mainmenu, added switch statements in DriverInteractionService.cs, removed unnessecary null checks" />
+    <MESSAGE value="Fixed DirectionService.cs namespace, added switch statement, added nullable to driver from API, updated FatigueService.cs namespace and method name" />
+    <MESSAGE value="updated FuelService.cs namespace, added var to method in InputService.cs, inverted if statement in SimulationSetupService.cs, updated StatusService.cs namespace" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated FuelService.cs namespace, added var to method in InputService.cs, inverted if statement in SimulationSetupService.cs, updated StatusService.cs namespace" />
   </component>
 </project>
