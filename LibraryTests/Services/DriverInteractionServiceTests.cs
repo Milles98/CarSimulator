@@ -17,7 +17,8 @@ namespace LibraryTests.Services
         private Mock<IConsoleService> _consoleServiceMock;
         private Mock<IStatusService> _statusServiceMock;
         private DriverInteractionService _sut;
-        private string _driverName = "Mille Elfver";
+        private readonly string _driverName = "Mille Elfver";
+        private bool _running = true;
         private CarBrand _carBrand = CarBrand.Toyota;
 
         [TestInitialize]
@@ -47,8 +48,7 @@ namespace LibraryTests.Services
         [TestMethod]
         public void ExecuteChoice_ShouldCallDirectionServiceTurnLeft_WhenChoiceIs1()
         {
-            bool running = true;
-            _sut.ExecuteChoice(1, ref running);
+            _sut.ExecuteChoice(1, ref _running);
 
             _carDirectionMock.Verify(x => x.Turn("vänster"), Times.Once);
         }
@@ -56,8 +56,7 @@ namespace LibraryTests.Services
         [TestMethod]
         public void ExecuteChoice_ShouldCallDirectionServiceTurnRight_WhenChoiceIs2()
         {
-            bool running = true;
-            _sut.ExecuteChoice(2, ref running);
+            _sut.ExecuteChoice(2, ref _running);
 
             _carDirectionMock.Verify(x => x.Turn("höger"), Times.Once);
         }
@@ -65,8 +64,7 @@ namespace LibraryTests.Services
         [TestMethod]
         public void ExecuteChoice_ShouldCallDirectionServiceDriveForward_WhenChoiceIs3()
         {
-            bool running = true;
-            _sut.ExecuteChoice(3, ref running);
+            _sut.ExecuteChoice(3, ref _running);
 
             _carDirectionMock.Verify(x => x.Drive("framåt"), Times.Once);
         }
@@ -74,8 +72,7 @@ namespace LibraryTests.Services
         [TestMethod]
         public void ExecuteChoice_ShouldCallDirectionServiceDriveBackward_WhenChoiceIs4()
         {
-            bool running = true;
-            _sut.ExecuteChoice(4, ref running);
+            _sut.ExecuteChoice(4, ref _running);
 
             _carDirectionMock.Verify(x => x.Drive("bakåt"), Times.Once);
         }
@@ -83,8 +80,7 @@ namespace LibraryTests.Services
         [TestMethod]
         public void ExecuteChoice_ShouldCallFatigueServiceRest_WhenChoiceIs5()
         {
-            bool running = true;
-            _sut.ExecuteChoice(5, ref running);
+            _sut.ExecuteChoice(5, ref _running);
 
             _fatigueServiceMock.Verify(x => x.Rest(), Times.Once);
         }
@@ -92,8 +88,7 @@ namespace LibraryTests.Services
         [TestMethod]
         public void ExecuteChoice_ShouldCallFuelServiceRefuel_WhenChoiceIs6()
         {
-            bool running = true;
-            _sut.ExecuteChoice(6, ref running);
+            _sut.ExecuteChoice(6, ref _running);
 
             _fuelServiceMock.Verify(x => x.Refuel(), Times.Once);
         }
@@ -101,7 +96,6 @@ namespace LibraryTests.Services
         [TestMethod]
         public void ExecuteChoice_ShouldSetRunningToFalseAndExit_WhenChoiceIs0()
         {
-            bool running = true;
             bool exitCalled = false;
 
             _sut.ExitAction = (code) =>
@@ -109,19 +103,18 @@ namespace LibraryTests.Services
                 exitCalled = true;
             };
 
-            _sut.ExecuteChoice(0, ref running);
+            _sut.ExecuteChoice(0, ref _running);
 
-            Assert.IsFalse(running);
+            Assert.IsFalse(_running);
             Assert.IsTrue(exitCalled);
         }
 
         [TestMethod]
         public void ExecuteChoice_ShouldHandleInvalidChoice_WhenChoiceIsInvalid()
         {
-            bool running = true;
             var choice = 99;
 
-            _sut.ExecuteChoice(choice, ref running);
+            _sut.ExecuteChoice(choice, ref _running);
         }
 
     }
