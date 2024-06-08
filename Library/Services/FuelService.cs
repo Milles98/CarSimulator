@@ -5,7 +5,7 @@ using Library.Services.Interfaces;
 
 namespace Library.Services;
 
-public class FuelService(Car? car, string carBrand, IConsoleService consoleService, IFatigueService fatigueService)
+public class FuelService(Car? car, IConsoleService consoleService, IFatigueService fatigueService)
     : IFuelService
 {
     private readonly Faker _faker = new();

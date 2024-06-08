@@ -20,7 +20,7 @@ public class FuelServiceTests
         _car = new Car { Brand = CarBrand.Toyota, Fuel = Fuel.Half };
         _consoleServiceMock = new Mock<IConsoleService>();
         _fatigueServiceMock = new Mock<IFatigueService>();
-        _sut = new FuelService(_car, _car.Brand.ToString(), _consoleServiceMock.Object, _fatigueServiceMock.Object);
+        _sut = new FuelService(_car, _consoleServiceMock.Object, _fatigueServiceMock.Object);
     }
 
     [TestMethod]

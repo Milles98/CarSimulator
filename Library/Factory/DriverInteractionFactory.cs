@@ -23,7 +23,7 @@ public class DriverInteractionFactory(
         }
 
         IFatigueService fatigueService = new FatigueService(driver, driver.Name, consoleService);
-        IFuelService fuelService = new FuelService(car, car.Brand.ToString(), consoleService, fatigueService);
+        IFuelService fuelService = new FuelService(car, consoleService, fatigueService);
         IDirectionService directionService = new DirectionService(car, driver, fuelService, fatigueService, car.Brand.ToString(), consoleService);
         IStatusService statusService = new StatusService(car, driver);
 
