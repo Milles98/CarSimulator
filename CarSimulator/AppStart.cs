@@ -1,4 +1,4 @@
-﻿using CarSimulator.Menus.Interface;
+﻿using CarSimulator.Menus.Interfaces;
 
 namespace CarSimulator
 {

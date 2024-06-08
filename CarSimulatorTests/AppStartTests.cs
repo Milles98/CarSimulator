@@ -1,5 +1,5 @@
 ﻿using CarSimulator;
-using CarSimulator.Menus.Interface;
+using CarSimulator.Menus.Interfaces;
 using Library.Services.Interfaces;
 using Moq;
 
