@@ -2,6 +2,9 @@
 using Library.Enums;
 using Library.Models;
 using Library.Services.Interfaces;
+
+namespace Library.Services;
+
 public class FatigueService : IFatigueService
 {
     private readonly Driver _driver;
@@ -50,7 +53,7 @@ public class FatigueService : IFatigueService
         {
             if (_driver.Fatigue == Fatigue.Exhausted)
             {
-                ASCIIFatigue();
+                AsciiFatigue();
             }
             else if (_driver.Fatigue < Fatigue.Exhausted)
             {
@@ -73,7 +76,7 @@ public class FatigueService : IFatigueService
         _consoleService.WriteLine($"{_driverName} blir tröttare efter att ha tankat.");
     }
 
-    private void ASCIIFatigue()
+    private void AsciiFatigue()
     {
         _consoleService.SetForegroundColor(ConsoleColor.Red);
         _consoleService.WriteLine(@"

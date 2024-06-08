@@ -2,7 +2,8 @@
 using Library.Enums;
 using Library.Models;
 using Library.Services.Interfaces;
-using System;
+
+namespace Library.Services;
 
 public class DirectionService : IDirectionService
 {
@@ -66,19 +67,19 @@ public class DirectionService : IDirectionService
 
     private void HandleDrive(string direction)
     {
-        string location = _faker.Address.City();
+        var location = _faker.Address.City();
 
-        if (direction == "framåt")
+        switch (direction)
         {
-            HandleForwardDrive(location);
-        }
-        else if (direction == "bakåt")
-        {
-            HandleReverseDrive(location);
-        }
-        else
-        {
-            _consoleService.DisplayError("Ogiltig riktning.");
+            case "framåt":
+                HandleForwardDrive(location);
+                break;
+            case "bakåt":
+                HandleReverseDrive(location);
+                break;
+            default:
+                _consoleService.DisplayError("Ogiltig riktning.");
+                break;
         }
     }
 
