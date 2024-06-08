@@ -1,9 +1,8 @@
-﻿namespace Library.Enums
+﻿namespace Library.Enums;
+
+public enum Fatigue
 {
-    public enum Fatigue
-    {
-        Exhausted = 0,
-        Tired = 5,
-        Rested = 10
-    }
+    Exhausted = 0,
+    Tired = 5,
+    Rested = 10
 }

@@ -1,12 +1,11 @@
 ﻿using CarSimulator.Menus.Interfaces;
 
-namespace CarSimulator
+namespace CarSimulator;
+
+public class AppStart(IMainMenu mainMenu)
 {
-    public class AppStart(IMainMenu mainMenu)
+    public async Task AppRun()
     {
-        public async Task AppRun()
-        {
-            await mainMenu.Menu();
-        }
+        await mainMenu.Menu();
     }
 }

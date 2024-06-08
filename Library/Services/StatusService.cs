@@ -9,8 +9,8 @@ public class StatusService(Car? car, Driver? driver) : IStatusService
     {
         return new CarStatus
         {
-            Fuel = car.Fuel,
-            Fatigue = driver.Fatigue,
+            Fuel = car!.Fuel,
+            Fatigue = driver!.Fatigue,
             Direction = car.Direction
         };
     }

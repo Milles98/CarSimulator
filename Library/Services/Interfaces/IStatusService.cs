@@ -1,7 +1,6 @@
-﻿namespace Library.Services.Interfaces
+﻿namespace Library.Services.Interfaces;
+
+public interface IStatusService
 {
-    public interface IStatusService
-    {
-        CarStatus GetStatus();
-    }
+    CarStatus GetStatus();
 }

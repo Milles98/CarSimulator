@@ -1,9 +1,8 @@
 ﻿using Library.Models;
 
-namespace Library.Services.Interfaces
+namespace Library.Services.Interfaces;
+
+public interface IFakePersonService
 {
-    public interface IFakePersonService
-    {
-        Task<Driver?> GetRandomDriverAsync();
-    }
+    Task<Driver?> GetRandomDriverAsync();
 }

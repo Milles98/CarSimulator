@@ -1,7 +1,6 @@
-﻿namespace CarSimulator.Menus.Interfaces
+﻿namespace CarSimulator.Menus.Interfaces;
+
+public interface IDriverInteractionMenu
 {
-    public interface IDriverInteractionMenu
-    {
-        void Menu();
-    }
+    void Menu();
 }

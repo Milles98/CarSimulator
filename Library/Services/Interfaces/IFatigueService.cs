@@ -1,9 +1,8 @@
-﻿namespace Library.Services.Interfaces
+﻿namespace Library.Services.Interfaces;
+
+public interface IFatigueService
 {
-    public interface IFatigueService
-    {
-        void Rest();
-        void CheckFatigue();
-        void IncreaseDriverFatigue();
-    }
+    void Rest();
+    void CheckFatigue();
+    void IncreaseDriverFatigue();
 }

@@ -5,7 +5,7 @@ using Library.Services.Interfaces;
 
 namespace Library.Services;
 
-public class FatigueService(Driver? driver, string driverName, IConsoleService consoleService)
+public class FatigueService(Driver? driver, string? driverName, IConsoleService consoleService)
     : IFatigueService
 {
     private readonly Faker _faker = new();
@@ -17,14 +17,14 @@ public class FatigueService(Driver? driver, string driverName, IConsoleService c
     {
         try
         {
-            if (driver.Fatigue == Fatigue.Rested)
+            if (driver is { Fatigue: Fatigue.Rested })
             {
                 consoleService.DisplayStatusMessage($"{driverName} rastade MEN blev inte mycket piggare av det.. {driverName} är ju redan utvilad!");
             }
             else
             {
-                driver.Fatigue = (Fatigue)Math.Min((int)driver.Fatigue + 5, (int)Fatigue.Rested);
-                string restLocation = _faker.Address.City();
+                if (driver != null) driver.Fatigue = (Fatigue)Math.Min((int)driver.Fatigue + 5, (int)Fatigue.Rested);
+                var restLocation = _faker.Address.City();
                 consoleService.DisplaySuccessMessage($"{driverName} tar en rast på {restLocation} och känner sig piggare.");
             }
         }
@@ -41,17 +41,23 @@ public class FatigueService(Driver? driver, string driverName, IConsoleService c
     {
         try
         {
-            if (driver.Fatigue == Fatigue.Exhausted)
+            switch (driver)
             {
-                AsciiFatigue();
-            }
-            else if (driver.Fatigue < Fatigue.Exhausted)
-            {
-                consoleService.DisplayError($"{driverName} är helt slut! Ta en rast omedelbart, annars kanske ni krockar!");
-            }
-            else if ((int)driver.Fatigue > 0 && (int)driver.Fatigue <= 5)
-            {
-                consoleService.DisplayStatusMessage($"{driverName} gäspar och börjar känna sig trött. Kanske är det dags för en rast snart?");
+                case { Fatigue: Fatigue.Exhausted }:
+                    AsciiFatigue();
+                    break;
+                case { Fatigue: < Fatigue.Exhausted }:
+                    consoleService.DisplayError($"{driverName} är helt slut! Ta en rast omedelbart, annars kanske ni krockar!");
+                    break;
+                default:
+                {
+                    if (driver != null && (int)driver.Fatigue > 0 && (int)driver.Fatigue <= 5)
+                    {
+                        consoleService.DisplayStatusMessage($"{driverName} gäspar och börjar känna sig trött. Kanske är det dags för en rast snart?");
+                    }
+
+                    break;
+                }
             }
         }
         catch (Exception ex)
@@ -62,20 +68,22 @@ public class FatigueService(Driver? driver, string driverName, IConsoleService c
 
     public void IncreaseDriverFatigue()
     {
-        driver.Fatigue -= 1;
+        if (driver != null) driver.Fatigue -= 1;
         consoleService.WriteLine($"{driverName} blir tröttare efter att ha tankat.");
     }
 
     private void AsciiFatigue()
     {
         consoleService.SetForegroundColor(ConsoleColor.Red);
-        consoleService.WriteLine(@"
- _   _ _                   _   _            _ _ 
-| | | | |_ _ __ ___   __ _| |_| |_ __ _  __| | |
-| | | | __| '_ ` _ \ / _` | __| __/ _` |/ _` | |
-| |_| | |_| | | | | | (_| | |_| || (_| | (_| |_|
- \___/ \__|_| |_| |_|\__,_|\__|\__\__,_|\__,_(_)
-                ");
+        consoleService.WriteLine("""
+                                 
+                                  _   _ _                   _   _            _ _ 
+                                 | | | | |_ _ __ ___   __ _| |_| |_ __ _  __| | |
+                                 | | | | __| '_ ` _ \ / _` | __| __/ _` |/ _` | |
+                                 | |_| | |_| | | | | | (_| | |_| || (_| | (_| |_|
+                                  \___/ \__|_| |_| |_|\__,_|\__|\__\__,_|\__,_(_)
+                                                 
+                                 """);
         consoleService.WriteLine($"{driverName} är utmattad! Ta en rast omedelbart.");
         consoleService.ResetColor();
     }

@@ -1,8 +1,7 @@
-﻿namespace Library.Services.Interfaces
+﻿namespace Library.Services.Interfaces;
+
+public interface IDirectionService
 {
-    public interface IDirectionService
-    {
-        void Drive(string direction);
-        void Turn(string direction);
-    }
+    void Drive(string direction);
+    void Turn(string direction);
 }

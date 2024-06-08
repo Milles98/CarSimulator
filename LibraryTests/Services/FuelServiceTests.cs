@@ -4,103 +4,102 @@ using Library.Services;
 using Library.Services.Interfaces;
 using Moq;
 
-namespace LibraryTests.Services
+namespace LibraryTests.Services;
+
+[TestClass]
+public class FuelServiceTests
 {
-    [TestClass]
-    public class FuelServiceTests
+    private Mock<IConsoleService> _consoleServiceMock;
+    private Mock<IFatigueService> _fatigueServiceMock;
+    private Car? _car;
+    private FuelService _sut;
+
+    [TestInitialize]
+    public void Setup()
     {
-        private Mock<IConsoleService> _consoleServiceMock;
-        private Mock<IFatigueService> _fatigueServiceMock;
-        private Car? _car;
-        private FuelService _sut;
+        _car = new Car { Brand = CarBrand.Toyota, Fuel = Fuel.Half };
+        _consoleServiceMock = new Mock<IConsoleService>();
+        _fatigueServiceMock = new Mock<IFatigueService>();
+        _sut = new FuelService(_car, _car.Brand.ToString(), _consoleServiceMock.Object, _fatigueServiceMock.Object);
+    }
 
-        [TestInitialize]
-        public void Setup()
-        {
-            _car = new Car { Brand = CarBrand.Toyota, Fuel = Fuel.Half };
-            _consoleServiceMock = new Mock<IConsoleService>();
-            _fatigueServiceMock = new Mock<IFatigueService>();
-            _sut = new FuelService(_car, _car.Brand.ToString(), _consoleServiceMock.Object, _fatigueServiceMock.Object);
-        }
+    [TestMethod]
+    public void Refuel_ShouldNotChangeFuelLevel_WhenCarIsAlreadyFull_AndNotIncreaseFatigue()
+    {
+        // Arrange
+        _car.Fuel = Fuel.Full;
 
-        [TestMethod]
-        public void Refuel_ShouldNotChangeFuelLevel_WhenCarIsAlreadyFull_AndNotIncreaseFatigue()
-        {
-            // Arrange
-            _car.Fuel = Fuel.Full;
+        // Act
+        _sut.Refuel();
 
-            // Act
-            _sut.Refuel();
+        // Assert
+        Assert.AreEqual(Fuel.Full, _car.Fuel);
+        _fatigueServiceMock.Verify(f => f.IncreaseDriverFatigue(), Times.Never);
+    }
 
-            // Assert
-            Assert.AreEqual(Fuel.Full, _car.Fuel);
-            _fatigueServiceMock.Verify(f => f.IncreaseDriverFatigue(), Times.Never);
-        }
+    [TestMethod]
+    public void Refuel_ShouldRefuelCar_WhenCarIsNotFull_AndIncreaseFatigue()
+    {
+        // Arrange
+        _car.Fuel = Fuel.Half;
 
-        [TestMethod]
-        public void Refuel_ShouldRefuelCar_WhenCarIsNotFull_AndIncreaseFatigue()
-        {
-            // Arrange
-            _car.Fuel = Fuel.Half;
+        // Act
+        _sut.Refuel();
 
-            // Act
-            _sut.Refuel();
+        // Assert
+        Assert.AreEqual(Fuel.Full, _car.Fuel);
+        _fatigueServiceMock.Verify(f => f.IncreaseDriverFatigue(), Times.Once);
+    }
 
-            // Assert
-            Assert.AreEqual(Fuel.Full, _car.Fuel);
-            _fatigueServiceMock.Verify(f => f.IncreaseDriverFatigue(), Times.Once);
-        }
+    [TestMethod]
+    public void HasEnoughFuel_ShouldReturnTrue_WhenFuelIsSufficient()
+    {
+        // Arrange
+        _car.Fuel = Fuel.Full;
 
-        [TestMethod]
-        public void HasEnoughFuel_ShouldReturnTrue_WhenFuelIsSufficient()
-        {
-            // Arrange
-            _car.Fuel = Fuel.Full;
+        // Act
+        var result = _sut.HasEnoughFuel(10);
 
-            // Act
-            var result = _sut.HasEnoughFuel(10);
+        // Assert
+        Assert.IsTrue(result);
+    }
 
-            // Assert
-            Assert.IsTrue(result);
-        }
+    [TestMethod]
+    public void HasEnoughFuel_ShouldReturnFalse_WhenFuelIsInsufficient()
+    {
+        // Arrange
+        _car.Fuel = Fuel.Half;
 
-        [TestMethod]
-        public void HasEnoughFuel_ShouldReturnFalse_WhenFuelIsInsufficient()
-        {
-            // Arrange
-            _car.Fuel = Fuel.Half;
+        // Act
+        var result = _sut.HasEnoughFuel(15);
 
-            // Act
-            var result = _sut.HasEnoughFuel(15);
+        // Assert
+        Assert.IsFalse(result);
+    }
 
-            // Assert
-            Assert.IsFalse(result);
-        }
+    [TestMethod]
+    public void UseFuel_ShouldReduceFuelCorrectly()
+    {
+        // Arrange
+        _car.Fuel = Fuel.Full;
 
-        [TestMethod]
-        public void UseFuel_ShouldReduceFuelCorrectly()
-        {
-            // Arrange
-            _car.Fuel = Fuel.Full;
+        // Act
+        _sut.UseFuel(10);
 
-            // Act
-            _sut.UseFuel(10);
+        // Assert
+        Assert.AreEqual(Fuel.Half, _car.Fuel);
+    }
 
-            // Assert
-            Assert.AreEqual(Fuel.Half, _car.Fuel);
-        }
+    [TestMethod]
+    public void UseFuel_ShouldNotReduceFuelBelowEmpty()
+    {
+        // Arrange
+        _car.Fuel = Fuel.Half;
 
-        [TestMethod]
-        public void UseFuel_ShouldNotReduceFuelBelowEmpty()
-        {
-            // Arrange
-            _car.Fuel = Fuel.Half;
+        // Act
+        _sut.UseFuel(15);
 
-            // Act
-            _sut.UseFuel(15);
-
-            // Assert
-            Assert.AreEqual(Fuel.Empty, _car.Fuel);
-        }
+        // Assert
+        Assert.AreEqual(Fuel.Empty, _car.Fuel);
     }
 }

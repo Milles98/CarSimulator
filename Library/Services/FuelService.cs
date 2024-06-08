@@ -17,13 +17,13 @@ public class FuelService(Car? car, string carBrand, IConsoleService consoleServi
     {
         try
         {
-            if (car.Fuel == Fuel.Full)
+            if (car is { Fuel: Fuel.Full })
             {
                 consoleService.DisplayError("Det går inte att tanka bilen, den är redan fulltankad!");
             }
             else
             {
-                car.Fuel = Fuel.Full;
+                if (car != null) car.Fuel = Fuel.Full;
                 var refuelLocation = _faker.Address.City();
                 consoleService.DisplaySuccessMessage($"Föraren tankade på {refuelLocation} och nu är bilen fulltankad.");
                 fatigueService.IncreaseDriverFatigue();
@@ -40,7 +40,7 @@ public class FuelService(Car? car, string carBrand, IConsoleService consoleServi
     /// </summary>
     public bool HasEnoughFuel(int requiredFuel)
     {
-        return (int)car.Fuel >= requiredFuel;
+        return car != null && (int)car.Fuel >= requiredFuel;
     }
 
     /// <summary>
@@ -49,13 +49,15 @@ public class FuelService(Car? car, string carBrand, IConsoleService consoleServi
     public void DisplayLowFuelWarning()
     {
         consoleService.SetForegroundColor(ConsoleColor.Red);
-        consoleService.WriteLine(@"
- _____ _   _        _     _ _         ____      _   _           _      _ 
-|  ___(_)_(_)_ __  | |   (_) |_ ___  | __ ) _ _(_)_(_)_ __  ___| | ___| |
-| |_   / _ \| '__| | |   | | __/ _ \ |  _ \| '__/ _` | '_ \/ __| |/ _ \ |
-|  _| | (_) | |    | |___| | ||  __/ | |_) | | | (_| | | | \__ \ |  __/_|
-|_|    \___/|_|    |_____|_|\__\___| |____/|_|  \__,_|_| |_|___/_|\___(_)
-                ");
+        consoleService.WriteLine("""
+                                 
+                                  _____ _   _        _     _ _         ____      _   _           _      _ 
+                                 |  ___(_)_(_)_ __  | |   (_) |_ ___  | __ ) _ _(_)_(_)_ __  ___| | ___| |
+                                 | |_   / _ \| '__| | |   | | __/ _ \ |  _ \| '__/ _` | '_ \/ __| |/ _ \ |
+                                 |  _| | (_) | |    | |___| | ||  __/ | |_) | | | (_| | | | \__ \ |  __/_|
+                                 |_|    \___/|_|    |_____|_|\__\___| |____/|_|  \__,_|_| |_|___/_|\___(_)
+                                                 
+                                 """);
         consoleService.WriteLine("Bilen har inte tillräckligt med bränsle. Föraren måste tanka!");
         consoleService.ResetColor();
     }
@@ -64,7 +66,7 @@ public class FuelService(Car? car, string carBrand, IConsoleService consoleServi
     {
         try
         {
-            if (car.Fuel == Fuel.Empty)
+            if (car is { Fuel: Fuel.Empty })
             {
                 DisplayLowFuelWarning();
             }
@@ -80,6 +82,7 @@ public class FuelService(Car? car, string carBrand, IConsoleService consoleServi
     /// </summary>
     public void UseFuel(int amount)
     {
+        if (car == null) return;
         var currentFuel = (int)car.Fuel;
         currentFuel -= amount;
         if (currentFuel < (int)Fuel.Empty) currentFuel = (int)Fuel.Empty;

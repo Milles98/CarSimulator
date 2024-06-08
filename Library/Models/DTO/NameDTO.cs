@@ -1,9 +1,8 @@
-﻿namespace Library.Models.DTO
+﻿namespace Library.Models.DTO;
+
+public class NameDTO
 {
-    public class NameDTO
-    {
-        public string Title { get; set; }
-        public string First { get; set; }
-        public string Last { get; set; }
-    }
+    public string Title { get; set; }
+    public string First { get; set; }
+    public string Last { get; set; }
 }
