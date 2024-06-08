@@ -7,9 +7,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="32657de6-ac81-4f8f-9bb8-3365d449205b" name="Changes" comment="added await to program.cs using statement">
-      <change beforePath="$PROJECT_DIR$/CarSimulator/Menus/MainMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CarSimulator/Menus/MainMenu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CarSimulatorTests/Menus/MainMenuTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CarSimulatorTests/Menus/MainMenuTests.cs" afterDir="false" />
+    <list default="true" id="32657de6-ac81-4f8f-9bb8-3365d449205b" name="Changes" comment="made isTesting private in mainmenu, added switch statements in DriverInteractionService.cs, removed unnessecary null checks">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CarSimulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CarSimulator/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/Services/DirectionService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Services/DirectionService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Library/Services/FakePersonService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Library/Services/FakePersonService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LibraryTests/Services/DirectionServiceTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LibraryTests/Services/DirectionServiceTests.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +54,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="mock://C:/Projects/Testing/TestAssignment/CarSimulator/CarSimulator/Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://C:/Projects/Testing/TestAssignment/CarSimulator/CarSimulator/Program.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Projects/Testing/TestAssignment/CarSimulator/Library/Services/DriverInteractionService.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
@@ -71,7 +74,7 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "#136 on dev",
+    "git-widget-placeholder": "#137 on dev",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -118,7 +121,7 @@
       <updated>1716970203581</updated>
       <workItem from="1716970207537" duration="650000" />
       <workItem from="1717825051065" duration="420000" />
-      <workItem from="1717825496585" duration="783000" />
+      <workItem from="1717825496585" duration="1772000" />
     </task>
     <task id="LOCAL−00001" summary="Made AppInitializer static as it doesnt need to be instanciated, updated relevant test">
       <option name="closed" value="true" />
@@ -148,7 +151,14 @@
       <option name="presentableId" value="LOCAL−00004" />
       <updated>1717825916247</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL−00005" summary="made isTesting private in mainmenu, added switch statements in DriverInteractionService.cs, removed unnessecary null checks">
+      <option name="closed" value="true" />
+      <created>1717826958195</created>
+      <option name="number" value="LOCAL−00005" />
+      <option name="presentableId" value="LOCAL−00005" />
+      <updated>1717826958195</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -162,6 +172,7 @@
     <MESSAGE value="rider test" />
     <MESSAGE value="Fixed namespaces" />
     <MESSAGE value="added await to program.cs using statement" />
-    <option name="LAST_COMMIT_MESSAGE" value="added await to program.cs using statement" />
+    <MESSAGE value="made isTesting private in mainmenu, added switch statements in DriverInteractionService.cs, removed unnessecary null checks" />
+    <option name="LAST_COMMIT_MESSAGE" value="made isTesting private in mainmenu, added switch statements in DriverInteractionService.cs, removed unnessecary null checks" />
   </component>
 </project>
