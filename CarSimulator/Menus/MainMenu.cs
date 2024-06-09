@@ -89,7 +89,7 @@ public class MainMenu(
         }
     }
 
-    private Task StartDriverInteraction(Driver? driver, Car? car)
+    private Task StartDriverInteraction(Driver driver, Car car)
     {
         try
         {

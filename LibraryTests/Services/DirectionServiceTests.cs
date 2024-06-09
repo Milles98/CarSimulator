@@ -12,8 +12,8 @@ public class DirectionServiceTests
     private Mock<IFuelService> _fuelServiceMock;
     private Mock<IFatigueService> _fatigueServiceMock;
     private Mock<IConsoleService> _consoleServiceMock;
-    private Car? _car;
-    private Driver? _driver;
+    private Car _car;
+    private Driver _driver;
     private DirectionService _sut;
 
     [TestInitialize]

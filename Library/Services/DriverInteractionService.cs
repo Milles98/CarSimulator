@@ -10,7 +10,7 @@ public class DriverInteractionService(
     IMenuDisplayService menuDisplayService,
     IInputService inputService,
     IConsoleService consoleService,
-    string? driverName,
+    string driverName,
     CarBrand carBrand,
     IStatusService statusService)
     : IDriverInteractionService

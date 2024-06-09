@@ -17,9 +17,9 @@ public class DriverInteractionServiceTests
     private Mock<IConsoleService> _consoleServiceMock;
     private Mock<IStatusService> _statusServiceMock;
     private DriverInteractionService _sut;
-    private readonly string? _driverName = "Mille Elfver";
+    private readonly string _driverName = "Mille Elfver";
     private bool _running = true;
-    private CarBrand _carBrand = CarBrand.Toyota;
+    private readonly CarBrand _carBrand = CarBrand.Toyota;
 
     [TestInitialize]
     public void Setup()
@@ -96,9 +96,9 @@ public class DriverInteractionServiceTests
     [TestMethod]
     public void ExecuteChoice_ShouldSetRunningToFalseAndExit_WhenChoiceIs0()
     {
-        bool exitCalled = false;
+        var exitCalled = false;
 
-        _sut.ExitAction = (code) =>
+        _sut.ExitAction = (_) =>
         {
             exitCalled = true;
         };

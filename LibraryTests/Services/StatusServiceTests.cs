@@ -7,8 +7,8 @@ namespace LibraryTests.Services;
 [TestClass]
 public class StatusServiceTests
 {
-    private Car? _car;
-    private Driver? _driver;
+    private Car _car;
+    private Driver _driver;
     private StatusService _sut;
 
     [TestInitialize]

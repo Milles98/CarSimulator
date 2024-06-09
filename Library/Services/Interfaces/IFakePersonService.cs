@@ -4,5 +4,5 @@ namespace Library.Services.Interfaces;
 
 public interface IFakePersonService
 {
-    Task<Driver?> GetRandomDriverAsync();
+    Task<Driver> GetRandomDriverAsync();
 }

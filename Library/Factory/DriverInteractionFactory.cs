@@ -10,7 +10,7 @@ public class DriverInteractionFactory(
     IConsoleService consoleService)
     : IDriverInteractionFactory
 {
-    public IDriverInteractionService CreateDriverInteractionService(Driver? driver, Car? car)
+    public IDriverInteractionService CreateDriverInteractionService(Driver driver, Car car)
     {
         if (driver == null)
         {

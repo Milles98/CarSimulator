@@ -11,7 +11,7 @@ public class FakePersonService(HttpClient httpClient, IConsoleService consoleSer
     /// <summary>
     /// Fetches a random driver from an API.
     /// </summary>
-    public async Task<Driver?> GetRandomDriverAsync()
+    public async Task<Driver> GetRandomDriverAsync()
     {
         try
         {
@@ -36,30 +36,30 @@ public class FakePersonService(HttpClient httpClient, IConsoleService consoleSer
                     };
                 }
                 consoleService.DisplayError("Inget resultat i response!.");
-                return null;
+                return null!;
             }
             consoleService.DisplayError($"API hämtning misslyckades med statuskod: {response.StatusCode}");
-            return null;
+            return null!;
         }
         catch (HttpRequestException httpRequestException)
         {
             consoleService.DisplayError($"Fel inträffade vid hämtning från APIet: {httpRequestException.Message}");
-            return null;
+            return null!;
         }
         catch (JsonReaderException jsonReaderException)
         {
             consoleService.DisplayError($"Fel inträffade vid deserializing av responsen från APIet: {jsonReaderException.Message}");
-            return null;
+            return null!;
         }
         catch (JsonSerializationException jsonSerializationException)
         {
             consoleService.DisplayError($"Fel inträffade vid deserializing av responsen från APIet: {jsonSerializationException.Message}");
-            return null;
+            return null!;
         }
         catch (Exception ex)
         {
             consoleService.DisplayError($"Oväntat fel: {ex.Message}");
-            return null;
+            return null!;
         }
     }
 }

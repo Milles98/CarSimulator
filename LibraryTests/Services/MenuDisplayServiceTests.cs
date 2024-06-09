@@ -23,7 +23,7 @@ public class MenuDisplayServiceTests
     public void DisplayOptions_ShouldDisplayWriteMethods()
     {
         // Arrange
-        string? driverName = "Mille Elfver";
+        string driverName = "Mille Elfver";
 
         // Act
         _sut.DisplayOptions(driverName);
@@ -40,8 +40,8 @@ public class MenuDisplayServiceTests
             Fuel = Fuel.Half,
             Fatigue = Fatigue.Tired,
         };
-        string? driverName = "Mille Elfver";
-        string? carBrand = "Toyota";
+        string driverName = "Mille Elfver";
+        string carBrand = "Toyota";
 
         // Act
         _sut.DisplayStatusMenu(status, driverName, carBrand);
@@ -52,7 +52,7 @@ public class MenuDisplayServiceTests
     public void DisplayIntroduction_ShouldDisplayReadAndWriteMethods()
     {
         // Arrange
-        string? driverName = "Mille Elfver";
+        string driverName = "Mille Elfver";
         CarBrand carBrand = CarBrand.Toyota;
 
         _consoleServiceMock.Setup(cs => cs.ReadLine()).Returns("nej");
