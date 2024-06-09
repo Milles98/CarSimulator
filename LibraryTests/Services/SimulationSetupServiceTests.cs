@@ -33,8 +33,47 @@ public class SimulationSetupServiceTests
 
         // Assert
         Assert.IsNotNull(result);
+    }
+
+    [TestMethod]
+    public async Task FetchDriverDetails_ShouldReturnDriverWithCorrectTitle_WhenDriverIsFetchedSuccessfully()
+    {
+        // Arrange
+        var driver = new Driver { Title = "Mr", FirstName = "Mille", LastName = "Elfver" };
+        _fakePersonServiceMock.Setup(s => s.GetRandomDriverAsync()).ReturnsAsync(driver);
+
+        // Act
+        var result = await _sut.FetchDriverDetails();
+
+        // Assert
         Assert.AreEqual(driver.Title, result.Title);
+    }
+
+    [TestMethod]
+    public async Task FetchDriverDetails_ShouldReturnDriverWithCorrectFirstName_WhenDriverIsFetchedSuccessfully()
+    {
+        // Arrange
+        var driver = new Driver { Title = "Mr", FirstName = "Mille", LastName = "Elfver" };
+        _fakePersonServiceMock.Setup(s => s.GetRandomDriverAsync()).ReturnsAsync(driver);
+
+        // Act
+        var result = await _sut.FetchDriverDetails();
+
+        // Assert
         Assert.AreEqual(driver.FirstName, result.FirstName);
+    }
+
+    [TestMethod]
+    public async Task FetchDriverDetails_ShouldReturnDriverWithCorrectLastName_WhenDriverIsFetchedSuccessfully()
+    {
+        // Arrange
+        var driver = new Driver { Title = "Mr", FirstName = "Mille", LastName = "Elfver" };
+        _fakePersonServiceMock.Setup(s => s.GetRandomDriverAsync()).ReturnsAsync(driver);
+
+        // Act
+        var result = await _sut.FetchDriverDetails();
+
+        // Assert
         Assert.AreEqual(driver.LastName, result.LastName);
     }
 
@@ -78,7 +117,37 @@ public class SimulationSetupServiceTests
 
         // Assert
         Assert.IsNotNull(result);
+    }
+
+    [TestMethod]
+    public void EnterCarDetails_ShouldReturnCarWithCorrectBrand_WhenValidInputIsProvided()
+    {
+        // Arrange
+        string? driverName = "Mille Elfver";
+        _consoleServiceMock.SetupSequence(cs => cs.ReadLine())
+            .Returns("1") //Valet för carbrand i meny grej
+            .Returns("1"); //Valet för direction i meny grej
+
+        // Act
+        var result = _sut.EnterCarDetails(driverName);
+
+        // Assert
         Assert.AreEqual(CarBrand.Toyota, result.Brand);
+    }
+
+    [TestMethod]
+    public void EnterCarDetails_ShouldReturnCarWithCorrectDirection_WhenValidInputIsProvided()
+    {
+        // Arrange
+        string? driverName = "Mille Elfver";
+        _consoleServiceMock.SetupSequence(cs => cs.ReadLine())
+            .Returns("1") //Valet för carbrand i meny grej
+            .Returns("1"); //Valet för direction i meny grej
+
+        // Act
+        var result = _sut.EnterCarDetails(driverName);
+
+        // Assert
         Assert.AreEqual(Direction.Norr, result.Direction);
     }
 
@@ -87,8 +156,7 @@ public class SimulationSetupServiceTests
     {
         // Arrange
         string? driverName = "Mille Elfver";
-        _consoleServiceMock.SetupSequence(cs => cs.ReadLine())
-            .Returns("0");
+        _consoleServiceMock.Setup(cs => cs.ReadLine()).Returns("0");
 
         // Act
         var result = _sut.EnterCarDetails(driverName);
