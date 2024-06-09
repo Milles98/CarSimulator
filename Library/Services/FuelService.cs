@@ -17,7 +17,7 @@ public class FuelService(Car car, IConsoleService consoleService, IFatigueServic
     {
         try
         {
-            if (car is { Fuel: Fuel.Full })
+            if (car.Fuel == Fuel.Full)
             {
                 consoleService.DisplayError("Det går inte att tanka bilen, den är redan fulltankad!");
             }
