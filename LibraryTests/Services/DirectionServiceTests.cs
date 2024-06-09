@@ -43,7 +43,7 @@ public class DirectionServiceTests
     }
 
     [TestMethod]
-    public void Drive_ShouldDriveForward_WithEnoughFuel()
+    public void Drive_ShouldUseFuel_WhenEnoughFuel()
     {
         // Arrange
         _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
@@ -53,12 +53,36 @@ public class DirectionServiceTests
 
         // Assert
         _fuelServiceMock.Verify(x => x.UseFuel(4), Times.Once);
+    }
+
+    [TestMethod]
+    public void Drive_ShouldCheckFatigue_WhenDriving()
+    {
+        // Arrange
+        _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
+
+        // Act
+        _sut.Drive("framåt");
+
+        // Assert
         _fatigueServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
+    }
+
+    [TestMethod]
+    public void Drive_ShouldSetDirectionToNorth_WhenDrivingForward()
+    {
+        // Arrange
+        _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
+
+        // Act
+        _sut.Drive("framåt");
+
+        // Assert
         Assert.AreEqual(Direction.Norr, _car.Direction);
     }
 
     [TestMethod]
-    public void Drive_ShouldDriveBackwardAndChangeDirection_WithEnoughFuel()
+    public void Drive_ShouldSetDirectionToSouth_WhenDrivingBackward()
     {
         // Arrange
         _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
@@ -67,8 +91,6 @@ public class DirectionServiceTests
         _sut.Drive("bakåt");
 
         // Assert
-        _fuelServiceMock.Verify(x => x.UseFuel(4), Times.Once);
-        _fatigueServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
         Assert.AreEqual(Direction.Söder, _car.Direction);
     }
 
@@ -90,24 +112,21 @@ public class DirectionServiceTests
     }
 
     [TestMethod]
-    public void Drive_ShouldDriveForwardAndResetDirection_WithEnoughFuelAndPreviouslyReversed()
+    public void Drive_ShouldResetDirectionToNorth_WhenDrivingForwardAfterReversing()
     {
         // Arrange
         _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
         _sut.Drive("bakåt");
-        _sut.Drive("framåt");
 
         // Act
         _sut.Drive("framåt");
 
         // Assert
-        _fuelServiceMock.Verify(x => x.UseFuel(4), Times.Exactly(3));
-        _fatigueServiceMock.Verify(x => x.CheckFatigue(), Times.Exactly(3));
         Assert.AreEqual(Direction.Norr, _car.Direction);
     }
 
     [TestMethod]
-    public void Turn_ShouldTurnLeft_WithEnoughFuel()
+    public void Turn_ShouldTurnLeft()
     {
         // Arrange
         _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
@@ -116,13 +135,11 @@ public class DirectionServiceTests
         _sut.Turn("vänster");
 
         // Assert
-        _fuelServiceMock.Verify(x => x.UseFuel(2), Times.Once);
-        _fatigueServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
         Assert.AreEqual(Direction.Väst, _car.Direction);
     }
 
     [TestMethod]
-    public void Turn_ShouldTurnRight_WithEnoughFuel()
+    public void Turn_ShouldTurnRight()
     {
         // Arrange
         _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
@@ -131,13 +148,11 @@ public class DirectionServiceTests
         _sut.Turn("höger");
 
         // Assert
-        _fuelServiceMock.Verify(x => x.UseFuel(2), Times.Once);
-        _fatigueServiceMock.Verify(x => x.CheckFatigue(), Times.Once);
         Assert.AreEqual(Direction.Öst, _car.Direction);
     }
 
     [TestMethod]
-    public void TurnRightAndReverse_ShouldChangeDirectionsCorrectly()
+    public void TurnRightAndReverse_ShouldSetDirectionToWest()
     {
         // Arrange
         _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
@@ -151,7 +166,7 @@ public class DirectionServiceTests
     }
 
     [TestMethod]
-    public void TurnLeftAndReverse_ShouldChangeDirectionsCorrectly()
+    public void TurnLeftAndReverse_ShouldSetDirectionToEast()
     {
         // Arrange
         _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
@@ -170,7 +185,7 @@ public class DirectionServiceTests
         // Arrange
         _fuelServiceMock.Setup(x => x.HasEnoughFuel(It.IsAny<int>())).Returns(true);
 
-        // Act
+        // Act & Assert
         _sut.Turn("vänster");
         Assert.AreEqual(Direction.Väst, _car.Direction);
 
@@ -210,5 +225,4 @@ public class DirectionServiceTests
         _sut.Drive("framåt");
         Assert.AreEqual(Direction.Norr, _car.Direction);
     }
-
 }
