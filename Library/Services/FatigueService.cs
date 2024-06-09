@@ -5,7 +5,7 @@ using Library.Services.Interfaces;
 
 namespace Library.Services;
 
-public class FatigueService(Driver? driver, string? driverName, IConsoleService consoleService)
+public class FatigueService(Driver driver, string driverName, IConsoleService consoleService)
     : IFatigueService
 {
     private readonly Faker _faker = new();
@@ -23,7 +23,7 @@ public class FatigueService(Driver? driver, string? driverName, IConsoleService 
             }
             else
             {
-                if (driver != null) driver.Fatigue = (Fatigue)Math.Min((int)driver.Fatigue + 5, (int)Fatigue.Rested);
+                driver.Fatigue = (Fatigue)Math.Min((int)driver.Fatigue + 5, (int)Fatigue.Rested);
                 var restLocation = _faker.Address.City();
                 consoleService.DisplaySuccessMessage($"{driverName} tar en rast på {restLocation} och känner sig piggare.");
             }
@@ -51,7 +51,7 @@ public class FatigueService(Driver? driver, string? driverName, IConsoleService 
                     break;
                 default:
                 {
-                    if (driver != null && (int)driver.Fatigue > 0 && (int)driver.Fatigue <= 5)
+                    if ((int)driver.Fatigue > 0 && (int)driver.Fatigue <= 5)
                     {
                         consoleService.DisplayStatusMessage($"{driverName} gäspar och börjar känna sig trött. Kanske är det dags för en rast snart?");
                     }
@@ -68,7 +68,7 @@ public class FatigueService(Driver? driver, string? driverName, IConsoleService 
 
     public void IncreaseDriverFatigue()
     {
-        if (driver != null) driver.Fatigue -= 1;
+        driver.Fatigue -= 1;
         consoleService.WriteLine($"{driverName} blir tröttare efter att ha tankat.");
     }
 

@@ -7,18 +7,13 @@ namespace Library.Services;
 public class SimulationSetupService(IFakePersonService fakePersonService, IConsoleService consoleService)
     : ISimulationSetupService
 {
-    public async Task<Driver?> FetchDriverDetails()
+    public async Task<Driver> FetchDriverDetails()
     {
         try
         {
             DisplayFetchingDriverMessage();
 
             var driver = await fakePersonService.GetRandomDriverAsync();
-            if (driver == null)
-            {
-                consoleService.DisplayError("Kunde inte hämta ett namn. Försök igen.");
-                return null;
-            }
 
             DisplayDriverDetails(driver);
             return new Driver { Title = driver.Title, FirstName = driver.FirstName, LastName = driver.LastName, Fatigue = Fatigue.Rested };
@@ -26,18 +21,18 @@ public class SimulationSetupService(IFakePersonService fakePersonService, IConso
         catch (Exception ex)
         {
             consoleService.DisplayError($"Fel uppstod vid hämtandet av förare från APIet: {ex.Message}");
-            return null;
+            return null!;
         }
     }
 
-    public Car? EnterCarDetails(string? driverName)
+    public Car EnterCarDetails(string driverName)
     {
         var selectedBrand = GetCarBrandSelection(driverName);
         if (selectedBrand == null)
-            return null;
+            return null!;
 
         var direction = GetDirectionSelection(driverName, selectedBrand.Value);
-        return direction == null ? null : new Car { Brand = selectedBrand.Value, Fuel = (Fuel)20, Direction = direction.Value };
+        return (direction == null ? null : new Car { Brand = selectedBrand.Value, Fuel = (Fuel)20, Direction = direction.Value })!;
     }
 
     private void DisplayFetchingDriverMessage()
@@ -60,7 +55,7 @@ public class SimulationSetupService(IFakePersonService fakePersonService, IConso
         Task.Delay(2000).Wait();
     }
 
-    private CarBrand? GetCarBrandSelection(string? driverName)
+    private CarBrand? GetCarBrandSelection(string driverName)
     {
         while (true)
         {
@@ -101,7 +96,7 @@ public class SimulationSetupService(IFakePersonService fakePersonService, IConso
             }
         }
     }
-    private Direction? GetDirectionSelection(string? driverName, CarBrand selectedBrand)
+    private Direction? GetDirectionSelection(string driverName, CarBrand selectedBrand)
     {
         while (true)
         {

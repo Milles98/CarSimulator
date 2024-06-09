@@ -7,14 +7,12 @@ public class MenuDisplayService(IConsoleService consoleService) : IMenuDisplaySe
 {
     private bool _skipTypingEffect;
 
-    public void DisplayOptions(string? driverName)
+    public void DisplayOptions(string driverName)
     {
         while (true)
         {
             try
             {
-                driverName = GetDriverName(driverName);
-
                 consoleService.SetForegroundColor(ConsoleColor.Cyan);
                 consoleService.WriteLine("1. Sväng vänster");
                 consoleService.WriteLine("2. Sväng höger");
@@ -34,15 +32,12 @@ public class MenuDisplayService(IConsoleService consoleService) : IMenuDisplaySe
         }
     }
 
-    public void DisplayStatusMenu(CarStatus status, string? driverName, string? carBrand)
+    public void DisplayStatusMenu(CarStatus status, string driverName, string carBrand)
     {
         while (true)
         {
             try
             {
-                driverName = GetDriverName(driverName);
-                carBrand = GetCarBrand(carBrand);
-
                 consoleService.SetForegroundColor(ConsoleColor.Yellow);
                 consoleService.WriteLine($"\n\nBilens riktning: {status.Direction}");
                 consoleService.ResetColor();
@@ -64,13 +59,12 @@ public class MenuDisplayService(IConsoleService consoleService) : IMenuDisplaySe
         }
     }
 
-    public void DisplayIntroduction(string? driverName, CarBrand carBrand)
+    public void DisplayIntroduction(string driverName, CarBrand carBrand)
     {
         while (true)
         {
             try
             {
-                driverName = GetDriverName(driverName);
                 _skipTypingEffect = GetUserTypingPreference();
 
                 var randomExpression = GetRandomExpression();
@@ -90,25 +84,6 @@ public class MenuDisplayService(IConsoleService consoleService) : IMenuDisplaySe
         }
     }
 
-    private string GetDriverName(string? driverName)
-    {
-        while (string.IsNullOrWhiteSpace(driverName))
-        {
-            consoleService.DisplayError("Förarnamn ska inte vara tomt, något fel kan ha skett vid hämtningen från APIet!");
-            driverName = consoleService.ReadLine();
-        }
-        return driverName;
-    }
-
-    private string GetCarBrand(string? carBrand)
-    {
-        while (string.IsNullOrWhiteSpace(carBrand))
-        {
-            consoleService.DisplayError("Bilmärke kan ej vara tomt, något fel har skett vid val av bilmärke.");
-            carBrand = consoleService.ReadLine();
-        }
-        return carBrand;
-    }
 
     private bool GetUserTypingPreference()
     {
@@ -132,7 +107,7 @@ public class MenuDisplayService(IConsoleService consoleService) : IMenuDisplaySe
         return expressions[random.Next(expressions.Count)];
     }
 
-    private void DisplayDriverIntroduction(string? driverName, CarBrand carBrand, Expression randomExpression)
+    private void DisplayDriverIntroduction(string driverName, CarBrand carBrand, Expression randomExpression)
     {
         TypeText($"{driverName} sätter sig i en sprillans ny {carBrand} och kollar ut genom fönstret i framsätet.", _skipTypingEffect);
         TypeText($"Allt ser bra ut. {driverName} tar en tugga av sin macka som är köpt på Circle K.", _skipTypingEffect);

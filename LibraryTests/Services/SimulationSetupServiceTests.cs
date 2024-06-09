@@ -81,7 +81,7 @@ public class SimulationSetupServiceTests
     public async Task FetchDriverDetails_ShouldReturnNull_WhenDriverIsNotFetched()
     {
         // Arrange
-        _fakePersonServiceMock.Setup(s => s.GetRandomDriverAsync()).ReturnsAsync((Driver)null);
+        _fakePersonServiceMock.Setup(s => s.GetRandomDriverAsync()).ReturnsAsync((Driver)null!);
 
         // Act
         var result = await _sut.FetchDriverDetails();
@@ -107,7 +107,7 @@ public class SimulationSetupServiceTests
     public void EnterCarDetails_ShouldReturnCar_WhenValidInputIsProvided()
     {
         // Arrange
-        string? driverName = "Mille Elfver";
+        string driverName = "Mille Elfver";
         _consoleServiceMock.SetupSequence(cs => cs.ReadLine())
             .Returns("1") //Valet för carbrand i meny grej
             .Returns("1"); //Valet för direction i meny grej
@@ -123,7 +123,7 @@ public class SimulationSetupServiceTests
     public void EnterCarDetails_ShouldReturnCarWithCorrectBrand_WhenValidInputIsProvided()
     {
         // Arrange
-        string? driverName = "Mille Elfver";
+        string driverName = "Mille Elfver";
         _consoleServiceMock.SetupSequence(cs => cs.ReadLine())
             .Returns("1") //Valet för carbrand i meny grej
             .Returns("1"); //Valet för direction i meny grej
@@ -139,7 +139,7 @@ public class SimulationSetupServiceTests
     public void EnterCarDetails_ShouldReturnCarWithCorrectDirection_WhenValidInputIsProvided()
     {
         // Arrange
-        string? driverName = "Mille Elfver";
+        string driverName = "Mille Elfver";
         _consoleServiceMock.SetupSequence(cs => cs.ReadLine())
             .Returns("1") //Valet för carbrand i meny grej
             .Returns("1"); //Valet för direction i meny grej
@@ -155,7 +155,7 @@ public class SimulationSetupServiceTests
     public void EnterCarDetails_ShouldReturnNull_WhenCancelled()
     {
         // Arrange
-        string? driverName = "Mille Elfver";
+        string driverName = "Mille Elfver";
         _consoleServiceMock.Setup(cs => cs.ReadLine()).Returns("0");
 
         // Act
