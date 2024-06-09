@@ -79,14 +79,10 @@ public class MainMenu(
     private async Task StartSimulation()
     {
         var driver = await simulationSetupService.FetchDriverDetails();
+        var car = simulationSetupService.EnterCarDetails(driver.Name);
 
-        if (driver != null)
-        {
-            var car = simulationSetupService.EnterCarDetails(driver.Name);
-
-            await WarmUpEngine();
-            await StartDriverInteraction(driver, car);
-        }
+        await WarmUpEngine();
+        await StartDriverInteraction(driver, car);
     }
 
     private Task StartDriverInteraction(Driver driver, Car car)
@@ -123,6 +119,7 @@ public class MainMenu(
             await Task.Delay(1000);
             consoleService.Write(".");
         }
+
         consoleService.WriteLine("");
         consoleService.Clear();
         consoleService.ResetColor();
