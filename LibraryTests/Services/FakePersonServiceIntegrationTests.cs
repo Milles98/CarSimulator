@@ -13,7 +13,7 @@ public class FakePersonServiceIntegrationTests
     [TestInitialize]
     public void Setup()
     {
-        //Arrange
+        // Arrange
         _consoleService = new ConsoleService();
         _httpClient = new HttpClient();
         _sut = new FakePersonService(_httpClient, _consoleService);
@@ -27,24 +27,50 @@ public class FakePersonServiceIntegrationTests
 
         // Assert
         Assert.IsNotNull(result);
+    }
+
+    [TestMethod]
+    public async Task GetRandomDriverAsync_ShouldReturnDriverWithValidTitle_WhenApiReturnIsCorrect()
+    {
+        // Act
+        var result = await _sut.GetRandomDriverAsync();
+
+        // Assert
         Assert.IsFalse(string.IsNullOrEmpty(result.Title));
+    }
+
+    [TestMethod]
+    public async Task GetRandomDriverAsync_ShouldReturnDriverWithValidFirstName_WhenApiReturnIsCorrect()
+    {
+        // Act
+        var result = await _sut.GetRandomDriverAsync();
+
+        // Assert
         Assert.IsFalse(string.IsNullOrEmpty(result.FirstName));
+    }
+
+    [TestMethod]
+    public async Task GetRandomDriverAsync_ShouldReturnDriverWithValidLastName_WhenApiReturnIsCorrect()
+    {
+        // Act
+        var result = await _sut.GetRandomDriverAsync();
+
+        // Assert
         Assert.IsFalse(string.IsNullOrEmpty(result.LastName));
     }
 
     [TestMethod]
-    public async Task GetRandomDriverAsync_ShouldNotReturnDriver_WhenApiReturnIsInCorrect()
+    public async Task GetRandomDriverAsync_ShouldNotReturnDriver_WhenApiReturnIsIncorrect()
     {
         // Arrange
-        var inCorrectHttpClient = new HttpClient(new FailingHttpClientHandler());
-        var sutWithInCorrectHttpClient = new FakePersonService(inCorrectHttpClient, _consoleService);
+        var incorrectHttpClient = new HttpClient(new FailingHttpClientHandler());
+        var sutWithIncorrectHttpClient = new FakePersonService(incorrectHttpClient, _consoleService);
 
-        //Act
-        var result = await sutWithInCorrectHttpClient.GetRandomDriverAsync();
+        // Act
+        var result = await sutWithIncorrectHttpClient.GetRandomDriverAsync();
 
         // Assert
         Assert.IsNull(result);
-
     }
 
     [TestMethod]
