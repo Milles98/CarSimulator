@@ -43,30 +43,11 @@ public class FuelService(Car car, IConsoleService consoleService, IFatigueServic
         return (int)car.Fuel >= requiredFuel;
     }
 
-    /// <summary>
-    /// Visar en varning om låg bränslenivå.
-    /// </summary>
-    public void DisplayLowFuelWarning()
-    {
-        consoleService.SetForegroundColor(ConsoleColor.Red);
-        consoleService.WriteLine("""
-                                 
-                                  _____ _   _        _     _ _         ____      _   _           _      _ 
-                                 |  ___(_)_(_)_ __  | |   (_) |_ ___  | __ ) _ _(_)_(_)_ __  ___| | ___| |
-                                 | |_   / _ \| '__| | |   | | __/ _ \ |  _ \| '__/ _` | '_ \/ __| |/ _ \ |
-                                 |  _| | (_) | |    | |___| | ||  __/ | |_) | | | (_| | | | \__ \ |  __/_|
-                                 |_|    \___/|_|    |_____|_|\__\___| |____/|_|  \__,_|_| |_|___/_|\___(_)
-                                                 
-                                 """);
-        consoleService.WriteLine("Bilen har inte tillräckligt med bränsle. Föraren måste tanka!");
-        consoleService.ResetColor();
-    }
-
     public void CheckFuelLevel()
     {
         try
         {
-            if (car is { Fuel: Fuel.Empty })
+            if (car.Fuel == Fuel.Empty)
             {
                 DisplayLowFuelWarning();
             }
@@ -86,5 +67,24 @@ public class FuelService(Car car, IConsoleService consoleService, IFatigueServic
         currentFuel -= amount;
         if (currentFuel < (int)Fuel.Empty) currentFuel = (int)Fuel.Empty;
         car.Fuel = (Fuel)currentFuel;
+    }
+    
+    /// <summary>
+    /// Visar en varning om låg bränslenivå.
+    /// </summary>
+    public void DisplayLowFuelWarning()
+    {
+        consoleService.SetForegroundColor(ConsoleColor.Red);
+        consoleService.WriteLine("""
+                                 
+                                  _____ _   _        _     _ _         ____      _   _           _      _ 
+                                 |  ___(_)_(_)_ __  | |   (_) |_ ___  | __ ) _ _(_)_(_)_ __  ___| | ___| |
+                                 | |_   / _ \| '__| | |   | | __/ _ \ |  _ \| '__/ _` | '_ \/ __| |/ _ \ |
+                                 |  _| | (_) | |    | |___| | ||  __/ | |_) | | | (_| | | | \__ \ |  __/_|
+                                 |_|    \___/|_|    |_____|_|\__\___| |____/|_|  \__,_|_| |_|___/_|\___(_)
+                                                 
+                                 """);
+        consoleService.WriteLine("Bilen har inte tillräckligt med bränsle. Föraren måste tanka!");
+        consoleService.ResetColor();
     }
 }
