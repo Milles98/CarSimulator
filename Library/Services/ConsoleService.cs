@@ -20,7 +20,7 @@ public class ConsoleService : IConsoleService
 
     public void DisplayError(string message)
     {
-        DisplayMessage(ConsoleColor.Red, $"Fel: {message}");
+        DisplayMessage(ConsoleColor.Red, message);
     }
 
     public void DisplayStatusMessage(string message)
