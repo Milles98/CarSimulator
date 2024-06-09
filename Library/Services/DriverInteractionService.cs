@@ -51,7 +51,7 @@ public class DriverInteractionService(
                     ExecuteChoice(choice, ref running);
                     try
                     {
-                        menuDisplayService.DisplayStatusMenu(statusService.GetStatus(), driverName, carBrand.ToString());
+                        menuDisplayService.DisplayStatusMenu(statusService.GetStatus());
                     }
                     catch (Exception ex)
                     {
@@ -63,7 +63,7 @@ public class DriverInteractionService(
                 ExecuteChoice(choice, ref running);
                 try
                 {
-                    menuDisplayService.DisplayStatusMenu(statusService.GetStatus(), driverName, carBrand.ToString());
+                    menuDisplayService.DisplayStatusMenu(statusService.GetStatus());
                 }
                 catch (Exception ex)
                 {

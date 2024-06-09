@@ -32,7 +32,7 @@ public class MenuDisplayService(IConsoleService consoleService) : IMenuDisplaySe
         }
     }
 
-    public void DisplayStatusMenu(CarStatus status, string driverName, string carBrand)
+    public void DisplayStatusMenu(CarStatus status)
     {
         while (true)
         {
