@@ -40,11 +40,9 @@ public class MenuDisplayServiceTests
             Fuel = Fuel.Half,
             Fatigue = Fatigue.Tired,
         };
-        string driverName = "Mille Elfver";
-        string carBrand = "Toyota";
 
         // Act
-        _sut.DisplayStatusMenu(status, driverName, carBrand);
+        _sut.DisplayStatusMenu(status);
 
     }
 
