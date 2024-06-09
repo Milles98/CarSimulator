@@ -24,7 +24,7 @@ public class FuelServiceTests
     }
 
     [TestMethod]
-    public void Refuel_ShouldNotChangeFuelLevel_WhenCarIsAlreadyFull_AndNotIncreaseFatigue()
+    public void Refuel_ShouldNotChangeFuelLevel_WhenCarIsAlreadyFull()
     {
         // Arrange
         _car.Fuel = Fuel.Full;
@@ -34,11 +34,23 @@ public class FuelServiceTests
 
         // Assert
         Assert.AreEqual(Fuel.Full, _car.Fuel);
+    }
+
+    [TestMethod]
+    public void Refuel_ShouldNotIncreaseFatigue_WhenCarIsAlreadyFull()
+    {
+        // Arrange
+        _car.Fuel = Fuel.Full;
+
+        // Act
+        _sut.Refuel();
+
+        // Assert
         _fatigueServiceMock.Verify(f => f.IncreaseDriverFatigue(), Times.Never);
     }
 
     [TestMethod]
-    public void Refuel_ShouldRefuelCar_WhenCarIsNotFull_AndIncreaseFatigue()
+    public void Refuel_ShouldRefuelCar_WhenCarIsNotFull()
     {
         // Arrange
         _car.Fuel = Fuel.Half;
@@ -48,6 +60,18 @@ public class FuelServiceTests
 
         // Assert
         Assert.AreEqual(Fuel.Full, _car.Fuel);
+    }
+
+    [TestMethod]
+    public void Refuel_ShouldIncreaseFatigue_WhenCarIsNotFull()
+    {
+        // Arrange
+        _car.Fuel = Fuel.Half;
+
+        // Act
+        _sut.Refuel();
+
+        // Assert
         _fatigueServiceMock.Verify(f => f.IncreaseDriverFatigue(), Times.Once);
     }
 
