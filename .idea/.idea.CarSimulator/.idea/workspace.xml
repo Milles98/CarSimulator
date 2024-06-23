@@ -9,6 +9,7 @@
   <component name="ChangeListManager">
     <list default="true" id="32657de6-ac81-4f8f-9bb8-3365d449205b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CarSimulator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CarSimulator/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LibraryTests/Services/DirectionServiceTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/LibraryTests/Services/DirectionServiceTests.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +93,7 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected=".NET Project.CarSimulator">
+  <component name="RunManager">
     <configuration name="CarSimulator" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -135,6 +136,10 @@
       <workItem from="1718086503245" duration="18000" />
       <workItem from="1718091961514" duration="695000" />
       <workItem from="1718095377965" duration="646000" />
+      <workItem from="1718098291599" duration="147000" />
+      <workItem from="1718177751251" duration="103000" />
+      <workItem from="1718178106284" duration="105000" />
+      <workItem from="1719152703732" duration="359000" />
     </task>
     <task id="LOCAL−00001" summary="Made AppInitializer static as it doesnt need to be instanciated, updated relevant test">
       <option name="closed" value="true" />
